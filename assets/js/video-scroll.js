@@ -109,25 +109,47 @@
         }
     };
     video.addEventListener('pause', () => setTimeout(keepVideoPlaying, 100));
-    document.addEventListener('fullscreenchange', () => setTimeout(keepVideoPlaying, 100));
+    ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange']
+        .forEach(ev => document.addEventListener(ev, () => setTimeout(keepVideoPlaying, 100)));
     document.addEventListener('visibilitychange', () => { if (!document.hidden) keepVideoPlaying(); });
+
+    const fitFakeFullscreen = () => {
+        if (!fakeFullscreen) return;
+        videoBox.style.setProperty('height', `${window.innerHeight}px`, 'important');
+    };
+    window.addEventListener('resize', fitFakeFullscreen);
+    window.addEventListener('orientationchange', () => setTimeout(fitFakeFullscreen, 300));
 
     const setFakeFullscreen = (on) => {
         fakeFullscreen = on;
         videoBox.classList.toggle('is-fake-fullscreen', on);
         document.documentElement.classList.toggle('video-fs-open', on);
         document.body.classList.toggle('video-fs-open', on);
-        if (!on) requestUpdate();
+        if (on) fitFakeFullscreen();
+        else { videoBox.style.removeProperty('height'); requestUpdate(); }
         keepVideoPlaying();
     };
 
+    const nativeElement = () => document.fullscreenElement || document.webkitFullscreenElement ||
+        document.mozFullScreenElement || document.msFullscreenElement || null;
+    const nativeExit = () => (document.exitFullscreen || document.webkitExitFullscreen ||
+        document.mozCancelFullScreen || document.msExitFullscreen);
+    const nativeRequest = () => (video.requestFullscreen || video.webkitRequestFullscreen ||
+        video.mozRequestFullScreen || video.msRequestFullscreen);
+
     fullscreenButton?.addEventListener('click', async () => {
         try {
-            if (isIOS) setFakeFullscreen(true);
-            else if (document.fullscreenElement) await document.exitFullscreen();
-            else if (video.requestFullscreen) await video.requestFullscreen();
+            if (nativeElement()) {
+                const exit = nativeExit();
+                if (exit) await exit.call(document);
+                return;
+            }
+            const request = nativeRequest();
+            if (isIOS || !request) setFakeFullscreen(true);
+            else await request.call(video);
         } catch (e) {
-            console.warn('Unable to open video in full screen.', e);
+            console.warn('Native full screen failed, using fallback.', e);
+            setFakeFullscreen(true);
         }
     });
     closeButton?.addEventListener('click', () => setFakeFullscreen(false));

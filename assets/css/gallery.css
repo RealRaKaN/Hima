@@ -33,11 +33,17 @@ nav .nav-links a.active { color: var(--primary-light); }
 
 .gallery-caption {
     position: absolute;
-    inset-inline: 0; bottom: 0;
+    left: 0; right: 0; bottom: 0;
     padding: 2rem 1rem .75rem;
     font-size: .9rem; font-weight: 500;
     text-align: start;
     background: linear-gradient(to top, rgba(7, 18, 11, .9), transparent);
+}
+
+/* متصفحات قديمة بدون aspect-ratio */
+@supports not (aspect-ratio: 4 / 3) {
+    .gallery-item { height: 0; padding-bottom: 75%; }
+    .gallery-item img { position: absolute; top: 0; left: 0; }
 }
 
 .gallery-empty { text-align: center; color: var(--text-muted); padding: 3rem 0; }

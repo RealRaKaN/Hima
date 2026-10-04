@@ -55,6 +55,8 @@
     left: 50%;
     display: flex;
     gap: .75rem;
+    width: -webkit-max-content;
+    width: -moz-max-content;
     width: max-content;
     opacity: 0;
     pointer-events: none;
@@ -191,3 +193,6 @@ video:fullscreen {
 
 body.video-fs-open { overflow: hidden; }
 body.video-fs-open nav { display: none; }
+
+html { background-color: var(--bg-dark); }
+html.video-fs-open { background-color: #000; }
