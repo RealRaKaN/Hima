@@ -1,0 +1,93 @@
+ <!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Hima | حِمَى</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/gallery.css">
+</head>
+<body>
+    <div id="shader-bg" aria-hidden="true"></div>
+
+    <!-- Nav -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <i data-lucide="radar" class="icon-brand"></i>
+                Hima | حِمَى
+            </a>
+            <button class="mobile-menu-btn" id="mobile-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false"><i data-lucide="menu"></i></button>
+
+            <div class="nav-links" id="nav-links">
+                <a href="index.html#hero" data-i18n="nav_live_demo">Live Demo</a>
+                <a href="index.html#metrics" data-i18n="nav_validation">Validation</a>
+                <a href="index.html#species" data-i18n="nav_target_species">Target Species</a>
+                <a href="index.html#architecture" data-i18n="nav_methodology">Methodology</a>
+                <a href="index.html#hardware" data-i18n="nav_hardware_setup">Hardware Setup</a>
+                <a href="gallery.html" class="active" data-i18n="nav_gallery">Gallery</a>
+                <button id="lang-toggle" class="lang-toggle">عربي</button>
+            </div>
+
+            <div class="nav-action" id="nav-action"></div>
+        </div>
+    </nav>
+
+    <!-- Gallery -->
+    <main class="container gallery-page">
+        <div class="section-header">
+            <h2 data-i18n="gallery_title">Gallery</h2>
+            <p data-i18n="gallery_sub">Photos from the Hima project.</p>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid"></div>
+        <p class="gallery-empty" id="gallery-empty" hidden data-i18n="gallery_empty">No images yet.</p>
+
+        <div class="gallery-back">
+            <a href="index.html" class="btn btn-primary"><i data-lucide="arrow-left" size="16"></i> <span data-i18n="gallery_back">Back to home</span></a>
+        </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Image viewer">
+        <button class="lightbox-btn lightbox-close" id="lb-close" type="button" aria-label="Close">✕</button>
+        <button class="lightbox-btn lightbox-prev" id="lb-prev" type="button" aria-label="Previous">‹</button>
+        <figure class="lightbox-figure">
+            <img id="lb-img" alt="">
+            <figcaption id="lb-caption"></figcaption>
+        </figure>
+        <button class="lightbox-btn lightbox-next" id="lb-next" type="button" aria-label="Next">›</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <h3 data-i18n="footer_title">An Integrated Drone-Based System for Real-Time Wildlife Detection and Tracking Using Computer Vision</h3>
+            <p data-i18n="footer_sub">Computer Science Department, Qassim University</p>
+            <div class="copyright" data-i18n="footer_copy">
+                &copy; 2026 Hima Project Team. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/RealRaKaN" class="footer-btn"><i data-lucide="github" size="16"></i> <span data-i18n-html="foot_github">GitHub Repository</span></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/translations.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
+    <script src="assets/js/gallery-data.js" defer></script>
+    <script src="assets/js/gallery.js" defer></script>
+    <script src="assets/js/shader-bg.js" defer></script>
+</body>
+</html>

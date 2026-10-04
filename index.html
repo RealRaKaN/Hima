@@ -35,6 +35,7 @@
                 <a href="#species" data-i18n="nav_target_species">Target Species</a>
                 <a href="#architecture" data-i18n="nav_methodology">Methodology</a>
                 <a href="#hardware" data-i18n="nav_hardware_setup">Hardware Setup</a>
+                <a href="gallery.html" data-i18n="nav_gallery">Gallery</a>
                 <button id="lang-toggle" class="lang-toggle">عربي</button>
             </div>
 
@@ -55,13 +56,19 @@
                 </video>
 
                 <div class="hero-overlay" id="hero-overlay"></div>
-                <button class="video-fullscreen-btn" id="video-fullscreen-btn" type="button" aria-label="Open video in full screen">
-                    <i data-lucide="maximize" size="16"></i>
-                    <span data-i18n="video_fullscreen">Full screen</span>
-                    <button class="video-close-btn" id="video-close-btn" type="button" aria-label="Close full screen">✕</button>
-                </button>
+                <button class="video-close-btn" id="video-close-btn" type="button" aria-label="Close full screen">✕</button>
             </div>
 
+                <div class="video-actions" id="video-actions">
+                    <button class="video-fullscreen-btn" id="video-fullscreen-btn" type="button" aria-label="Open video in full screen">
+                    <i data-lucide="maximize" size="16"></i>
+                    <span data-i18n="video_fullscreen">Full screen</span>
+                    </button>
+                    <a class="video-gallery-btn" href="gallery.html">
+                        <i data-lucide="images" size="16"></i>
+                        <span data-i18n="nav_gallery">Gallery</span>
+                    </a>
+            </div>
 
             <div class="hero-content" id="hero-text">
                 <div class="badge-academic">

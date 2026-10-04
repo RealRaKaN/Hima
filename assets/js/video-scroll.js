@@ -5,6 +5,7 @@
     const hero = document.getElementById('hero');
     const video = videoBox?.querySelector('video');
     const fullscreenButton = document.getElementById('video-fullscreen-btn');
+    const videoActions = document.getElementById('video-actions');
     const closeButton = document.getElementById('video-close-btn');
     const navbar = document.getElementById('navbar');
     let previousScrollY = window.scrollY;
@@ -45,7 +46,7 @@
         const textBottomEnd = textTopEnd + textH * endScale;
 
         const gap = 16;
-        const bottomPad = 16;
+        const bottomPad = 64;
         const availH = Math.max(vh - textBottomEnd - gap - bottomPad, 120);
         const maxW = vw * (isMobile ? 0.95 : 0.60);
         const targetW = Math.min(maxW, availH * 16 / 9);
@@ -69,6 +70,9 @@
         videoBox.style.borderRadius = `${p * (isMobile ? 12 : 20)}px`;
         videoBox.style.boxShadow = `0 20px 50px rgba(0,0,0,.8), 0 0 30px rgba(16,185,129,${p * 0.3})`;
         videoBox.classList.toggle('is-framed', p > 0.6);
+        if (videoActions) {
+            videoActions.style.top = `${lerp(0, videoTopEnd, p) + lerp(vh, targetH, p) + 12}px`;
+        }
     };
 
     let current = getTarget();

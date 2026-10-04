@@ -49,11 +49,26 @@
     }
 }
 
-.video-fullscreen-btn {
+.video-actions {
     position: absolute;
     z-index: 3;
-    bottom: 1rem;
     left: 50%;
+    display: flex;
+    gap: .75rem;
+    width: max-content;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, .5rem);
+    transition: opacity .25s ease, transform .25s ease;
+}
+.video-transform-box.is-framed ~ .video-actions {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+}
+
+.video-fullscreen-btn,
+.video-gallery-btn {
     display: inline-flex;
     align-items: center;
     gap: .5rem;
@@ -63,12 +78,13 @@
     border: 1px solid rgba(16, 185, 129, .55);
     border-radius: 999px;
     font: 600 .85rem var(--font-body);
+    white-space: nowrap;
     cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, .5rem);
-    transition: opacity .25s ease, transform .25s ease, background-color .25s ease;
+    transition: background-color .25s ease;
 }
+.video-fullscreen-btn:hover,
+.video-gallery-btn:hover { background: rgba(0, 108, 53, .85); }
+
 .video-transform-box { top: 0; left: 50%; }
 
 .video-transform-box.is-fake-fullscreen {
@@ -85,7 +101,7 @@
 }
 .video-transform-box.is-fake-fullscreen .hero-video { object-fit: contain; }
 .video-transform-box.is-fake-fullscreen .hero-overlay,
-.video-transform-box.is-fake-fullscreen .video-fullscreen-btn { display: none; }
+.video-transform-box.is-fake-fullscreen ~ .video-actions { display: none; }
 
 .video-close-btn {
     display: none;
@@ -132,12 +148,6 @@ video:fullscreen {
     background: #000;
 }
 
-@media (max-width: 768px) {
-    .video-fullscreen-btn {
-        bottom: .65rem;
-    }
-}
-
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         scroll-behavior: auto !important;
@@ -161,7 +171,7 @@ video:fullscreen {
 }
 .video-transform-box.is-fake-fullscreen .hero-video { object-fit: contain; }
 .video-transform-box.is-fake-fullscreen .hero-overlay { display: none; }
-.video-transform-box.is-fake-fullscreen .video-fullscreen-btn { display: none; }
+.video-transform-box.is-fake-fullscreen ~ .video-actions { display: none; }
 
 .video-close-btn {
     display: none;
