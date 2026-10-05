@@ -223,8 +223,12 @@ nav {
 /* Tools */
 .tools-section { padding: 4rem 0; text-align: center; }
 .tools-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem; }
-.tool-badge { background: var(--glass-bg); border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; color: #e5e7eb; transition: all 0.3s ease; }
 .tool-badge:hover { border-color: var(--primary-light); color: white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); transform: translateY(-2px); }
+.tool-badge { display: flex; align-items: center; justify-content: center; gap: 0.6rem; background: var(--glass-bg); border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; color: #e5e7eb; text-decoration: none; transition: all 0.3s ease; }
+
+.tool-badge--logo { width: 84px; height: 84px; padding: 0; border-radius: 18px; }
+.tool-badge--logo img { width: 42px; height: 42px; object-fit: contain; }
+.tool-badge--channel img { width: 28px; height: 28px; }
 
 /* Hardware model */
 .hardware-split { display: block; text-align: center; }
