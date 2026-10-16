@@ -22,24 +22,26 @@ interface ToolChannel {
 
 type ToolItem = ToolLogo | ToolText | ToolChannel;
 
+const base = import.meta.env.BASE_URL;
+
 const tools: ToolItem[] = [
-  { type: 'logo', title: 'PyTorch', src: '/assets/images/tools/pytorch.svg' },
-  { type: 'logo', title: 'YOLO', src: '/assets/images/tools/yolo.svg' },
-  { type: 'logo', title: 'OpenCV', src: '/assets/images/tools/opencv.svg' },
-  { type: 'logo', title: 'Python', src: '/assets/images/tools/python.svg' },
-  { type: 'logo', title: 'Arduino', src: '/assets/images/tools/arduino.svg' },
-  { type: 'logo', title: 'Kaggle', src: '/assets/images/tools/kaggle.svg' },
-  { type: 'logo', title: 'Ultralytics', src: '/assets/images/tools/ultralytics.svg' },
-  { type: 'logo', title: 'iNaturalist API', src: '/assets/images/tools/image.png' },
-  { type: 'logo', title: 'jetson nano', src: '/assets/images/tools/nvd.png' },
-  { type: 'logo', title: 'ArduPilot', src: '/assets/images/tools/ArduPilot_logo.svg' },
+  { type: 'logo', title: 'PyTorch', src: `${base}assets/images/tools/pytorch.svg` },
+  { type: 'logo', title: 'YOLO', src: `${base}assets/images/tools/yolo.svg` },
+  { type: 'logo', title: 'OpenCV', src: `${base}assets/images/tools/opencv.svg` },
+  { type: 'logo', title: 'Python', src: `${base}assets/images/tools/python.svg` },
+  { type: 'logo', title: 'Arduino', src: `${base}assets/images/tools/arduino.svg` },
+  { type: 'logo', title: 'Kaggle', src: `${base}assets/images/tools/kaggle.svg` },
+  { type: 'logo', title: 'Ultralytics', src: `${base}assets/images/tools/ultralytics.svg` },
+  { type: 'logo', title: 'iNaturalist API', src: `${base}assets/images/tools/image.png` },
+  { type: 'logo', title: 'jetson nano', src: `${base}assets/images/tools/nvd.png` },
+  { type: 'logo', title: 'ArduPilot', src: `${base}assets/images/tools/ArduPilot_logo.svg` },
   { type: 'text', title: 'SAM 2' },
   { type: 'text', title: 'Grounding DINO' },
   { type: 'text', title: 'BoT-SORT' },
   {
     type: 'channel',
     title: 'محمد اليوسفي',
-    src: '/assets/images/tools/youtube.svg',
+    src: `${base}assets/images/tools/youtube.svg`,
     href: 'https://www.youtube.com/@MohdAlyousefi',
   },
 ];

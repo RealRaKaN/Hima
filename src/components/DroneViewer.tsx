@@ -31,7 +31,7 @@ export default function DroneViewer() {
             dangerouslySetInnerHTML={{
               __html: `
                 <model-viewer
-                  src="/DRONE.glb"
+                  src="${import.meta.env.BASE_URL}DRONE.glb"
                   alt="A 3D model of the Hima drone"
                   auto-rotate
                   camera-controls

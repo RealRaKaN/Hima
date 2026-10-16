@@ -1,32 +1,26 @@
-# React + TypeScript + Vite
+# Hima | حِمَى
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+**An Integrated Drone-Based System for Real-Time Wildlife Detection and Tracking Using Computer Vision**
 
-Currently, two official plugins are available:
+> Qassim University — Computer Science Department  
+> Graduation Project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Overview
+Hima (حِمَى) is an autonomous drone-based monitoring and tracking system designed for native Arabian desert wildlife (Arabian Oryx and Reem Gazelle) using state-of-the-art computer vision models.
 
-## React Compiler
+## Tech Stack
+- **Frontend:** React, TypeScript, Vite, Tailwind CSS, Framer Motion
+- **3D & Visuals:** WebGL, Three.js, `<model-viewer>`
+- **AI & Robotics:** PyTorch, YOLO, OpenCV, BoT-SORT, SAM 2, Grounding DINO, ArduPilot, Jetson Nano
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Local Development
+```bash
+# Install dependencies
+npm install
 
-## Expanding the Oxlint configuration
+# Start local development server
+npm run dev
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+# Build for production
+npm run build
 ```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.

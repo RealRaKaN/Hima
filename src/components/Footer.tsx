@@ -43,7 +43,7 @@ export default function Footer() {
             className="footer-btn flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all duration-200"
           >
             <img
-              src="/assets/images/tools/whatsapp-svgrepo-com.svg"
+              src={`${import.meta.env.BASE_URL}assets/images/tools/whatsapp-svgrepo-com.svg`}
               width="20"
               height="20"
               alt="WhatsApp"
