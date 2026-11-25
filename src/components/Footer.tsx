@@ -26,7 +26,7 @@ export default function Footer() {
 
         <div className="footer-links flex justify-center gap-4 mb-8 flex-wrap">
           <a
-            href="https://github.com/RealRaKaN"
+            href="https://github.com/RealRaKaN/Hima"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-btn flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all duration-200"
