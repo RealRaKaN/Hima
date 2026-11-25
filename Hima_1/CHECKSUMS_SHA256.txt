@@ -1,0 +1,7 @@
+# SHA-256 of the large files in Hima_1 (check: sha256sum -c CHECKSUMS_SHA256.txt from this folder; Windows: certutil -hashfile FILE SHA256)
+c476ac1ea7828d3ecea935adb0d6ced34542002121cc171b8272b83ce0dc2ef4 *./1_Drone_Jetson/data_ext/wdpa_555756385/iarr_wdpa_555756385.geojson
+712340651a57e15d41d2ec4621a3aa116d4188d36e6d8d2b9d33c74bd7286724 *./1_Drone_Jetson/system/best_4_1.pt
+646f8bc3fe0a656803d95c294f7852321748cb29d13466a1af8862e2db384a1b *./1_Drone_Jetson/system/weights/general/yolo26s.pt
+ba746e1556a0fb760a24fb3098806894079f061171cbbcaced8bc57c44af9c3e *./2_Station_PC/data_ext/imagery/reserve_s2_2025.jpg
+b07e1eb1ba30fa9b496affba8643aee60b8522e93f9ffdd47b5ec3c094e5861a *./2_Station_PC/data_ext/imagery/route_main_s2_2025.jpg
+c476ac1ea7828d3ecea935adb0d6ced34542002121cc171b8272b83ce0dc2ef4 *./2_Station_PC/data_ext/wdpa_555756385/iarr_wdpa_555756385.geojson

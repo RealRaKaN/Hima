@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hima.local/contract/judge.schema.json",
+  "title": "Hima landing-report judge reply (one sentence)",
+  "description": "A second LLM checks ONE sentence of the landing report against the facts of that part only (the headline against mission facts, a note against its own track). It can only reject: the fixed fact gate runs after it and keeps the last word.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["summary_values", "verdict", "problem"],
+  "properties": {
+    "summary_values": { "type": "string", "maxLength": 400 },
+    "verdict": { "enum": ["supported", "unsupported"] },
+    "problem": { "type": "string", "maxLength": 300 }
+  }
+}

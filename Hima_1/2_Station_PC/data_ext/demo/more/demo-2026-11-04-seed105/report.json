@@ -1,0 +1,137 @@
+{
+  "schema_version": "hima.report/1",
+  "mission_id": "demo-2026-11-04-seed105",
+  "source": "template",
+  "model": null,
+  "judge_model": null,
+  "latency_s": null,
+  "writer_latency_s": null,
+  "judge_latency_s": null,
+  "gate": {
+    "accepted": false,
+    "reasons": [
+      "llm: not used (--no-llm)"
+    ],
+    "repaired": []
+  },
+  "llm_raw": null,
+  "judge": [],
+  "prompt_sha256": "0658e460064821a7b9e1b9eacb92a9632aff23b2e2a8110d9468667d2222e195",
+  "summary": {
+    "mission_id": "demo-2026-11-04-seed105",
+    "source": "synthetic",
+    "duration_s": 599.0,
+    "metrics_known": true,
+    "tracks_seen": 6,
+    "tracks_by_species": {
+      "reem_gazelle": 4,
+      "arabian_oryx": 2
+    },
+    "alert_track_ids": [
+      103
+    ],
+    "tracks_needing_attention": 1,
+    "alerts_listed": 1,
+    "animals": [
+      {
+        "track_id": 103,
+        "species": "reem_gazelle",
+        "status": "SUSPECTED_INJURY_OR_ILLNESS",
+        "visible_s": 593.0,
+        "first_seen_s": 0.0,
+        "last_seen_s": 599.0,
+        "events": {
+          "isolation": 1
+        },
+        "min_distance_to_drone_m": 88.0
+      },
+      {
+        "track_id": 101,
+        "species": "reem_gazelle",
+        "status": "BASELINE",
+        "visible_s": 596.0,
+        "first_seen_s": 0.0,
+        "last_seen_s": 599.0,
+        "events": {},
+        "min_distance_to_drone_m": 80.0
+      },
+      {
+        "track_id": 104,
+        "species": "reem_gazelle",
+        "status": "RAPID_CORRIDOR_TRANSIT",
+        "visible_s": 30.0,
+        "first_seen_s": 192.0,
+        "last_seen_s": 221.0,
+        "events": {
+          "isolation": 1
+        },
+        "min_distance_to_drone_m": 86.7
+      },
+      {
+        "track_id": 105,
+        "species": "reem_gazelle",
+        "status": "BASELINE",
+        "visible_s": 597.0,
+        "first_seen_s": 0.0,
+        "last_seen_s": 599.0,
+        "events": {},
+        "min_distance_to_drone_m": 80.1
+      },
+      {
+        "track_id": 202,
+        "species": "arabian_oryx",
+        "status": "INTERMITTENT_OCCLUSION",
+        "visible_s": 398.0,
+        "first_seen_s": 0.0,
+        "last_seen_s": 574.0,
+        "events": {},
+        "min_distance_to_drone_m": 80.0
+      },
+      {
+        "track_id": 203,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 596.0,
+        "first_seen_s": 0.0,
+        "last_seen_s": 599.0,
+        "events": {},
+        "min_distance_to_drone_m": 80.3
+      }
+    ]
+  },
+  "report": {
+    "headline": "1 of 6 tracks need attention in mission demo-2026-11-04-seed105.",
+    "findings": [
+      {
+        "track_id": 103,
+        "status": "SUSPECTED_INJURY_OR_ILLNESS",
+        "note": "reem_gazelle seen for 593 s."
+      },
+      {
+        "track_id": 101,
+        "status": "BASELINE",
+        "note": "reem_gazelle seen for 596 s."
+      },
+      {
+        "track_id": 104,
+        "status": "RAPID_CORRIDOR_TRANSIT",
+        "note": "reem_gazelle seen for 30 s."
+      },
+      {
+        "track_id": 105,
+        "status": "BASELINE",
+        "note": "reem_gazelle seen for 597 s."
+      },
+      {
+        "track_id": 202,
+        "status": "INTERMITTENT_OCCLUSION",
+        "note": "arabian_oryx seen for 398 s."
+      },
+      {
+        "track_id": 203,
+        "status": "BASELINE",
+        "note": "arabian_oryx seen for 596 s."
+      }
+    ]
+  }
+}

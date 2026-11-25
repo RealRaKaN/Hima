@@ -1,0 +1,368 @@
+<!doctype html>
+<!-- Hima route editor: a page with no outside files (the station in the field has no internet).
+     Web Mercator map: satellite images (from the station's imagery folder), the fence, the route and its points.
+     Drag a point to move it; click the route or the map to read its GPS position; Add / Delete / Undo / Reset.
+     The page sends back {action, targets, nonce}; the dashboard checks the route and writes the answer. -->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root { --bg:#0f1720; --panel:#16212c; --fg:#e6edf3; --muted:#8aa0b4; --line:#facc15; --pt:#f97316;
+          --sel:#22d3ee; --bad:#ef4444; --warn:#f59e0b; --ok:#22c55e; --fence:#a3e635; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--fg);
+               font:13px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  #wrap { display:flex; flex-direction:column; height:100%; }
+  #bar { display:flex; flex-wrap:wrap; gap:6px; align-items:center; padding:6px; background:var(--panel); }
+  #bar button { background:#223142; color:var(--fg); border:1px solid #2f4357; border-radius:6px; padding:5px 9px;
+                cursor:pointer; font:inherit; }
+  #bar button:hover { border-color:var(--sel); }
+  #bar button.on { background:var(--sel); color:#001; }
+  #bar button.go { background:#14532d; border-color:#166534; }
+  #bar button.ok { background:#1e3a8a; border-color:#1d4ed8; }
+  #bar button:disabled { opacity:.4; cursor:default; }
+  #bar label { color:var(--muted); display:flex; align-items:center; gap:4px; }
+  #map { position:relative; flex:1; overflow:hidden; background:#0b1118; touch-action:none; cursor:grab; }
+  #map.adding { cursor:crosshair; }
+  #imgs, svg { position:absolute; left:0; top:0; width:100%; height:100%; }
+  #imgs img { position:absolute; transform-origin:0 0; image-rendering:auto; pointer-events:none; user-select:none; }
+  #info { position:absolute; left:8px; bottom:8px; background:rgba(15,23,32,.92); border:1px solid #2f4357;
+          border-radius:8px; padding:8px 10px; max-width:min(420px, 80%); }
+  #info b { color:var(--sel); }
+  #info button { margin-left:6px; background:#223142; color:var(--fg); border:1px solid #2f4357; border-radius:5px;
+                 padding:2px 7px; cursor:pointer; font:inherit; }
+  #stat { position:absolute; right:8px; top:8px; background:rgba(15,23,32,.92); border:1px solid #2f4357;
+          border-radius:8px; padding:8px 10px; text-align:right; }
+  #stat .big { font-size:18px; font-weight:600; }
+  .bad { color:var(--bad); } .warn { color:var(--warn); } .okc { color:var(--ok); } .muted { color:var(--muted); }
+  #zoom { position:absolute; right:8px; bottom:8px; display:flex; flex-direction:column; gap:4px; }
+  #zoom button { width:32px; height:32px; font-size:18px; background:#223142; color:var(--fg);
+                 border:1px solid #2f4357; border-radius:6px; cursor:pointer; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="bar">
+    <button id="bAdd" title="Then click the map: the point goes where it adds the least length">+ Add point</button>
+    <button id="bDel" title="Delete the selected point">Delete point</button>
+    <button id="bUndo">Undo</button>
+    <button id="bReset" title="Back to the drone's route">Drone's route</button>
+    <button id="bFit">Fit</button>
+    <label><input type="checkbox" id="cImg" checked> images</label>
+    <label>opacity <input type="range" id="rOp" min="0" max="100" value="100" style="width:80px"></label>
+    <span style="flex:1"></span>
+    <button id="bCheck" title="Check the edited route at the station (safe area, battery)">Check</button>
+    <button id="bSend" class="go">Send edited route</button>
+    <button id="bApprove" class="ok">Fly the drone's route now</button>
+  </div>
+  <div id="map">
+    <div id="imgs"></div>
+    <svg id="svg"></svg>
+    <div id="stat"></div>
+    <div id="info" class="muted">Drag a point to move it. Click the route or the map for its GPS position.</div>
+    <div id="zoom"><button id="zIn">+</button><button id="zOut">&minus;</button></div>
+  </div>
+</div>
+<script>
+"use strict";
+// ---------------------------------------------------------------- Streamlit component protocol (no library)
+function post(type, extra) { window.parent.postMessage(Object.assign({isStreamlitMessage: true, type}, extra), "*"); }
+function sendValue(v) { post("streamlit:setComponentValue", {value: v, dataType: "json"}); }
+function setHeight(h) { post("streamlit:setFrameHeight", {height: h}); }
+
+// ---------------------------------------------------------------- projection: Web Mercator metres
+const R = 6378137, D2R = Math.PI / 180;
+const merc = (lat, lon) => [R * lon * D2R, R * Math.log(Math.tan(Math.PI / 4 + lat * D2R / 2))];
+const unmerc = (x, y) => [(2 * Math.atan(Math.exp(y / R)) - Math.PI / 2) / D2R, x / R / D2R];
+function hav(a, b) {                 // ground metres between [lat, lon] points
+  const p1 = a[0] * D2R, p2 = b[0] * D2R, dl = (b[1] - a[1]) * D2R;
+  const h = Math.sin((p2 - p1) / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) ** 2;
+  return 2 * 6371008.8 * Math.asin(Math.sqrt(h));
+}
+
+// ---------------------------------------------------------------- state
+let A = null;                        // args from Python
+let key = null;                      // plan id: a new plan resets the editor
+let pts = [], orig = [], hist = [];  // [lat, lon]
+let launch = [0, 0], fence = [];
+let view = {cx: 0, cy: 0, s: 0.01};  // centre (merc m), pixels per merc metre
+let sel = -1, adding = false, nonce = 0, imgsOn = true, opacity = 1;
+const map = document.getElementById("map"), svg = document.getElementById("svg"),
+      imgsDiv = document.getElementById("imgs"), info = document.getElementById("info"),
+      stat = document.getElementById("stat");
+let W = 800, H = 560;
+
+function toPx(lat, lon) { const [x, y] = merc(lat, lon); return [(x - view.cx) * view.s + W / 2, (view.cy - y) * view.s + H / 2]; }
+function toLL(px, py) { return unmerc((px - W / 2) / view.s + view.cx, view.cy - (py - H / 2) / view.s); }
+const fmt = ll => `${ll[0].toFixed(6)}, ${ll[1].toFixed(6)}`;
+
+function fit() {
+  const all = [launch, ...pts, ...(A && A.fit_fence ? fence : [])];
+  if (!all.length) return;
+  const ms = all.map(p => merc(p[0], p[1]));
+  const xs = ms.map(m => m[0]), ys = ms.map(m => m[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  view.cx = (x0 + x1) / 2; view.cy = (y0 + y1) / 2;
+  view.s = Math.min(W / Math.max(x1 - x0, 500), H / Math.max(y1 - y0, 500)) * 0.85;
+  draw();
+}
+
+// ---------------------------------------------------------------- checks shown live (the dashboard and the drone check again)
+function inPoly(p, poly) {
+  let c = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const a = poly[i], b = poly[j];
+    if ((a[0] > p[0]) !== (b[0] > p[0]) && p[1] < (b[1] - a[1]) * (p[0] - a[0]) / (b[0] - a[0]) + a[1]) c = !c;
+  }
+  return c;
+}
+function segDistM(p, a, b) {         // metres from p to segment ab (local flat approximation)
+  const k = Math.cos(p[0] * D2R) * 111320, q = [p[1] * k, p[0] * 110540],
+        u = [a[1] * k, a[0] * 110540], v = [b[1] * k, b[0] * 110540];
+  const dx = v[0] - u[0], dy = v[1] - u[1], L = dx * dx + dy * dy;
+  const t = L ? Math.max(0, Math.min(1, ((q[0] - u[0]) * dx + (q[1] - u[1]) * dy) / L)) : 0;
+  return Math.hypot(u[0] + t * dx - q[0], u[1] + t * dy - q[1]);
+}
+function cross(a, b, c, d) {         // segments ab and cd cross
+  const o = (p, q, r) => Math.sign((q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1]));
+  return o(a, b, c) !== o(a, b, d) && o(c, d, a) !== o(c, d, b);
+}
+function problems() {
+  const out = {pts: pts.map(() => null), legs: [], text: []};
+  const margin = A.plan_margin_m || 0, appr = A.land_approach_m || 0;
+  pts.forEach((p, i) => {
+    if (fence.length > 2 && !inPoly(p, fence)) { out.pts[i] = "bad"; out.text.push(`point ${i + 1} is outside the fence`); return; }
+    if (fence.length > 2 && margin) {
+      let d = Infinity;
+      for (let j = 0; j < fence.length; j++) d = Math.min(d, segDistM(p, fence[j], fence[(j + 1) % fence.length]));
+      if (d < margin) { out.pts[i] = "bad"; out.text.push(`point ${i + 1} is ${d.toFixed(0)} m from the fence (keep ${margin} m)`); return; }
+    }
+    if (appr && hav(p, launch) < appr) { out.pts[i] = "warn"; out.text.push(`point ${i + 1} is closer than ${appr} m to the launch point`); }
+  });
+  const loop = [launch, ...pts, launch];
+  for (let i = 0; i + 1 < loop.length; i++) {
+    let bad = false;
+    for (let j = 0; j < fence.length && fence.length > 2; j++) if (cross(loop[i], loop[i + 1], fence[j], fence[(j + 1) % fence.length])) { bad = true; break; }
+    out.legs.push(bad);
+    if (bad) out.text.push(`leg ${i + 1} crosses the fence`);
+  }
+  return out;
+}
+const lengthM = () => { const l = [launch, ...pts, launch]; let s = 0; for (let i = 0; i + 1 < l.length; i++) s += hav(l[i], l[i + 1]); return s; };
+
+// ---------------------------------------------------------------- drawing
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; }
+
+function placeImages() {
+  imgsDiv.style.display = imgsOn ? "" : "none";
+  imgsDiv.style.opacity = opacity;
+  for (const im of imgsDiv.children) {
+    const b = JSON.parse(im.dataset.b);           // [south, west, north, east]
+    const [x0, y0] = toPx(b[2], b[1]), [x1, y1] = toPx(b[0], b[3]);
+    im.style.left = x0 + "px"; im.style.top = y0 + "px";
+    im.style.width = (x1 - x0) + "px"; im.style.height = (y1 - y0) + "px";
+  }
+}
+
+function draw() {
+  placeImages();
+  svg.innerHTML = "";
+  const pr = problems();
+  if (fence.length > 2) {
+    el("polygon", {points: fence.map(p => toPx(p[0], p[1]).join(",")).join(" "), fill: "none",
+                   stroke: "var(--fence)", "stroke-width": 2, "stroke-dasharray": "6 4"});
+  }
+  const loop = [launch, ...pts, launch];
+  for (let i = 0; i + 1 < loop.length; i++) {
+    const a = toPx(...loop[i]), b = toPx(...loop[i + 1]);
+    el("line", {x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: pr.legs[i] ? "var(--bad)" : "var(--line)",
+                "stroke-width": 3, "stroke-linecap": "round"});
+    const hit = el("line", {x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: "transparent", "stroke-width": 16,
+                            style: "cursor:pointer"});
+    hit.dataset.leg = i;
+  }
+  const L = toPx(...launch);
+  el("rect", {x: L[0] - 8, y: L[1] - 8, width: 16, height: 16, fill: "#0ea5e9", stroke: "#fff", "stroke-width": 2});
+  el("text", {x: L[0] + 11, y: L[1] + 4, fill: "#fff", "font-size": 12, "paint-order": "stroke", stroke: "#000",
+              "stroke-width": 3}).textContent = "launch";
+  pts.forEach((p, i) => {
+    const [x, y] = toPx(p[0], p[1]);
+    const c = el("circle", {cx: x, cy: y, r: i === sel ? 10 : 8,
+                            fill: pr.pts[i] === "bad" ? "var(--bad)" : pr.pts[i] === "warn" ? "var(--warn)" : "var(--pt)",
+                            stroke: i === sel ? "var(--sel)" : "#fff", "stroke-width": i === sel ? 3 : 2,
+                            style: "cursor:move"});
+    c.dataset.pt = i;
+    const t = el("text", {x: x, y: y + 4, "text-anchor": "middle", fill: "#000", "font-size": 10,
+                          "font-weight": 700, style: "pointer-events:none"});
+    t.textContent = i + 1;
+  });
+  const len = lengthM() / 1000, budget = A.route_budget_km;
+  const over = budget != null && len > budget;
+  const left = A.deadline_ms ? Math.max(0, Math.round((A.deadline_ms - Date.now()) / 1000)) : null;
+  stat.innerHTML =
+    `<div class="big ${over ? "bad" : ""}">${len.toFixed(1)} km</div>` +
+    `<div class="muted">${budget != null ? "battery allows " + budget.toFixed(1) + " km" : "battery limit: checked on the drone"}</div>` +
+    `<div>${pts.length} points${changed() ? ' · <span class="warn">edited</span>' : ""}</div>` +
+    (left != null ? `<div class="${left < 15 ? "bad" : ""}">${left > 0 ? "drone waits " + left + " s" : "wait over: the drone flies its own route"}</div>` : "") +
+    (A.answered ? `<div class="okc">answered: ${A.answered}</div>` : "") +
+    (pr.text.length ? `<div class="bad" style="max-width:260px;text-align:left">${pr.text.slice(0, 4).join("<br>")}</div>` : "");
+  const closed = !A.editable || (left != null && left <= 0) || A.answered;
+  for (const id of ["bSend", "bApprove", "bCheck", "bAdd", "bDel", "bUndo", "bReset"])
+    document.getElementById(id).disabled = !!closed && id !== "bCheck";
+  document.getElementById("bSend").disabled = !!closed || !changed() || over || pr.text.some(t => !t.includes("closer"));
+  document.getElementById("bDel").disabled = !!closed || sel < 0;
+  document.getElementById("bUndo").disabled = !!closed || !hist.length;
+}
+const changed = () => JSON.stringify(pts) !== JSON.stringify(orig);
+
+function say(html) { info.innerHTML = html; info.classList.remove("muted"); }
+function sayPoint(i) {
+  say(`<b>point ${i + 1}</b> &nbsp;GPS ${fmt(pts[i])} <button id="cp">copy</button>` +
+      `<div class="muted">from the launch point ${(hav(launch, pts[i]) / 1000).toFixed(2)} km</div>`);
+  copyBtn(fmt(pts[i]));
+}
+function copyBtn(text) {
+  const b = document.getElementById("cp");
+  if (b) b.onclick = () => { navigator.clipboard && navigator.clipboard.writeText(text).catch(() => {}); b.textContent = "copied"; };
+}
+
+// ---------------------------------------------------------------- editing
+function push() { hist.push(JSON.stringify(pts)); if (hist.length > 100) hist.shift(); }
+function bestInsert(ll) {           // where a new point adds the least length
+  const loop = [launch, ...pts, launch]; let best = 0, bestAdd = Infinity;
+  for (let i = 0; i + 1 < loop.length; i++) {
+    const add = hav(loop[i], ll) + hav(ll, loop[i + 1]) - hav(loop[i], loop[i + 1]);
+    if (add < bestAdd) { bestAdd = add; best = i; }
+  }
+  return best;                       // index in pts
+}
+function projectOnLeg(i, px, py) {   // the point of leg i under the pointer
+  const loop = [launch, ...pts, launch];
+  const a = toPx(...loop[i]), b = toPx(...loop[i + 1]);
+  const dx = b[0] - a[0], dy = b[1] - a[1], L = dx * dx + dy * dy;
+  const t = L ? Math.max(0, Math.min(1, ((px - a[0]) * dx + (py - a[1]) * dy) / L)) : 0;
+  return toLL(a[0] + t * dx, a[1] + t * dy);
+}
+
+// ---------------------------------------------------------------- pointer: pan, drag, pinch, click
+const ptrs = new Map();
+let drag = null;                     // {kind: "pan"|"pt", ...}
+function local(e) { const r = map.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+map.addEventListener("pointerdown", e => {
+  if (e.target.closest && e.target.closest("#zoom, #info, #stat")) return;   // their own buttons get the click
+  map.setPointerCapture(e.pointerId);
+  const [x, y] = local(e);
+  ptrs.set(e.pointerId, [x, y]);
+  if (ptrs.size === 2) { const [p, q] = [...ptrs.values()]; drag = {kind: "pinch", d: Math.hypot(p[0] - q[0], p[1] - q[1]), s: view.s}; return; }
+  const t = e.target;
+  const closed = !A.editable || A.answered || (A.deadline_ms && Date.now() > A.deadline_ms);
+  if (t.dataset && t.dataset.pt !== undefined) {
+    const i = +t.dataset.pt; sel = i; sayPoint(i);
+    drag = closed ? null : {kind: "pt", i, moved: false, start: [x, y]};
+    if (drag) push();
+    draw(); return;
+  }
+  drag = {kind: "pan", x, y, cx: view.cx, cy: view.cy, moved: false, target: t};
+});
+map.addEventListener("pointermove", e => {
+  const [x, y] = local(e);
+  if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, [x, y]);
+  if (!drag) return;
+  if (drag.kind === "pinch" && ptrs.size === 2) {
+    const [p, q] = [...ptrs.values()]; view.s = drag.s * Math.hypot(p[0] - q[0], p[1] - q[1]) / drag.d; draw(); return;
+  }
+  if (drag.kind === "pt") {
+    if (Math.hypot(x - drag.start[0], y - drag.start[1]) < 3 && !drag.moved) return;
+    drag.moved = true; pts[drag.i] = toLL(x, y).map(v => +v.toFixed(7)); sayPoint(drag.i); draw(); return;
+  }
+  if (drag.kind === "pan") {
+    if (Math.hypot(x - drag.x, y - drag.y) > 3) drag.moved = true;
+    view.cx = drag.cx - (x - drag.x) / view.s; view.cy = drag.cy + (y - drag.y) / view.s; draw();
+  }
+});
+function up(e) {
+  const [x, y] = local(e);
+  ptrs.delete(e.pointerId);
+  if (!drag) return;
+  if (drag.kind === "pt" && !drag.moved) hist.pop();
+  if (drag.kind === "pan" && !drag.moved) {
+    const closed = !A.editable || A.answered || (A.deadline_ms && Date.now() > A.deadline_ms);
+    const t = drag.target, ll = toLL(x, y);
+    if (adding && !closed) {
+      push(); const i = bestInsert(ll); pts.splice(i, 0, ll.map(v => +v.toFixed(7))); sel = i; sayPoint(i);
+    } else if (t.dataset && t.dataset.leg !== undefined) {
+      const leg = +t.dataset.leg, p = projectOnLeg(leg, x, y);
+      say(`<b>route, leg ${leg + 1}</b> &nbsp;GPS ${fmt(p)} <button id="cp">copy</button>` +
+          (closed ? "" : ` <button id="ins">insert a point here</button>`));
+      copyBtn(fmt(p));
+      const ins = document.getElementById("ins");
+      if (ins) ins.onclick = () => { push(); pts.splice(leg, 0, p.map(v => +v.toFixed(7))); sel = leg; sayPoint(leg); draw(); };
+      sel = -1;
+    } else {
+      sel = -1;
+      say(`map &nbsp;GPS ${fmt(ll)} <button id="cp">copy</button>`); copyBtn(fmt(ll));
+    }
+    draw();
+  }
+  drag = null;
+}
+map.addEventListener("pointerup", up);
+map.addEventListener("pointercancel", up);
+map.addEventListener("wheel", e => {
+  e.preventDefault();
+  if (e.target.closest && e.target.closest("#info, #stat")) return;
+  const [x, y] = local(e), before = toLL(x, y);
+  view.s *= Math.exp(-e.deltaY * 0.0015);
+  const [mx, my] = merc(...before);
+  view.cx = mx - (x - W / 2) / view.s; view.cy = my + (y - H / 2) / view.s;
+  draw();
+}, {passive: false});
+document.getElementById("zIn").onclick = () => { view.s *= 1.5; draw(); };
+document.getElementById("zOut").onclick = () => { view.s /= 1.5; draw(); };
+
+// ---------------------------------------------------------------- buttons
+const bAdd = document.getElementById("bAdd");
+bAdd.onclick = () => { adding = !adding; bAdd.classList.toggle("on", adding); map.classList.toggle("adding", adding);
+                       if (adding) say("Click the map where the new point goes."); };
+document.getElementById("bDel").onclick = () => { if (sel < 0) return; push(); pts.splice(sel, 1); sel = -1; draw(); };
+document.getElementById("bUndo").onclick = () => { if (!hist.length) return; pts = JSON.parse(hist.pop()); sel = -1; draw(); };
+document.getElementById("bReset").onclick = () => { push(); pts = JSON.parse(JSON.stringify(orig)); sel = -1; draw(); };
+document.getElementById("bFit").onclick = fit;
+document.getElementById("cImg").onchange = e => { imgsOn = e.target.checked; placeImages(); };
+document.getElementById("rOp").oninput = e => { opacity = e.target.value / 100; placeImages(); };
+document.getElementById("bCheck").onclick = () => sendValue({action: "check", targets: pts, nonce: Date.now(), plan_id: key});
+document.getElementById("bSend").onclick = () => sendValue({action: "edit", targets: pts, nonce: Date.now(), plan_id: key});
+document.getElementById("bApprove").onclick = () => sendValue({action: "approve", targets: orig, nonce: Date.now(), plan_id: key});
+
+// ---------------------------------------------------------------- render from Python
+function resize() {
+  const r = map.getBoundingClientRect(); W = r.width || 800; H = r.height || 560;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+}
+window.addEventListener("message", ev => {
+  const d = ev.data;
+  if (!d || d.type !== "streamlit:render") return;
+  A = d.args;
+  setHeight(A.height || 640);
+  resize();
+  if (A.plan_id !== key) {                 // a new plan: start from the drone's route
+    key = A.plan_id;
+    launch = A.launch; fence = A.fence || [];
+    orig = JSON.parse(JSON.stringify(A.targets)); pts = JSON.parse(JSON.stringify(A.targets)); hist = []; sel = -1;
+    imgsDiv.innerHTML = "";
+    for (const im of A.images || []) {
+      const img = document.createElement("img");
+      img.src = im.src; img.dataset.b = JSON.stringify(im.bounds); img.alt = "";
+      imgsDiv.appendChild(img);
+    }
+    nonce = 0;
+    fit();
+  }
+  draw();
+});
+window.addEventListener("resize", () => { resize(); draw(); });
+setInterval(() => { if (A && A.deadline_ms) draw(); }, 1000);
+post("streamlit:componentReady", {apiVersion: 1});
+</script>
+</body>
+</html>

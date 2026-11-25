@@ -1,0 +1,1083 @@
+{
+  "schema_version": "hima.report/1",
+  "mission_id": "flight-20261115T151622Z",
+  "source": "llm_repaired",
+  "model": "llama3.1:8b",
+  "judge_model": "llama3.1:8b",
+  "latency_s": 74.828,
+  "writer_latency_s": 21.446,
+  "judge_latency_s": 53.382,
+  "prompt_tokens": 2717,
+  "gate": {
+    "accepted": true,
+    "reasons": [
+      "place: headline puts something 2.3 km north, which is not a distance from take-off of its facts"
+    ],
+    "repaired": [
+      "headline"
+    ]
+  },
+  "llm_raw": "{\n  \"headline\": \"A 28-minute flight at 50 m that went 2.3 km north of take-off. The drone found Arabian oryx in 9 places and reem gazelle in 1; two incidents need attention: a truck in a mixed herd at minute 17 and an oryx alert with the drone close at minute 21.\",\n  \"flight\": [\n    {\n      \"stage\": \"S1\",\n      \"text\": \"After take-off the drone flew north-east and passed 4 calm places with Arabian oryx between about 150 m and 650 m out, the largest herd at least 7.\"\n    },\n    {\n      \"stage\": \"S2\",\n      \"text\": \"At about 800 m north-east of take-off it found a mixed herd of at least 4 reem gazelle and 3 Arabian oryx; a truck was seen inside the herd.\"\n    },\n    {\n      \"stage\": \"S3\",\n      \"text\": \"The drone then found a herd of at least 5 Arabian oryx; an animal crossed quickly on its own, away from the others.\"\n    },\n    {\n      \"stage\": \"S4\",\n      \"text\": \"After turning back the drone flew north and passed a single Arabian oryx about 750 m north of take-off.\"\n    },\n    {\n      \"stage\": \"S5\",\n      \"text\": \"It then found a herd of at least 2 Arabian oryx about 550 m north of take-off; an animal stayed alert with the drone close for much of the time.\"\n    },\n    {\n      \"stage\": \"S6\",\n      \"text\": \"Finally, the drone found a herd of at least 2 Arabian oryx about 300 m north of take-off; animals went in and out of cover at times.\"\n    }\n  ],\n  \"incidents\": [\n    {\n      \"incident\": \"I1\",\n      \"text\": \"At minute 17 a truck was seen inside a mixed herd of at least 4 reem gazelle and 3 Arabian oryx about 800 m north-east of take-off. The animals ran (severe disturbance). The cause was a vehicle.\",\n      \"follow_up\": \"Rangers should check whether the truck was allowed in the reserve at that place and time.\"\n    },\n    {\n      \"incident\": \"I2\",\n      \"text\": \"At minute 21 an animal stayed alert with the drone close for much of the time in a herd of at least 2 Arabian oryx about 550 m north of take-off.\",\n      \"follow_up\": \"Rangers should fly the drone farther from this herd on the next flight.\"\n    }\n  ],\n  \"closing\": \"The rest of the flight was calm; counts are minimums and animals under trees may be missed.\"\n}",
+  "judge": [
+    {
+      "part": "headline",
+      "raw": "{\n  \"summary_values\": \"duration_min=28, distance_flown_km=2.3, altitude_m=50, farthest_m=800, farthest_direction=north, places_with_animals=9, species=[Arabian oryx, places=9, largest_at_least=7; reem gazelle, places=1, largest_at_least=4], incidents=[Truck in a mixed herd, at_min=17; Oryx alert with the drone close, at_min=21], incidents_count=2, nothing_unusual=false, vehicles_known=true, metrics_known=true\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "stage S1",
+      "raw": "{\n  \"summary_values\": \"stage S1, leg outbound, from_min 1, to_min 16, calm_places 4, direction north-east, from_m 150, to_m 650, species Arabian oryx, largest_at_least 7\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "stage S2",
+      "raw": "{\n  \"summary_values\": \"stage S2, leg outbound, place about 800 m north-east of take-off, herd a mixed herd of at least 4 reem gazelle and 3 Arabian oryx, incident I1, incident what a truck was seen inside the herd\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "stage S3",
+      "raw": "{\n  \"summary_values\": \"stage S3, leg outbound, from_min 19, to_min 21, distance_m 800, direction north, place about 800 m north of take-off, herd a herd of at least 5 Arabian oryx, at_least {\\\"Arabian oryx\\\": 5}, what_happened [\\\"an animal crossed quickly on its own, away from the others; it was not running from the drone\\\"]\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "stage S4",
+      "raw": "{\n  \"summary_values\": \"stage S4, leg return, place about 750 m north of take-off, herd a single Arabian oryx\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "stage S5",
+      "raw": "{\n  \"summary_values\": \"stage S5, leg return, place about 550 m north of take-off, herd at least 2 Arabian oryx, incident Oryx alert with the drone close, incident_at_min 21\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "stage S6",
+      "raw": "{\n  \"summary_values\": \"stage S6, leg return, place about 300 m north of take-off, herd at least 2 Arabian oryx, what_happened animals went in and out of cover (under trees) at times\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "incident I1",
+      "raw": "{\n  \"summary_values\": \"at_min: 17, place: about 800 m north-east of take-off, herd: a mixed herd of at least 4 reem gazelle and 3 Arabian oryx, what_happened: animals ran (severe disturbance), cause: a vehicle\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "follow-up I1",
+      "raw": "{\n  \"summary_values\": \"follow_up_topics: ['check whether the truck was allowed in the reserve at that place and time']\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "incident I2",
+      "raw": "{\n  \"summary_values\": \"at_min: 21, place: about 550 m north of take-off, herd: a herd of at least 2 Arabian oryx, what_happened: an animal stayed alert with the drone close for much of the time\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "follow-up I2",
+      "raw": "{\n  \"summary_values\": \"follow_up_topics: [\\\"fly the drone farther from this herd on the next flight\\\"]\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    },
+    {
+      "part": "closing",
+      "raw": "{\n  \"summary_values\": \"rest_calm=true, counts_are_minimums=true, under_cover=true\",\n  \"verdict\": \"supported\",\n  \"problem\": \"\"\n}",
+      "reasons": []
+    }
+  ],
+  "prompt_sha256": "8e3d78f94a0fbd998e990196e64b45b423139e9114da2911fe62536a2de795a1",
+  "summary": {
+    "mission_id": "flight-20261115T151622Z",
+    "source": "real",
+    "duration_s": 1646.9,
+    "metrics_known": true,
+    "tracks_seen": 56,
+    "tracks_by_species": {
+      "reem_gazelle": 4,
+      "arabian_oryx": 52
+    },
+    "alert_track_ids": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      50
+    ],
+    "tracks_needing_attention": 7,
+    "alerts_listed": 7,
+    "animals": [
+      {
+        "track_id": 31,
+        "species": "reem_gazelle",
+        "status": "SEVERE_DRONE_DISTURBANCE",
+        "visible_s": 18.0,
+        "first_seen_s": 978.6,
+        "last_seen_s": 996.9,
+        "events": {
+          "stress": 1
+        },
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 32,
+        "species": "reem_gazelle",
+        "status": "SEVERE_DRONE_DISTURBANCE",
+        "visible_s": 17.7,
+        "first_seen_s": 978.8,
+        "last_seen_s": 997.0,
+        "events": {
+          "stress": 1
+        },
+        "min_distance_to_drone_m": 50.1
+      },
+      {
+        "track_id": 33,
+        "species": "arabian_oryx",
+        "status": "SEVERE_DRONE_DISTURBANCE",
+        "visible_s": 16.5,
+        "first_seen_s": 979.0,
+        "last_seen_s": 996.8,
+        "events": {
+          "stress": 1
+        },
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 34,
+        "species": "arabian_oryx",
+        "status": "SEVERE_DRONE_DISTURBANCE",
+        "visible_s": 17.1,
+        "first_seen_s": 979.0,
+        "last_seen_s": 996.9,
+        "events": {
+          "stress": 1
+        },
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 35,
+        "species": "reem_gazelle",
+        "status": "SEVERE_DRONE_DISTURBANCE",
+        "visible_s": 17.2,
+        "first_seen_s": 979.1,
+        "last_seen_s": 996.9,
+        "events": {
+          "stress": 1
+        },
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 36,
+        "species": "reem_gazelle",
+        "status": "SEVERE_DRONE_DISTURBANCE",
+        "visible_s": 16.5,
+        "first_seen_s": 979.6,
+        "last_seen_s": 996.7,
+        "events": {
+          "stress": 1
+        },
+        "min_distance_to_drone_m": 50.2
+      },
+      {
+        "track_id": 50,
+        "species": "arabian_oryx",
+        "status": "PROXIMITY_PACING_ALERTNESS",
+        "visible_s": 91.9,
+        "first_seen_s": 1282.7,
+        "last_seen_s": 1379.4,
+        "events": {
+          "isolation": 1,
+          "proximity": 1
+        },
+        "min_distance_to_drone_m": 40.0
+      },
+      {
+        "track_id": 1,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 6.8,
+        "first_seen_s": 51.6,
+        "last_seen_s": 58.6,
+        "events": {},
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 2,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 112.7,
+        "first_seen_s": 52.2,
+        "last_seen_s": 170.0,
+        "events": {},
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 3,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 112.7,
+        "first_seen_s": 52.2,
+        "last_seen_s": 171.6,
+        "events": {},
+        "min_distance_to_drone_m": 50.1
+      },
+      {
+        "track_id": 4,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 113.2,
+        "first_seen_s": 52.6,
+        "last_seen_s": 169.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.1
+      },
+      {
+        "track_id": 5,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 16.7,
+        "first_seen_s": 53.7,
+        "last_seen_s": 70.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.2
+      },
+      {
+        "track_id": 6,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 15.5,
+        "first_seen_s": 61.8,
+        "last_seen_s": 77.7,
+        "events": {},
+        "min_distance_to_drone_m": 50.3
+      },
+      {
+        "track_id": 7,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 9.4,
+        "first_seen_s": 81.7,
+        "last_seen_s": 91.4,
+        "events": {},
+        "min_distance_to_drone_m": 50.3
+      },
+      {
+        "track_id": 8,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 78.6,
+        "first_seen_s": 88.2,
+        "last_seen_s": 171.0,
+        "events": {},
+        "min_distance_to_drone_m": 50.1
+      },
+      {
+        "track_id": 9,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 70.5,
+        "first_seen_s": 96.7,
+        "last_seen_s": 169.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.9
+      },
+      {
+        "track_id": 10,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 93.9,
+        "first_seen_s": 203.3,
+        "last_seen_s": 301.9,
+        "events": {},
+        "min_distance_to_drone_m": 50.5
+      },
+      {
+        "track_id": 11,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 92.0,
+        "first_seen_s": 204.1,
+        "last_seen_s": 301.4,
+        "events": {},
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 12,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 93.6,
+        "first_seen_s": 204.2,
+        "last_seen_s": 302.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 13,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 93.5,
+        "first_seen_s": 204.9,
+        "last_seen_s": 302.5,
+        "events": {},
+        "min_distance_to_drone_m": 50.2
+      },
+      {
+        "track_id": 14,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 94.6,
+        "first_seen_s": 205.4,
+        "last_seen_s": 303.5,
+        "events": {},
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 15,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 27.5,
+        "first_seen_s": 205.8,
+        "last_seen_s": 234.6,
+        "events": {},
+        "min_distance_to_drone_m": 50.1
+      },
+      {
+        "track_id": 16,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 218.8,
+        "last_seen_s": 218.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.5
+      },
+      {
+        "track_id": 17,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 7.1,
+        "first_seen_s": 249.4,
+        "last_seen_s": 256.3,
+        "events": {},
+        "min_distance_to_drone_m": 50.3
+      },
+      {
+        "track_id": 18,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 5.7,
+        "first_seen_s": 297.9,
+        "last_seen_s": 304.0,
+        "events": {},
+        "min_distance_to_drone_m": 50.2
+      },
+      {
+        "track_id": 19,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 305.8,
+        "last_seen_s": 305.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.6
+      },
+      {
+        "track_id": 20,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 307.2,
+        "last_seen_s": 307.2,
+        "events": {},
+        "min_distance_to_drone_m": 50.1
+      },
+      {
+        "track_id": 21,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 452.9,
+        "first_seen_s": 329.4,
+        "last_seen_s": 807.9,
+        "events": {
+          "isolation": 1
+        },
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 22,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 555.4,
+        "last_seen_s": 555.4,
+        "events": {},
+        "min_distance_to_drone_m": 50.5
+      },
+      {
+        "track_id": 23,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 796.8,
+        "last_seen_s": 796.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.5
+      },
+      {
+        "track_id": 24,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 807.6,
+        "last_seen_s": 807.6,
+        "events": {},
+        "min_distance_to_drone_m": 51.0
+      },
+      {
+        "track_id": 25,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 103.2,
+        "first_seen_s": 834.6,
+        "last_seen_s": 942.6,
+        "events": {
+          "isolation": 1
+        },
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 26,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 855.9,
+        "last_seen_s": 855.9,
+        "events": {},
+        "min_distance_to_drone_m": 50.4
+      },
+      {
+        "track_id": 27,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 859.5,
+        "last_seen_s": 859.5,
+        "events": {},
+        "min_distance_to_drone_m": 50.2
+      },
+      {
+        "track_id": 28,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 884.9,
+        "last_seen_s": 884.9,
+        "events": {},
+        "min_distance_to_drone_m": 50.6
+      },
+      {
+        "track_id": 29,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 910.5,
+        "last_seen_s": 910.5,
+        "events": {},
+        "min_distance_to_drone_m": 50.9
+      },
+      {
+        "track_id": 30,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 933.8,
+        "last_seen_s": 933.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.2
+      },
+      {
+        "track_id": 37,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 984.8,
+        "last_seen_s": 984.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.6
+      },
+      {
+        "track_id": 38,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1022.8,
+        "last_seen_s": 1022.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.3
+      },
+      {
+        "track_id": 39,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1023.9,
+        "last_seen_s": 1023.9,
+        "events": {},
+        "min_distance_to_drone_m": 51.1
+      },
+      {
+        "track_id": 40,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1060.1,
+        "last_seen_s": 1060.1,
+        "events": {},
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 41,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1106.8,
+        "last_seen_s": 1106.8,
+        "events": {},
+        "min_distance_to_drone_m": 51.2
+      },
+      {
+        "track_id": 42,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 33.3,
+        "first_seen_s": 1142.6,
+        "last_seen_s": 1177.6,
+        "events": {},
+        "min_distance_to_drone_m": 74.3
+      },
+      {
+        "track_id": 43,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 32.3,
+        "first_seen_s": 1142.7,
+        "last_seen_s": 1177.0,
+        "events": {},
+        "min_distance_to_drone_m": 74.1
+      },
+      {
+        "track_id": 44,
+        "species": "arabian_oryx",
+        "status": "RAPID_CORRIDOR_TRANSIT",
+        "visible_s": 94.9,
+        "first_seen_s": 1143.0,
+        "last_seen_s": 1242.3,
+        "events": {
+          "isolation": 2
+        },
+        "min_distance_to_drone_m": 74.1
+      },
+      {
+        "track_id": 45,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 31.0,
+        "first_seen_s": 1143.9,
+        "last_seen_s": 1177.2,
+        "events": {},
+        "min_distance_to_drone_m": 74.6
+      },
+      {
+        "track_id": 46,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1148.3,
+        "last_seen_s": 1148.3,
+        "events": {},
+        "min_distance_to_drone_m": 75.4
+      },
+      {
+        "track_id": 47,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1195.2,
+        "last_seen_s": 1195.2,
+        "events": {},
+        "min_distance_to_drone_m": 75.5
+      },
+      {
+        "track_id": 48,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1232.9,
+        "last_seen_s": 1232.9,
+        "events": {},
+        "min_distance_to_drone_m": 75.5
+      },
+      {
+        "track_id": 49,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1249.0,
+        "last_seen_s": 1249.0,
+        "events": {},
+        "min_distance_to_drone_m": 68.9
+      },
+      {
+        "track_id": 51,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1354.6,
+        "last_seen_s": 1354.6,
+        "events": {},
+        "min_distance_to_drone_m": 40.3
+      },
+      {
+        "track_id": 52,
+        "species": "arabian_oryx",
+        "status": "INTERMITTENT_OCCLUSION",
+        "visible_s": 19.6,
+        "first_seen_s": 1420.1,
+        "last_seen_s": 1449.3,
+        "events": {
+          "isolation": 4
+        },
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 53,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1450.8,
+        "last_seen_s": 1450.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.5
+      },
+      {
+        "track_id": 54,
+        "species": "arabian_oryx",
+        "status": "INTERMITTENT_OCCLUSION",
+        "visible_s": 76.9,
+        "first_seen_s": 1452.3,
+        "last_seen_s": 1575.5,
+        "events": {},
+        "min_distance_to_drone_m": 50.0
+      },
+      {
+        "track_id": 55,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1456.8,
+        "last_seen_s": 1456.8,
+        "events": {},
+        "min_distance_to_drone_m": 50.6
+      },
+      {
+        "track_id": 56,
+        "species": "arabian_oryx",
+        "status": "BASELINE",
+        "visible_s": 0.1,
+        "first_seen_s": 1532.4,
+        "last_seen_s": 1532.4,
+        "events": {},
+        "min_distance_to_drone_m": 50.1
+      }
+    ],
+    "detail": {
+      "link_m": 100.0,
+      "vehicle_near_herd_m": 200.0,
+      "vehicle_close_m": 30.0,
+      "route": {
+        "altitude_m": 50,
+        "farthest_m": 801,
+        "farthest_direction": "north",
+        "farthest_min": 19.1,
+        "end_from_launch_m": 0
+      },
+      "flight": {
+        "duration_min": 27.5,
+        "distance_flown_m": 2256
+      },
+      "groups_count": 9,
+      "groups": [
+        {
+          "group": "G1",
+          "tracks": 9,
+          "by_species": {
+            "arabian_oryx": 9
+          },
+          "statuses": {
+            "BASELINE": 9
+          },
+          "track_ids": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "distance_from_launch_m": 142,
+          "direction_from_launch": "north-east",
+          "first_seen_min": 0.9,
+          "last_seen_min": 2.9,
+          "seen_together": {
+            "arabian_oryx": 5
+          }
+        },
+        {
+          "group": "G2",
+          "tracks": 11,
+          "by_species": {
+            "arabian_oryx": 11
+          },
+          "statuses": {
+            "BASELINE": 11
+          },
+          "track_ids": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "distance_from_launch_m": 309,
+          "direction_from_launch": "north-east",
+          "first_seen_min": 3.4,
+          "last_seen_min": 5.1,
+          "seen_together": {
+            "arabian_oryx": 7
+          }
+        },
+        {
+          "group": "G3",
+          "tracks": 4,
+          "by_species": {
+            "arabian_oryx": 4
+          },
+          "statuses": {
+            "BASELINE": 4
+          },
+          "track_ids": [
+            21,
+            22,
+            23,
+            24
+          ],
+          "distance_from_launch_m": 477,
+          "direction_from_launch": "north-east",
+          "first_seen_min": 5.5,
+          "last_seen_min": 13.5,
+          "seen_together": {
+            "arabian_oryx": 2
+          }
+        },
+        {
+          "group": "G4",
+          "tracks": 6,
+          "by_species": {
+            "arabian_oryx": 6
+          },
+          "statuses": {
+            "BASELINE": 6
+          },
+          "track_ids": [
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "distance_from_launch_m": 654,
+          "direction_from_launch": "north-east",
+          "first_seen_min": 13.9,
+          "last_seen_min": 15.7,
+          "seen_together": {
+            "arabian_oryx": 2
+          }
+        },
+        {
+          "group": "G5",
+          "tracks": 11,
+          "by_species": {
+            "arabian_oryx": 7,
+            "reem_gazelle": 4
+          },
+          "statuses": {
+            "BASELINE": 5,
+            "SEVERE_DRONE_DISTURBANCE": 6
+          },
+          "track_ids": [
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41
+          ],
+          "distance_from_launch_m": 777,
+          "direction_from_launch": "north-east",
+          "first_seen_min": 16.3,
+          "last_seen_min": 18.4,
+          "seen_together": {
+            "arabian_oryx": 3,
+            "reem_gazelle": 4
+          }
+        },
+        {
+          "group": "G6",
+          "tracks": 6,
+          "by_species": {
+            "arabian_oryx": 6
+          },
+          "statuses": {
+            "BASELINE": 5,
+            "RAPID_CORRIDOR_TRANSIT": 1
+          },
+          "track_ids": [
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ],
+          "distance_from_launch_m": 792,
+          "direction_from_launch": "north",
+          "first_seen_min": 19.0,
+          "last_seen_min": 20.7,
+          "seen_together": {
+            "arabian_oryx": 5
+          }
+        },
+        {
+          "group": "G7",
+          "tracks": 2,
+          "by_species": {
+            "arabian_oryx": 2
+          },
+          "statuses": {
+            "BASELINE": 2
+          },
+          "track_ids": [
+            48,
+            49
+          ],
+          "distance_from_launch_m": 754,
+          "direction_from_launch": "north",
+          "first_seen_min": 20.5,
+          "last_seen_min": 20.8,
+          "seen_together": {
+            "arabian_oryx": 1
+          }
+        },
+        {
+          "group": "G8",
+          "tracks": 2,
+          "by_species": {
+            "arabian_oryx": 2
+          },
+          "statuses": {
+            "BASELINE": 1,
+            "PROXIMITY_PACING_ALERTNESS": 1
+          },
+          "track_ids": [
+            50,
+            51
+          ],
+          "distance_from_launch_m": 544,
+          "direction_from_launch": "north",
+          "first_seen_min": 21.4,
+          "last_seen_min": 23.0,
+          "seen_together": {
+            "arabian_oryx": 2
+          }
+        },
+        {
+          "group": "G9",
+          "tracks": 5,
+          "by_species": {
+            "arabian_oryx": 5
+          },
+          "statuses": {
+            "BASELINE": 3,
+            "INTERMITTENT_OCCLUSION": 2
+          },
+          "track_ids": [
+            52,
+            53,
+            54,
+            55,
+            56
+          ],
+          "distance_from_launch_m": 304,
+          "direction_from_launch": "north",
+          "first_seen_min": 23.7,
+          "last_seen_min": 26.3,
+          "seen_together": {
+            "arabian_oryx": 2
+          }
+        }
+      ],
+      "vehicles_known": true,
+      "vehicle_sightings": 1,
+      "vehicles": [
+        {
+          "vehicle": "V1",
+          "kind": "truck",
+          "count": 1,
+          "seen_min": 16.6,
+          "nearest_group": "G5",
+          "distance_to_group_m": 1,
+          "group_by_species": {
+            "arabian_oryx": 7,
+            "reem_gazelle": 4
+          },
+          "distance_from_launch_m": 778,
+          "direction_from_launch": "north-east"
+        }
+      ],
+      "alert_animals": {
+        "31": {
+          "group": "G5",
+          "cause": "vehicle",
+          "behaviour_s": {
+            "resting": 3.4,
+            "running": 3.7,
+            "walking": 10.9
+          },
+          "distance_travelled_m": 28.6,
+          "max_speed_mps": 3.5
+        },
+        "32": {
+          "group": "G5",
+          "cause": "vehicle",
+          "behaviour_s": {
+            "resting": 2.2,
+            "running": 4.0,
+            "walking": 11.5
+          },
+          "distance_travelled_m": 29.5,
+          "max_speed_mps": 3.5
+        },
+        "33": {
+          "group": "G5",
+          "cause": "vehicle",
+          "behaviour_s": {
+            "resting": 4.3,
+            "running": 3.0,
+            "walking": 9.2
+          },
+          "distance_travelled_m": 29.0,
+          "max_speed_mps": 3.4
+        },
+        "34": {
+          "group": "G5",
+          "cause": "vehicle",
+          "behaviour_s": {
+            "resting": 11.3,
+            "running": 3.8,
+            "walking": 2.0
+          },
+          "distance_travelled_m": 29.9,
+          "max_speed_mps": 3.4
+        },
+        "35": {
+          "group": "G5",
+          "cause": "vehicle",
+          "behaviour_s": {
+            "resting": 12.1,
+            "running": 3.5,
+            "walking": 1.6
+          },
+          "distance_travelled_m": 24.4,
+          "max_speed_mps": 3.5
+        },
+        "36": {
+          "group": "G5",
+          "cause": "vehicle",
+          "behaviour_s": {
+            "resting": 11.0,
+            "running": 3.6,
+            "walking": 1.9
+          },
+          "distance_travelled_m": 23.9,
+          "max_speed_mps": 3.5
+        },
+        "50": {
+          "group": "G8",
+          "cause": null,
+          "behaviour_s": {
+            "resting": 4.1,
+            "running": 0.1,
+            "walking": 87.7
+          },
+          "distance_travelled_m": 127.2,
+          "max_speed_mps": 2.6
+        }
+      },
+      "nothing_unusual": false
+    }
+  },
+  "report": {
+    "headline": "A 28-minute flight at about 50 m, out to about 800 m north of take-off. The drone found Arabian oryx in 9 places (the largest herd at least 7) and reem gazelle in 1 place (at least 4). 2 incidents need attention: truck in a mixed herd at minute 17; oryx alert with the drone close at minute 21.",
+    "flight": [
+      {
+        "stage": "S1",
+        "text": "After take-off the drone flew north-east and passed 4 calm places with Arabian oryx between about 150 m and 650 m out, the largest herd at least 7."
+      },
+      {
+        "stage": "S2",
+        "text": "At about 800 m north-east of take-off it found a mixed herd of at least 4 reem gazelle and 3 Arabian oryx; a truck was seen inside the herd."
+      },
+      {
+        "stage": "S3",
+        "text": "The drone then found a herd of at least 5 Arabian oryx; an animal crossed quickly on its own, away from the others."
+      },
+      {
+        "stage": "S4",
+        "text": "After turning back the drone flew north and passed a single Arabian oryx about 750 m north of take-off."
+      },
+      {
+        "stage": "S5",
+        "text": "It then found a herd of at least 2 Arabian oryx about 550 m north of take-off; an animal stayed alert with the drone close for much of the time."
+      },
+      {
+        "stage": "S6",
+        "text": "Finally, the drone found a herd of at least 2 Arabian oryx about 300 m north of take-off; animals went in and out of cover at times."
+      }
+    ],
+    "incidents": [
+      {
+        "incident": "I1",
+        "text": "At minute 17 a truck was seen inside a mixed herd of at least 4 reem gazelle and 3 Arabian oryx about 800 m north-east of take-off. The animals ran (severe disturbance). The cause was a vehicle.",
+        "follow_up": "Rangers should check whether the truck was allowed in the reserve at that place and time."
+      },
+      {
+        "incident": "I2",
+        "text": "At minute 21 an animal stayed alert with the drone close for much of the time in a herd of at least 2 Arabian oryx about 550 m north of take-off.",
+        "follow_up": "Rangers should fly the drone farther from this herd on the next flight."
+      }
+    ],
+    "closing": "The rest of the flight was calm; counts are minimums and animals under trees may be missed."
+  }
+}

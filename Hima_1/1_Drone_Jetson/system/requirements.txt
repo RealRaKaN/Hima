@@ -1,0 +1,21 @@
+# Exact versions tested (Python 3.14.2, Windows 11).
+# Only packages the project imports directly; transitive deps come with them.
+#
+# torch/torchvision are CUDA 12.8 builds. Install them from the PyTorch index:
+#   pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128
+# then: pip install -r requirements.txt
+torch==2.11.0
+torchvision==0.26.0
+ultralytics==8.4.153
+lap==0.5.13
+opencv-python==5.0.0.93
+numpy==2.3.5
+requests==2.34.2
+tomli==2.2.1; python_version < "3.11"   # hima.toml reader on Python 3.10 (Jetson); 3.11+ has tomllib
+jsonschema==4.26.0
+referencing==0.37.0
+# the station dashboard's data tables
+pandas==3.0.6
+
+pymavlink==2.4.50        # MAVLink 2 telemetry; LGPLv3; pulls lxml 6.1.3 and fastcrc 0.5.0
+pyserial==3.5                    # serial ports for pymavlink (COM on Windows, /dev/ttyTHS1 on the Jetson); BSD

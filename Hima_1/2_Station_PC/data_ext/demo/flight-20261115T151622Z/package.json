@@ -1,0 +1,2045 @@
+{
+  "schema_version": "hima.package/1",
+  "mission_id": "flight-20261115T151622Z",
+  "created_at": "2026-11-15T15:46:11Z",
+  "session_sha256": "2a3aa00a7f5bc9fa7b437c2b94bd1c40b243f7395eeae5a7e40d396ef1686833",
+  "config_used": {
+    "sha256": "f6180c274dc644f2b498275c256c0b2cfc29f4f1d2d940b5142df1476b032418",
+    "values": {
+      "config_version": 1,
+      "detector": {
+        "weights": "best_4_1.pt",
+        "conf": 0.15,
+        "tracker": "bytetrack.yaml",
+        "imgsz": 0,
+        "class_map": {
+          "arabain oryx": "arabian_oryx",
+          "reem_gazelle": "reem_gazelle"
+        }
+      },
+      "geometry": {
+        "speed_window_s": 2.0
+      },
+      "activity": {
+        "provisional": true,
+        "walk_min_mps": 0.3,
+        "run_min_mps": 2.5
+      },
+      "events": {
+        "provisional": true,
+        "proximity_m": 45.0,
+        "stress_m": 60.0,
+        "isolation_m": 30.0,
+        "min_event_s": 3.0,
+        "merge_gap_s": 2.0
+      },
+      "status": {
+        "provisional": true,
+        "r_stress": 0.2,
+        "r_iso": 0.5,
+        "r_rest": 0.6,
+        "r_iso_transit": 0.3,
+        "r_run": 0.2,
+        "r_prox": 0.5,
+        "r_vis": 0.9
+      },
+      "herd": {
+        "timeline_step_s": 10.0,
+        "neighbour_memory_s": 60.0
+      },
+      "safety": {
+        "provisional": true,
+        "alt_min_m": 40.0,
+        "alt_max_m": 120.0,
+        "alt_default_m": 60.0,
+        "observe_min_m": 50.0
+      },
+      "llm": {
+        "model": "llama3.2",
+        "url": "http://localhost:11434/api/generate",
+        "temperature": 0.0,
+        "seed": 42,
+        "timeout_s": 60.0
+      },
+      "onboard": {
+        "provisional": true,
+        "update_s": 10.0,
+        "ai_keep_alive_s": 3600.0,
+        "ai_flight_only": true
+      },
+      "alerts": {
+        "provisional": true,
+        "min_visible_s": 15.0,
+        "cooldown_s": 120.0,
+        "max_message_bytes": 50
+      },
+      "injury": {
+        "provisional": true,
+        "stage1_s": 60.0,
+        "stage2_s": 180.0,
+        "stage3_s": 360.0,
+        "still_radius_m": 5.0,
+        "max_gap_s": 10.0
+      },
+      "young": {
+        "provisional": true,
+        "oryx_adult_m": 1.6,
+        "gazelle_adult_m": 1.0,
+        "max_ratio": 0.6,
+        "min_samples": 10
+      },
+      "cause": {
+        "provisional": true,
+        "approach_s": 10.0,
+        "approach_m": 5.0,
+        "vehicle_pre_s": 10.0
+      },
+      "link": {
+        "provisional": true,
+        "bytes_per_s": 100.0,
+        "signed": false
+      },
+      "triage": {
+        "provisional": true,
+        "pre_s": 10.0,
+        "post_s": 10.0,
+        "max_clip_s": 60.0,
+        "min_track_s": 1.0,
+        "switch_gap_s": 2.0,
+        "switch_dist_px": 100.0,
+        "untracked_gap_s": 1.0,
+        "jpeg_quality": 90,
+        "clip_fourcc": "mp4v",
+        "storage_budget_mb": 2000.0
+      },
+      "report": {
+        "provisional": true,
+        "max_findings": 8,
+        "max_chars": 1500,
+        "model": "llama3.1:8b",
+        "timeout_s": 180.0,
+        "judge": true,
+        "judge_model": "llama3.1:8b"
+      },
+      "objects": {
+        "provisional": true,
+        "weights": "weights/general/yolo26s.pt",
+        "imgsz": 1280,
+        "conf": 0.25,
+        "every_s": 0.5,
+        "k": 2,
+        "cooldown_s": 120.0
+      },
+      "periodic": {
+        "provisional": true,
+        "every_s": 30.0,
+        "model": "llama3.2",
+        "max_sentences": 3,
+        "timeout_s": 25.0
+      },
+      "window": {
+        "provisional": true,
+        "model": "gemma3:4b",
+        "max_images": 3,
+        "image_every_s": 2.0,
+        "max_per_flight": 6,
+        "cooldown_s": 120.0,
+        "crop_px": 448,
+        "timeout_s": 60.0,
+        "num_ctx": 8192
+      },
+      "dwell": {
+        "provisional": true,
+        "max_over_animal_s": 420.0,
+        "max_gap_s": 10.0,
+        "repeat_s": 120.0
+      },
+      "camera": {
+        "device": "0",
+        "width_px": 1280,
+        "height_px": 720,
+        "hfov_deg": 24.0,
+        "fps": 10.0
+      },
+      "mavlink": {
+        "url": "/dev/ttyTHS1",
+        "baud": 921600,
+        "heartbeat_timeout_s": 10.0,
+        "position_hz": 10.0,
+        "max_pose_age_s": 1.0
+      },
+      "flight": {
+        "out_dir": "flights",
+        "min_free_gb": 5.0,
+        "min_satellites": 8,
+        "min_fix_type": 3,
+        "preflight_wait_s": 180.0,
+        "min_agl_m": 5.0,
+        "start_on_arm": true,
+        "max_flight_s": 5400.0,
+        "save_video": true
+      },
+      "delivery": {
+        "station_url": "http://192.168.1.10:8765",
+        "key_file": "secrets/delivery.key",
+        "listen": "0.0.0.0:8765",
+        "inbox_dir": "station_inbox",
+        "archive_dir": "ground_archive",
+        "chunk_mb": 4.0,
+        "retry_s": 15.0,
+        "timeout_s": 20.0
+      }
+    }
+  },
+  "criteria": {
+    "new_track_thresh": 0.25,
+    "new_track_thresh_source": "C:\\Hima\\system\\.venv\\Lib\\site-packages\\ultralytics\\cfg\\trackers\\bytetrack.yaml",
+    "untracked_available": true,
+    "skipped": []
+  },
+  "media": {
+    "video": "flight.mp4",
+    "fps": 10.0,
+    "width_px": 1280,
+    "height_px": 720,
+    "clip_fourcc": "mp4v"
+  },
+  "budget": {
+    "limit_bytes": 2000000000,
+    "used_bytes": 18155724,
+    "dropped_count": 0,
+    "over_budget": false
+  },
+  "items": [
+    {
+      "id": "session",
+      "kind": "session",
+      "priority": 0,
+      "reason": "full session file",
+      "state": "stored",
+      "t_start": 6.229,
+      "t_end": 1653.173,
+      "track_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56
+      ],
+      "n_frames": 16321,
+      "file": {
+        "path": "session.json",
+        "bytes": 8969654,
+        "sha256": "2a3aa00a7f5bc9fa7b437c2b94bd1c40b243f7395eeae5a7e40d396ef1686833"
+      }
+    },
+    {
+      "id": "report",
+      "kind": "report",
+      "priority": 0,
+      "source": "llm_repaired",
+      "reason": "landing report (template sentences for: headline)",
+      "state": "stored",
+      "t_start": 6.229,
+      "t_end": 1653.173,
+      "track_ids": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        50
+      ],
+      "file": {
+        "path": "report.json",
+        "bytes": 32641,
+        "sha256": "351fc13694e956b6619003989717bad62e9576a4493444f3c21e413a9759d3f2"
+      }
+    },
+    {
+      "kind": "event_clip",
+      "priority": 1,
+      "reason": "SEVERE_DRONE_DISTURBANCE: stress",
+      "t_start": 983.239,
+      "t_end": 1007.042,
+      "track_ids": [
+        31
+      ],
+      "status": "SEVERE_DRONE_DISTURBANCE",
+      "event_types": [
+        "stress"
+      ],
+      "truncated": false,
+      "id": "clip-001",
+      "frame_first": 9737,
+      "frame_last": 9969,
+      "file": {
+        "path": "clips/clip-001.mp4",
+        "bytes": 892554,
+        "sha256": "9002abdb4e9d6b5b4321bcac379bf5d75a6eadbe0ea05d11b0a2277d09fd47c4"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "event_clip",
+      "priority": 1,
+      "reason": "SEVERE_DRONE_DISTURBANCE: stress",
+      "t_start": 983.141,
+      "t_end": 1007.141,
+      "track_ids": [
+        32
+      ],
+      "status": "SEVERE_DRONE_DISTURBANCE",
+      "event_types": [
+        "stress"
+      ],
+      "truncated": false,
+      "id": "clip-002",
+      "frame_first": 9736,
+      "frame_last": 9969,
+      "file": {
+        "path": "clips/clip-002.mp4",
+        "bytes": 891966,
+        "sha256": "cda7a824be97e4a19a32e77beb347aa8187a8ed939fff4328d145cb5c26e4ed4"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "event_clip",
+      "priority": 1,
+      "reason": "SEVERE_DRONE_DISTURBANCE: stress",
+      "t_start": 983.439,
+      "t_end": 1006.942,
+      "track_ids": [
+        33
+      ],
+      "status": "SEVERE_DRONE_DISTURBANCE",
+      "event_types": [
+        "stress"
+      ],
+      "truncated": false,
+      "id": "clip-003",
+      "frame_first": 9739,
+      "frame_last": 9968,
+      "file": {
+        "path": "clips/clip-003.mp4",
+        "bytes": 882822,
+        "sha256": "abc2c3902bf94183a4041491f2453d67ef3f605d06a959eaf51defcfd8b735f6"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "event_clip",
+      "priority": 1,
+      "reason": "SEVERE_DRONE_DISTURBANCE: stress",
+      "t_start": 983.141,
+      "t_end": 1007.042,
+      "track_ids": [
+        34
+      ],
+      "status": "SEVERE_DRONE_DISTURBANCE",
+      "event_types": [
+        "stress"
+      ],
+      "truncated": false,
+      "id": "clip-004",
+      "frame_first": 9736,
+      "frame_last": 9969,
+      "file": {
+        "path": "clips/clip-004.mp4",
+        "bytes": 891966,
+        "sha256": "cda7a824be97e4a19a32e77beb347aa8187a8ed939fff4328d145cb5c26e4ed4"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "event_clip",
+      "priority": 1,
+      "reason": "SEVERE_DRONE_DISTURBANCE: stress",
+      "t_start": 983.239,
+      "t_end": 1007.042,
+      "track_ids": [
+        35
+      ],
+      "status": "SEVERE_DRONE_DISTURBANCE",
+      "event_types": [
+        "stress"
+      ],
+      "truncated": false,
+      "id": "clip-005",
+      "frame_first": 9737,
+      "frame_last": 9969,
+      "file": {
+        "path": "clips/clip-005.mp4",
+        "bytes": 892554,
+        "sha256": "9002abdb4e9d6b5b4321bcac379bf5d75a6eadbe0ea05d11b0a2277d09fd47c4"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "event_clip",
+      "priority": 1,
+      "reason": "SEVERE_DRONE_DISTURBANCE: stress",
+      "t_start": 983.239,
+      "t_end": 1006.839,
+      "track_ids": [
+        36
+      ],
+      "status": "SEVERE_DRONE_DISTURBANCE",
+      "event_types": [
+        "stress"
+      ],
+      "truncated": false,
+      "id": "clip-006",
+      "frame_first": 9737,
+      "frame_last": 9967,
+      "file": {
+        "path": "clips/clip-006.mp4",
+        "bytes": 890965,
+        "sha256": "a27df27f7b33f18ec288d57418154daf64aaafcd431ec15d6c77b7d38b65af3c"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "event_clip",
+      "priority": 3,
+      "reason": "PROXIMITY_PACING_ALERTNESS: isolation, proximity",
+      "t_start": 1272.736,
+      "t_end": 1332.736,
+      "track_ids": [
+        50
+      ],
+      "status": "PROXIMITY_PACING_ALERTNESS",
+      "event_types": [
+        "isolation",
+        "proximity"
+      ],
+      "truncated": true,
+      "id": "clip-007",
+      "frame_first": 12598,
+      "frame_last": 13184,
+      "file": {
+        "path": "clips/clip-007.mp4",
+        "bytes": 1886044,
+        "sha256": "1dd8cb3e0b40859db61d8d19278291f776969a5434bb1a21fc98745000c03eab"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 16 with conf < new_track_thresh 0.25",
+      "t_start": 218.812,
+      "t_end": 218.812,
+      "track_ids": [
+        16
+      ],
+      "count": 1,
+      "sample_t": 218.812,
+      "sample_frame": 2125,
+      "boxes": [
+        {
+          "track_id": 16,
+          "class_raw": "arabain oryx",
+          "conf": 0.2246,
+          "bbox_xywh_px": [
+            245.79,
+            471.41,
+            33.15,
+            19.89
+          ]
+        }
+      ],
+      "id": "unc-001",
+      "file": {
+        "path": "uncertain/unc-001.jpg",
+        "bytes": 38806,
+        "sha256": "9649d60249036096175801e6269319ed19809a8b604397b6c4fd366f0c2df139"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 16 seen for 0 s < min_track_s 1",
+      "t_start": 218.812,
+      "t_end": 218.812,
+      "track_ids": [
+        16
+      ],
+      "count": 1,
+      "sample_t": 218.812,
+      "sample_frame": 2125,
+      "boxes": [
+        {
+          "track_id": 16,
+          "class_raw": "arabain oryx",
+          "conf": 0.2246,
+          "bbox_xywh_px": [
+            245.79,
+            471.41,
+            33.15,
+            19.89
+          ]
+        }
+      ],
+      "id": "unc-002",
+      "file": {
+        "path": "uncertain/unc-002.jpg",
+        "bytes": 38806,
+        "sha256": "9649d60249036096175801e6269319ed19809a8b604397b6c4fd366f0c2df139"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 19 with conf < new_track_thresh 0.25",
+      "t_start": 305.805,
+      "t_end": 305.805,
+      "track_ids": [
+        19
+      ],
+      "count": 1,
+      "sample_t": 305.805,
+      "sample_frame": 2987,
+      "boxes": [
+        {
+          "track_id": 19,
+          "class_raw": "arabain oryx",
+          "conf": 0.1658,
+          "bbox_xywh_px": [
+            174.01,
+            248.43,
+            23.98,
+            14.39
+          ]
+        }
+      ],
+      "id": "unc-003",
+      "file": {
+        "path": "uncertain/unc-003.jpg",
+        "bytes": 27778,
+        "sha256": "8fc0daa3b3c433ca3de5d21087756cd126d7d80caaf3ccc6d9d09b20558d842b"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 19 seen for 0 s < min_track_s 1",
+      "t_start": 305.805,
+      "t_end": 305.805,
+      "track_ids": [
+        19
+      ],
+      "count": 1,
+      "sample_t": 305.805,
+      "sample_frame": 2987,
+      "boxes": [
+        {
+          "track_id": 19,
+          "class_raw": "arabain oryx",
+          "conf": 0.1658,
+          "bbox_xywh_px": [
+            174.01,
+            248.43,
+            23.98,
+            14.39
+          ]
+        }
+      ],
+      "id": "unc-004",
+      "file": {
+        "path": "uncertain/unc-004.jpg",
+        "bytes": 27778,
+        "sha256": "8fc0daa3b3c433ca3de5d21087756cd126d7d80caaf3ccc6d9d09b20558d842b"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 20 with conf < new_track_thresh 0.25",
+      "t_start": 307.203,
+      "t_end": 307.203,
+      "track_ids": [
+        20
+      ],
+      "count": 1,
+      "sample_t": 307.203,
+      "sample_frame": 3001,
+      "boxes": [
+        {
+          "track_id": 20,
+          "class_raw": "arabain oryx",
+          "conf": 0.175,
+          "bbox_xywh_px": [
+            614.88,
+            542.79,
+            36.22,
+            21.73
+          ]
+        }
+      ],
+      "id": "unc-005",
+      "file": {
+        "path": "uncertain/unc-005.jpg",
+        "bytes": 28812,
+        "sha256": "bd8d56a4a966ab6c7a059b41703cd3050963a90ebb28703957b557a33cb19816"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 20 seen for 0 s < min_track_s 1",
+      "t_start": 307.203,
+      "t_end": 307.203,
+      "track_ids": [
+        20
+      ],
+      "count": 1,
+      "sample_t": 307.203,
+      "sample_frame": 3001,
+      "boxes": [
+        {
+          "track_id": 20,
+          "class_raw": "arabain oryx",
+          "conf": 0.175,
+          "bbox_xywh_px": [
+            614.88,
+            542.79,
+            36.22,
+            21.73
+          ]
+        }
+      ],
+      "id": "unc-006",
+      "file": {
+        "path": "uncertain/unc-006.jpg",
+        "bytes": 28812,
+        "sha256": "bd8d56a4a966ab6c7a059b41703cd3050963a90ebb28703957b557a33cb19816"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 22 seen for 0 s < min_track_s 1",
+      "t_start": 555.374,
+      "t_end": 555.374,
+      "track_ids": [
+        22
+      ],
+      "count": 1,
+      "sample_t": 555.374,
+      "sample_frame": 5475,
+      "boxes": [
+        {
+          "track_id": 22,
+          "class_raw": "arabain oryx",
+          "conf": 0.2829,
+          "bbox_xywh_px": [
+            226.08,
+            281.45,
+            39.22,
+            23.53
+          ]
+        }
+      ],
+      "id": "unc-007",
+      "file": {
+        "path": "uncertain/unc-007.jpg",
+        "bytes": 30476,
+        "sha256": "8ab5b4eb8ca3ad8e0652c2373c7f4c0e5c43e799d8b775c8a1c42a71a8e03483"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 23 with conf < new_track_thresh 0.25",
+      "t_start": 796.753,
+      "t_end": 796.753,
+      "track_ids": [
+        23
+      ],
+      "count": 1,
+      "sample_t": 796.753,
+      "sample_frame": 7880,
+      "boxes": [
+        {
+          "track_id": 23,
+          "class_raw": "arabain oryx",
+          "conf": 0.2369,
+          "bbox_xywh_px": [
+            991.05,
+            82.62,
+            38.74,
+            23.24
+          ]
+        }
+      ],
+      "id": "unc-008",
+      "file": {
+        "path": "uncertain/unc-008.jpg",
+        "bytes": 30722,
+        "sha256": "95a2ea1f6cda987aee9a8668a5d6d0904e164c340ad53fd50b6f4d6c96a9fb73"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 23 seen for 0 s < min_track_s 1",
+      "t_start": 796.753,
+      "t_end": 796.753,
+      "track_ids": [
+        23
+      ],
+      "count": 1,
+      "sample_t": 796.753,
+      "sample_frame": 7880,
+      "boxes": [
+        {
+          "track_id": 23,
+          "class_raw": "arabain oryx",
+          "conf": 0.2369,
+          "bbox_xywh_px": [
+            991.05,
+            82.62,
+            38.74,
+            23.24
+          ]
+        }
+      ],
+      "id": "unc-009",
+      "file": {
+        "path": "uncertain/unc-009.jpg",
+        "bytes": 30722,
+        "sha256": "95a2ea1f6cda987aee9a8668a5d6d0904e164c340ad53fd50b6f4d6c96a9fb73"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 24 with conf < new_track_thresh 0.25",
+      "t_start": 807.551,
+      "t_end": 807.551,
+      "track_ids": [
+        24
+      ],
+      "count": 1,
+      "sample_t": 807.551,
+      "sample_frame": 7987,
+      "boxes": [
+        {
+          "track_id": 24,
+          "class_raw": "arabain oryx",
+          "conf": 0.2478,
+          "bbox_xywh_px": [
+            90.82,
+            93.46,
+            28.89,
+            17.33
+          ]
+        }
+      ],
+      "id": "unc-010",
+      "file": {
+        "path": "uncertain/unc-010.jpg",
+        "bytes": 29905,
+        "sha256": "169ae38484a188827b8021f99cd06527f07fceb7bb0f293653b10dfb607eb47b"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 24 seen for 0 s < min_track_s 1",
+      "t_start": 807.551,
+      "t_end": 807.551,
+      "track_ids": [
+        24
+      ],
+      "count": 1,
+      "sample_t": 807.551,
+      "sample_frame": 7987,
+      "boxes": [
+        {
+          "track_id": 24,
+          "class_raw": "arabain oryx",
+          "conf": 0.2478,
+          "bbox_xywh_px": [
+            90.82,
+            93.46,
+            28.89,
+            17.33
+          ]
+        }
+      ],
+      "id": "unc-011",
+      "file": {
+        "path": "uncertain/unc-011.jpg",
+        "bytes": 29905,
+        "sha256": "169ae38484a188827b8021f99cd06527f07fceb7bb0f293653b10dfb607eb47b"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 26 with conf < new_track_thresh 0.25",
+      "t_start": 855.945,
+      "t_end": 855.945,
+      "track_ids": [
+        26
+      ],
+      "count": 1,
+      "sample_t": 855.945,
+      "sample_frame": 8468,
+      "boxes": [
+        {
+          "track_id": 26,
+          "class_raw": "arabain oryx",
+          "conf": 0.193,
+          "bbox_xywh_px": [
+            333.9,
+            97.28,
+            29.09,
+            17.45
+          ]
+        }
+      ],
+      "id": "unc-012",
+      "file": {
+        "path": "uncertain/unc-012.jpg",
+        "bytes": 29577,
+        "sha256": "097d995f40c38030b830ca411350b46a6922874391de0faa5e35fd22bcb98dce"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 26 seen for 0 s < min_track_s 1",
+      "t_start": 855.945,
+      "t_end": 855.945,
+      "track_ids": [
+        26
+      ],
+      "count": 1,
+      "sample_t": 855.945,
+      "sample_frame": 8468,
+      "boxes": [
+        {
+          "track_id": 26,
+          "class_raw": "arabain oryx",
+          "conf": 0.193,
+          "bbox_xywh_px": [
+            333.9,
+            97.28,
+            29.09,
+            17.45
+          ]
+        }
+      ],
+      "id": "unc-013",
+      "file": {
+        "path": "uncertain/unc-013.jpg",
+        "bytes": 29577,
+        "sha256": "097d995f40c38030b830ca411350b46a6922874391de0faa5e35fd22bcb98dce"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 27 with conf < new_track_thresh 0.25",
+      "t_start": 859.452,
+      "t_end": 859.452,
+      "track_ids": [
+        27
+      ],
+      "count": 1,
+      "sample_t": 859.452,
+      "sample_frame": 8503,
+      "boxes": [
+        {
+          "track_id": 27,
+          "class_raw": "arabain oryx",
+          "conf": 0.1731,
+          "bbox_xywh_px": [
+            764.59,
+            87.29,
+            35.0,
+            21.0
+          ]
+        }
+      ],
+      "id": "unc-014",
+      "file": {
+        "path": "uncertain/unc-014.jpg",
+        "bytes": 29503,
+        "sha256": "f03cae679017d0228713aef413fea7049772e467baa5d73a4562747fbfbf059f"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 27 seen for 0 s < min_track_s 1",
+      "t_start": 859.452,
+      "t_end": 859.452,
+      "track_ids": [
+        27
+      ],
+      "count": 1,
+      "sample_t": 859.452,
+      "sample_frame": 8503,
+      "boxes": [
+        {
+          "track_id": 27,
+          "class_raw": "arabain oryx",
+          "conf": 0.1731,
+          "bbox_xywh_px": [
+            764.59,
+            87.29,
+            35.0,
+            21.0
+          ]
+        }
+      ],
+      "id": "unc-015",
+      "file": {
+        "path": "uncertain/unc-015.jpg",
+        "bytes": 29503,
+        "sha256": "f03cae679017d0228713aef413fea7049772e467baa5d73a4562747fbfbf059f"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 28 with conf < new_track_thresh 0.25",
+      "t_start": 884.944,
+      "t_end": 884.944,
+      "track_ids": [
+        28
+      ],
+      "count": 1,
+      "sample_t": 884.944,
+      "sample_frame": 8757,
+      "boxes": [
+        {
+          "track_id": 28,
+          "class_raw": "arabain oryx",
+          "conf": 0.2426,
+          "bbox_xywh_px": [
+            159.05,
+            314.87,
+            24.61,
+            14.77
+          ]
+        }
+      ],
+      "id": "unc-016",
+      "file": {
+        "path": "uncertain/unc-016.jpg",
+        "bytes": 29711,
+        "sha256": "514dbf1c834eabb21957f97ec53db68e156cfbac4ab60f570a7784568fd0752d"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 28 seen for 0 s < min_track_s 1",
+      "t_start": 884.944,
+      "t_end": 884.944,
+      "track_ids": [
+        28
+      ],
+      "count": 1,
+      "sample_t": 884.944,
+      "sample_frame": 8757,
+      "boxes": [
+        {
+          "track_id": 28,
+          "class_raw": "arabain oryx",
+          "conf": 0.2426,
+          "bbox_xywh_px": [
+            159.05,
+            314.87,
+            24.61,
+            14.77
+          ]
+        }
+      ],
+      "id": "unc-017",
+      "file": {
+        "path": "uncertain/unc-017.jpg",
+        "bytes": 29711,
+        "sha256": "514dbf1c834eabb21957f97ec53db68e156cfbac4ab60f570a7784568fd0752d"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 29 seen for 0 s < min_track_s 1",
+      "t_start": 910.541,
+      "t_end": 910.541,
+      "track_ids": [
+        29
+      ],
+      "count": 1,
+      "sample_t": 910.541,
+      "sample_frame": 9012,
+      "boxes": [
+        {
+          "track_id": 29,
+          "class_raw": "arabain oryx",
+          "conf": 0.2999,
+          "bbox_xywh_px": [
+            1207.45,
+            215.13,
+            28.3,
+            16.98
+          ]
+        }
+      ],
+      "id": "unc-018",
+      "file": {
+        "path": "uncertain/unc-018.jpg",
+        "bytes": 29533,
+        "sha256": "b60585615193a4b4f24cc6b97d836e4bc576897cd8b71b258ba0889b4b57a7cd"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 30 with conf < new_track_thresh 0.25",
+      "t_start": 933.842,
+      "t_end": 933.842,
+      "track_ids": [
+        30
+      ],
+      "count": 1,
+      "sample_t": 933.842,
+      "sample_frame": 9243,
+      "boxes": [
+        {
+          "track_id": 30,
+          "class_raw": "arabain oryx",
+          "conf": 0.203,
+          "bbox_xywh_px": [
+            909.83,
+            305.24,
+            20.97,
+            12.58
+          ]
+        }
+      ],
+      "id": "unc-019",
+      "file": {
+        "path": "uncertain/unc-019.jpg",
+        "bytes": 29536,
+        "sha256": "e8900f7fbc38fbb51e6107bf16a8cbce1636c94f3c71edb0fcee338f38c3bae4"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 30 seen for 0 s < min_track_s 1",
+      "t_start": 933.842,
+      "t_end": 933.842,
+      "track_ids": [
+        30
+      ],
+      "count": 1,
+      "sample_t": 933.842,
+      "sample_frame": 9243,
+      "boxes": [
+        {
+          "track_id": 30,
+          "class_raw": "arabain oryx",
+          "conf": 0.203,
+          "bbox_xywh_px": [
+            909.83,
+            305.24,
+            20.97,
+            12.58
+          ]
+        }
+      ],
+      "id": "unc-020",
+      "file": {
+        "path": "uncertain/unc-020.jpg",
+        "bytes": 29536,
+        "sha256": "e8900f7fbc38fbb51e6107bf16a8cbce1636c94f3c71edb0fcee338f38c3bae4"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 37 with conf < new_track_thresh 0.25",
+      "t_start": 984.841,
+      "t_end": 984.841,
+      "track_ids": [
+        37
+      ],
+      "count": 1,
+      "sample_t": 984.841,
+      "sample_frame": 9753,
+      "boxes": [
+        {
+          "track_id": 37,
+          "class_raw": "arabain oryx",
+          "conf": 0.2279,
+          "bbox_xywh_px": [
+            245.05,
+            614.49,
+            30.84,
+            18.5
+          ]
+        }
+      ],
+      "id": "unc-021",
+      "file": {
+        "path": "uncertain/unc-021.jpg",
+        "bytes": 36787,
+        "sha256": "4f36b33129f46dfafcf3a034f44c394597a5d7c49835df60e64fe77f56901a72"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 37 seen for 0 s < min_track_s 1",
+      "t_start": 984.841,
+      "t_end": 984.841,
+      "track_ids": [
+        37
+      ],
+      "count": 1,
+      "sample_t": 984.841,
+      "sample_frame": 9753,
+      "boxes": [
+        {
+          "track_id": 37,
+          "class_raw": "arabain oryx",
+          "conf": 0.2279,
+          "bbox_xywh_px": [
+            245.05,
+            614.49,
+            30.84,
+            18.5
+          ]
+        }
+      ],
+      "id": "unc-022",
+      "file": {
+        "path": "uncertain/unc-022.jpg",
+        "bytes": 36787,
+        "sha256": "4f36b33129f46dfafcf3a034f44c394597a5d7c49835df60e64fe77f56901a72"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 38 seen for 0 s < min_track_s 1",
+      "t_start": 1022.836,
+      "t_end": 1022.836,
+      "track_ids": [
+        38
+      ],
+      "count": 1,
+      "sample_t": 1022.836,
+      "sample_frame": 10126,
+      "boxes": [
+        {
+          "track_id": 38,
+          "class_raw": "arabain oryx",
+          "conf": 0.2888,
+          "bbox_xywh_px": [
+            826.34,
+            622.23,
+            33.82,
+            20.29
+          ]
+        }
+      ],
+      "id": "unc-023",
+      "file": {
+        "path": "uncertain/unc-023.jpg",
+        "bytes": 28820,
+        "sha256": "41e52857a3dc7f5cc03a997c0ef7f88e1a71ff378e9b379f354860ad228963fa"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 39 with conf < new_track_thresh 0.25",
+      "t_start": 1023.939,
+      "t_end": 1023.939,
+      "track_ids": [
+        39
+      ],
+      "count": 1,
+      "sample_t": 1023.939,
+      "sample_frame": 10137,
+      "boxes": [
+        {
+          "track_id": 39,
+          "class_raw": "arabain oryx",
+          "conf": 0.2156,
+          "bbox_xywh_px": [
+            52.5,
+            129.19,
+            15.11,
+            9.07
+          ]
+        }
+      ],
+      "id": "unc-024",
+      "file": {
+        "path": "uncertain/unc-024.jpg",
+        "bytes": 28819,
+        "sha256": "56e21c81203be17d553aefe77e847982c4b863ad5b5738f830b398db34f90d9e"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 39 seen for 0 s < min_track_s 1",
+      "t_start": 1023.939,
+      "t_end": 1023.939,
+      "track_ids": [
+        39
+      ],
+      "count": 1,
+      "sample_t": 1023.939,
+      "sample_frame": 10137,
+      "boxes": [
+        {
+          "track_id": 39,
+          "class_raw": "arabain oryx",
+          "conf": 0.2156,
+          "bbox_xywh_px": [
+            52.5,
+            129.19,
+            15.11,
+            9.07
+          ]
+        }
+      ],
+      "id": "unc-025",
+      "file": {
+        "path": "uncertain/unc-025.jpg",
+        "bytes": 28819,
+        "sha256": "56e21c81203be17d553aefe77e847982c4b863ad5b5738f830b398db34f90d9e"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 40 with conf < new_track_thresh 0.25",
+      "t_start": 1060.053,
+      "t_end": 1060.053,
+      "track_ids": [
+        40
+      ],
+      "count": 1,
+      "sample_t": 1060.053,
+      "sample_frame": 10495,
+      "boxes": [
+        {
+          "track_id": 40,
+          "class_raw": "arabain oryx",
+          "conf": 0.2021,
+          "bbox_xywh_px": [
+            633.15,
+            396.53,
+            17.84,
+            10.7
+          ]
+        }
+      ],
+      "id": "unc-026",
+      "file": {
+        "path": "uncertain/unc-026.jpg",
+        "bytes": 28764,
+        "sha256": "219fb6d2865a10c47dc20e6a67fc3b328def5a7463e2f0344b7e1b84731cc57e"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 40 seen for 0 s < min_track_s 1",
+      "t_start": 1060.053,
+      "t_end": 1060.053,
+      "track_ids": [
+        40
+      ],
+      "count": 1,
+      "sample_t": 1060.053,
+      "sample_frame": 10495,
+      "boxes": [
+        {
+          "track_id": 40,
+          "class_raw": "arabain oryx",
+          "conf": 0.2021,
+          "bbox_xywh_px": [
+            633.15,
+            396.53,
+            17.84,
+            10.7
+          ]
+        }
+      ],
+      "id": "unc-027",
+      "file": {
+        "path": "uncertain/unc-027.jpg",
+        "bytes": 28764,
+        "sha256": "219fb6d2865a10c47dc20e6a67fc3b328def5a7463e2f0344b7e1b84731cc57e"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 41 with conf < new_track_thresh 0.25",
+      "t_start": 1106.773,
+      "t_end": 1106.773,
+      "track_ids": [
+        41
+      ],
+      "count": 1,
+      "sample_t": 1106.773,
+      "sample_frame": 10957,
+      "boxes": [
+        {
+          "track_id": 41,
+          "class_raw": "arabain oryx",
+          "conf": 0.2286,
+          "bbox_xywh_px": [
+            397.52,
+            276.15,
+            17.99,
+            10.79
+          ]
+        }
+      ],
+      "id": "unc-028",
+      "file": {
+        "path": "uncertain/unc-028.jpg",
+        "bytes": 28534,
+        "sha256": "d0670a16b06cd290bab9f635f1bdcb27793e2e0f914e9c8a4ea0239292be7820"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 41 seen for 0 s < min_track_s 1",
+      "t_start": 1106.773,
+      "t_end": 1106.773,
+      "track_ids": [
+        41
+      ],
+      "count": 1,
+      "sample_t": 1106.773,
+      "sample_frame": 10957,
+      "boxes": [
+        {
+          "track_id": 41,
+          "class_raw": "arabain oryx",
+          "conf": 0.2286,
+          "bbox_xywh_px": [
+            397.52,
+            276.15,
+            17.99,
+            10.79
+          ]
+        }
+      ],
+      "id": "unc-029",
+      "file": {
+        "path": "uncertain/unc-029.jpg",
+        "bytes": 28534,
+        "sha256": "d0670a16b06cd290bab9f635f1bdcb27793e2e0f914e9c8a4ea0239292be7820"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 46 with conf < new_track_thresh 0.25",
+      "t_start": 1148.303,
+      "t_end": 1148.303,
+      "track_ids": [
+        46
+      ],
+      "count": 1,
+      "sample_t": 1148.303,
+      "sample_frame": 11369,
+      "boxes": [
+        {
+          "track_id": 46,
+          "class_raw": "arabain oryx",
+          "conf": 0.1744,
+          "bbox_xywh_px": [
+            317.77,
+            274.71,
+            27.36,
+            16.42
+          ]
+        }
+      ],
+      "id": "unc-030",
+      "file": {
+        "path": "uncertain/unc-030.jpg",
+        "bytes": 33871,
+        "sha256": "1d1dc3baa27a5099957f83cd8ef8c27ae5f6596dd904e63f0996142969e2364e"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 46 seen for 0 s < min_track_s 1",
+      "t_start": 1148.303,
+      "t_end": 1148.303,
+      "track_ids": [
+        46
+      ],
+      "count": 1,
+      "sample_t": 1148.303,
+      "sample_frame": 11369,
+      "boxes": [
+        {
+          "track_id": 46,
+          "class_raw": "arabain oryx",
+          "conf": 0.1744,
+          "bbox_xywh_px": [
+            317.77,
+            274.71,
+            27.36,
+            16.42
+          ]
+        }
+      ],
+      "id": "unc-031",
+      "file": {
+        "path": "uncertain/unc-031.jpg",
+        "bytes": 33871,
+        "sha256": "1d1dc3baa27a5099957f83cd8ef8c27ae5f6596dd904e63f0996142969e2364e"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 47 with conf < new_track_thresh 0.25",
+      "t_start": 1195.184,
+      "t_end": 1195.184,
+      "track_ids": [
+        47
+      ],
+      "count": 1,
+      "sample_t": 1195.184,
+      "sample_frame": 11832,
+      "boxes": [
+        {
+          "track_id": 47,
+          "class_raw": "arabain oryx",
+          "conf": 0.1629,
+          "bbox_xywh_px": [
+            871.54,
+            85.75,
+            27.76,
+            16.66
+          ]
+        }
+      ],
+      "id": "unc-032",
+      "file": {
+        "path": "uncertain/unc-032.jpg",
+        "bytes": 31150,
+        "sha256": "5705b9104473a512605cda74b4c5d907d1261e89f7c8c60853cd3dd05b30cd95"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 47 seen for 0 s < min_track_s 1",
+      "t_start": 1195.184,
+      "t_end": 1195.184,
+      "track_ids": [
+        47
+      ],
+      "count": 1,
+      "sample_t": 1195.184,
+      "sample_frame": 11832,
+      "boxes": [
+        {
+          "track_id": 47,
+          "class_raw": "arabain oryx",
+          "conf": 0.1629,
+          "bbox_xywh_px": [
+            871.54,
+            85.75,
+            27.76,
+            16.66
+          ]
+        }
+      ],
+      "id": "unc-033",
+      "file": {
+        "path": "uncertain/unc-033.jpg",
+        "bytes": 31150,
+        "sha256": "5705b9104473a512605cda74b4c5d907d1261e89f7c8c60853cd3dd05b30cd95"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 48 with conf < new_track_thresh 0.25",
+      "t_start": 1232.941,
+      "t_end": 1232.941,
+      "track_ids": [
+        48
+      ],
+      "count": 1,
+      "sample_t": 1232.941,
+      "sample_frame": 12205,
+      "boxes": [
+        {
+          "track_id": 48,
+          "class_raw": "arabain oryx",
+          "conf": 0.234,
+          "bbox_xywh_px": [
+            866.08,
+            91.6,
+            18.52,
+            11.11
+          ]
+        }
+      ],
+      "id": "unc-034",
+      "file": {
+        "path": "uncertain/unc-034.jpg",
+        "bytes": 30869,
+        "sha256": "765a53b9ffa1558a634016547085e65a15285f7b238155ebb706ecd91906b11c"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 48 seen for 0 s < min_track_s 1",
+      "t_start": 1232.941,
+      "t_end": 1232.941,
+      "track_ids": [
+        48
+      ],
+      "count": 1,
+      "sample_t": 1232.941,
+      "sample_frame": 12205,
+      "boxes": [
+        {
+          "track_id": 48,
+          "class_raw": "arabain oryx",
+          "conf": 0.234,
+          "bbox_xywh_px": [
+            866.08,
+            91.6,
+            18.52,
+            11.11
+          ]
+        }
+      ],
+      "id": "unc-035",
+      "file": {
+        "path": "uncertain/unc-035.jpg",
+        "bytes": 30869,
+        "sha256": "765a53b9ffa1558a634016547085e65a15285f7b238155ebb706ecd91906b11c"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 49 with conf < new_track_thresh 0.25",
+      "t_start": 1248.985,
+      "t_end": 1248.985,
+      "track_ids": [
+        49
+      ],
+      "count": 1,
+      "sample_t": 1248.985,
+      "sample_frame": 12362,
+      "boxes": [
+        {
+          "track_id": 49,
+          "class_raw": "arabain oryx",
+          "conf": 0.1655,
+          "bbox_xywh_px": [
+            1062.54,
+            240.94,
+            25.0,
+            15.0
+          ]
+        }
+      ],
+      "id": "unc-036",
+      "file": {
+        "path": "uncertain/unc-036.jpg",
+        "bytes": 29119,
+        "sha256": "2597729ea3c317312d170050bf830363cb44a2338d6a2646ac72c5efbf66fc77"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 49 seen for 0 s < min_track_s 1",
+      "t_start": 1248.985,
+      "t_end": 1248.985,
+      "track_ids": [
+        49
+      ],
+      "count": 1,
+      "sample_t": 1248.985,
+      "sample_frame": 12362,
+      "boxes": [
+        {
+          "track_id": 49,
+          "class_raw": "arabain oryx",
+          "conf": 0.1655,
+          "bbox_xywh_px": [
+            1062.54,
+            240.94,
+            25.0,
+            15.0
+          ]
+        }
+      ],
+      "id": "unc-037",
+      "file": {
+        "path": "uncertain/unc-037.jpg",
+        "bytes": 29119,
+        "sha256": "2597729ea3c317312d170050bf830363cb44a2338d6a2646ac72c5efbf66fc77"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 51 with conf < new_track_thresh 0.25",
+      "t_start": 1354.552,
+      "t_end": 1354.552,
+      "track_ids": [
+        51
+      ],
+      "count": 1,
+      "sample_t": 1354.552,
+      "sample_frame": 13399,
+      "boxes": [
+        {
+          "track_id": 51,
+          "class_raw": "arabain oryx",
+          "conf": 0.2373,
+          "bbox_xywh_px": [
+            947.39,
+            590.07,
+            37.57,
+            22.54
+          ]
+        }
+      ],
+      "id": "unc-038",
+      "file": {
+        "path": "uncertain/unc-038.jpg",
+        "bytes": 29401,
+        "sha256": "361b0573e816c63ce0020e87edb5d437c12f4be8a2ba272f030ab0fa67945ffa"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 51 seen for 0 s < min_track_s 1",
+      "t_start": 1354.552,
+      "t_end": 1354.552,
+      "track_ids": [
+        51
+      ],
+      "count": 1,
+      "sample_t": 1354.552,
+      "sample_frame": 13399,
+      "boxes": [
+        {
+          "track_id": 51,
+          "class_raw": "arabain oryx",
+          "conf": 0.2373,
+          "bbox_xywh_px": [
+            947.39,
+            590.07,
+            37.57,
+            22.54
+          ]
+        }
+      ],
+      "id": "unc-039",
+      "file": {
+        "path": "uncertain/unc-039.jpg",
+        "bytes": 29401,
+        "sha256": "361b0573e816c63ce0020e87edb5d437c12f4be8a2ba272f030ab0fa67945ffa"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 53 with conf < new_track_thresh 0.25",
+      "t_start": 1450.763,
+      "t_end": 1450.763,
+      "track_ids": [
+        53
+      ],
+      "count": 1,
+      "sample_t": 1450.763,
+      "sample_frame": 14339,
+      "boxes": [
+        {
+          "track_id": 53,
+          "class_raw": "arabain oryx",
+          "conf": 0.1682,
+          "bbox_xywh_px": [
+            1061.27,
+            296.4,
+            31.15,
+            18.69
+          ]
+        }
+      ],
+      "id": "unc-040",
+      "file": {
+        "path": "uncertain/unc-040.jpg",
+        "bytes": 33713,
+        "sha256": "ed347f1abb061ea5f374f498bb803112cba0c79268c5ca71e2bcdd572fb68281"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 53 seen for 0 s < min_track_s 1",
+      "t_start": 1450.763,
+      "t_end": 1450.763,
+      "track_ids": [
+        53
+      ],
+      "count": 1,
+      "sample_t": 1450.763,
+      "sample_frame": 14339,
+      "boxes": [
+        {
+          "track_id": 53,
+          "class_raw": "arabain oryx",
+          "conf": 0.1682,
+          "bbox_xywh_px": [
+            1061.27,
+            296.4,
+            31.15,
+            18.69
+          ]
+        }
+      ],
+      "id": "unc-041",
+      "file": {
+        "path": "uncertain/unc-041.jpg",
+        "bytes": 33713,
+        "sha256": "ed347f1abb061ea5f374f498bb803112cba0c79268c5ca71e2bcdd572fb68281"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 55 with conf < new_track_thresh 0.25",
+      "t_start": 1456.839,
+      "t_end": 1456.839,
+      "track_ids": [
+        55
+      ],
+      "count": 1,
+      "sample_t": 1456.839,
+      "sample_frame": 14398,
+      "boxes": [
+        {
+          "track_id": 55,
+          "class_raw": "arabain oryx",
+          "conf": 0.1861,
+          "bbox_xywh_px": [
+            1064.77,
+            554.93,
+            27.92,
+            16.75
+          ]
+        }
+      ],
+      "id": "unc-042",
+      "file": {
+        "path": "uncertain/unc-042.jpg",
+        "bytes": 34607,
+        "sha256": "fe61331ab7f59efaa3dfbd2f7ac5739a3c78f2f713b7c22c6725c7daa2448e53"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 55 seen for 0 s < min_track_s 1",
+      "t_start": 1456.839,
+      "t_end": 1456.839,
+      "track_ids": [
+        55
+      ],
+      "count": 1,
+      "sample_t": 1456.839,
+      "sample_frame": 14398,
+      "boxes": [
+        {
+          "track_id": 55,
+          "class_raw": "arabain oryx",
+          "conf": 0.1861,
+          "bbox_xywh_px": [
+            1064.77,
+            554.93,
+            27.92,
+            16.75
+          ]
+        }
+      ],
+      "id": "unc-043",
+      "file": {
+        "path": "uncertain/unc-043.jpg",
+        "bytes": 34607,
+        "sha256": "fe61331ab7f59efaa3dfbd2f7ac5739a3c78f2f713b7c22c6725c7daa2448e53"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "low_conf",
+      "reason": "1 detection(s) of track 56 with conf < new_track_thresh 0.25",
+      "t_start": 1532.353,
+      "t_end": 1532.353,
+      "track_ids": [
+        56
+      ],
+      "count": 1,
+      "sample_t": 1532.353,
+      "sample_frame": 15139,
+      "boxes": [
+        {
+          "track_id": 56,
+          "class_raw": "arabain oryx",
+          "conf": 0.2455,
+          "bbox_xywh_px": [
+            576.05,
+            580.62,
+            22.7,
+            13.62
+          ]
+        }
+      ],
+      "id": "unc-044",
+      "file": {
+        "path": "uncertain/unc-044.jpg",
+        "bytes": 34416,
+        "sha256": "b4850e43cf3c68dc1402aab6deff7178934d552b109a5b332b180e51a8dbca46"
+      },
+      "state": "stored"
+    },
+    {
+      "kind": "uncertain_detection",
+      "priority": 4,
+      "criterion": "short_track",
+      "reason": "track 56 seen for 0 s < min_track_s 1",
+      "t_start": 1532.353,
+      "t_end": 1532.353,
+      "track_ids": [
+        56
+      ],
+      "count": 1,
+      "sample_t": 1532.353,
+      "sample_frame": 15139,
+      "boxes": [
+        {
+          "track_id": 56,
+          "class_raw": "arabain oryx",
+          "conf": 0.2455,
+          "bbox_xywh_px": [
+            576.05,
+            580.62,
+            22.7,
+            13.62
+          ]
+        }
+      ],
+      "id": "unc-045",
+      "file": {
+        "path": "uncertain/unc-045.jpg",
+        "bytes": 34416,
+        "sha256": "b4850e43cf3c68dc1402aab6deff7178934d552b109a5b332b180e51a8dbca46"
+      },
+      "state": "stored"
+    },
+    {
+      "id": "flightlog",
+      "kind": "flight_log",
+      "priority": 0,
+      "state": "stored",
+      "reason": "onboard flight log: alerts, object samples, periodic analyses, camera-window access log, AI calls, link deliveries, telemetry",
+      "t_start": 6.229,
+      "t_end": 1653.173,
+      "track_ids": [],
+      "file": {
+        "path": "flight_log.json",
+        "bytes": 481670,
+        "sha256": "92e591ecce16880e23e5c4afb1e38ec83da1ee5893c687592cbdf113cb311fe2"
+      }
+    },
+    {
+      "id": "img-001",
+      "kind": "flight_image",
+      "priority": 1,
+      "reason": "vehicle alert HIMA A5 VEHICLE @996",
+      "state": "stored",
+      "t_start": 995.742,
+      "t_end": 995.742,
+      "track_ids": [],
+      "purpose": "vehicle_alert",
+      "sample_t": 995.742,
+      "alert": "HIMA A5 VEHICLE @996",
+      "window": null,
+      "file": {
+        "path": "images/img-001.jpg",
+        "bytes": 45259,
+        "sha256": "d4e3a958031c5eb8bfa4cd618b6069379fc21f569bd08b397faf34fb72493f3d"
+      }
+    }
+  ]
+}

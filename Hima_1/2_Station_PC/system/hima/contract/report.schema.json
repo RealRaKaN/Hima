@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hima.local/schemas/report/1",
+  "title": "Hima landing report v1 (what the model must return for one mission; English only). Two forms: headline + findings (a summary without detail), or the narrative report: headline (a short summary of the flight), flight (one text per stage, in time order), incidents (text + follow-up each) and closing. Recommendations only in an incident's follow-up; no advice anywhere else.",
+  "type": "object",
+  "anyOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["headline", "findings"],
+      "properties": {
+        "headline": {"type": "string", "minLength": 1, "maxLength": 200},
+        "findings": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["track_id", "status", "note"],
+            "properties": {
+              "track_id": {"type": "integer", "minimum": 0},
+              "status": {
+                "enum": [
+                  "SEVERE_DRONE_DISTURBANCE",
+                  "SUSPECTED_INJURY_OR_ILLNESS",
+                  "POSSIBLE_HIDDEN_YOUNG",
+                  "RAPID_CORRIDOR_TRANSIT",
+                  "PROXIMITY_PACING_ALERTNESS",
+                  "INTERMITTENT_OCCLUSION",
+                  "BASELINE"
+                ]
+              },
+              "note": {"type": "string", "minLength": 1, "maxLength": 350}
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["headline", "flight", "incidents", "closing"],
+      "properties": {
+        "headline": {"type": "string", "minLength": 1, "maxLength": 500},
+        "flight": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 40,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["stage", "text"],
+            "properties": {
+              "stage": {"type": "string", "pattern": "^S[0-9]+$"},
+              "text": {"type": "string", "minLength": 1, "maxLength": 400}
+            }
+          }
+        },
+        "incidents": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["incident", "text", "follow_up"],
+            "properties": {
+              "incident": {"type": "string", "pattern": "^I[0-9]+$"},
+              "text": {"type": "string", "minLength": 1, "maxLength": 500},
+              "follow_up": {"type": "string", "minLength": 1, "maxLength": 300}
+            }
+          }
+        },
+        "closing": {"type": "string", "minLength": 1, "maxLength": 400}
+      }
+    }
+  ]
+}

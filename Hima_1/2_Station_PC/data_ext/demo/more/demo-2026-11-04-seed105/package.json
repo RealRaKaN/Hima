@@ -1,0 +1,428 @@
+{
+  "schema_version": "hima.package/1",
+  "mission_id": "demo-2026-11-04-seed105",
+  "created_at": "2026-11-04T08:00:00Z",
+  "session_sha256": "8f60138dac127278ce6272e5953ff1b1b54e60b48a7f47ff2f3d31bb3b266919",
+  "config_used": {
+    "sha256": "1cdd47e11b86801295d5aba598f913169f58c6782ca62c87c62bea18fc31b979",
+    "values": {
+      "config_version": 1,
+      "detector": {
+        "weights": "best_4_1.pt",
+        "conf": 0.15,
+        "tracker": "bytetrack.yaml",
+        "imgsz": 0,
+        "class_map": {
+          "arabain oryx": "arabian_oryx",
+          "reem_gazelle": "reem_gazelle"
+        }
+      },
+      "geometry": {
+        "speed_window_s": 2.0
+      },
+      "activity": {
+        "provisional": true,
+        "walk_min_mps": 0.3,
+        "run_min_mps": 2.5
+      },
+      "events": {
+        "provisional": true,
+        "proximity_m": 45.0,
+        "stress_m": 60.0,
+        "isolation_m": 30.0,
+        "min_event_s": 3.0,
+        "merge_gap_s": 2.0
+      },
+      "status": {
+        "provisional": true,
+        "r_stress": 0.2,
+        "r_iso": 0.5,
+        "r_rest": 0.6,
+        "r_iso_transit": 0.3,
+        "r_run": 0.2,
+        "r_prox": 0.5,
+        "r_vis": 0.9
+      },
+      "herd": {
+        "timeline_step_s": 10.0,
+        "neighbour_memory_s": 60.0
+      },
+      "identity": {
+        "provisional": true,
+        "confirm_s": 1.0,
+        "confirm_gap_s": 0.5,
+        "part_inside": 0.9,
+        "part_area_ratio": 0.6,
+        "link_gap_s": 120.0,
+        "link_base_m": 3.0,
+        "link_speed_margin": 1.5,
+        "link_max_m": 30.0
+      },
+      "hiding": {
+        "provisional": true,
+        "min_s": 5.0,
+        "span_min_s": 2.0,
+        "margin_px": 40.0
+      },
+      "safety": {
+        "provisional": true,
+        "alt_min_m": 40.0,
+        "alt_max_m": 120.0,
+        "alt_default_m": 60.0,
+        "observe_min_m": 50.0
+      },
+      "llm": {
+        "model": "llama3.2",
+        "url": "http://localhost:11434/api/generate",
+        "temperature": 0.0,
+        "seed": 42,
+        "timeout_s": 60.0
+      },
+      "onboard": {
+        "provisional": true,
+        "update_s": 10.0,
+        "ai_keep_alive_s": 3600.0,
+        "ai_flight_only": true
+      },
+      "alerts": {
+        "provisional": true,
+        "min_visible_s": 15.0,
+        "cooldown_s": 120.0,
+        "max_message_bytes": 50
+      },
+      "injury": {
+        "provisional": true,
+        "stage1_s": 60.0,
+        "stage2_s": 180.0,
+        "stage3_s": 360.0,
+        "still_radius_m": 5.0,
+        "max_gap_s": 10.0
+      },
+      "young": {
+        "provisional": true,
+        "oryx_adult_m": 1.6,
+        "gazelle_adult_m": 1.0,
+        "max_ratio": 0.6,
+        "min_samples": 10
+      },
+      "cause": {
+        "provisional": true,
+        "approach_s": 10.0,
+        "approach_m": 5.0,
+        "vehicle_pre_s": 10.0
+      },
+      "link": {
+        "provisional": true,
+        "bytes_per_s": 100.0,
+        "signed": false
+      },
+      "triage": {
+        "provisional": true,
+        "pre_s": 10.0,
+        "post_s": 10.0,
+        "max_clip_s": 60.0,
+        "min_track_s": 1.0,
+        "switch_gap_s": 2.0,
+        "switch_dist_px": 100.0,
+        "untracked_gap_s": 1.0,
+        "jpeg_quality": 90,
+        "clip_fourcc": "mp4v",
+        "storage_budget_mb": 2000.0
+      },
+      "report": {
+        "provisional": true,
+        "max_findings": 8,
+        "max_chars": 1500,
+        "model": "llama3.1:8b",
+        "timeout_s": 180.0,
+        "judge": true,
+        "judge_model": "llama3.1:8b"
+      },
+      "objects": {
+        "provisional": true,
+        "weights": "weights/general/yolo26s.pt",
+        "imgsz": 1280,
+        "conf": 0.25,
+        "every_s": 0.5,
+        "k": 2,
+        "cooldown_s": 120.0
+      },
+      "periodic": {
+        "provisional": true,
+        "every_s": 30.0,
+        "model": "llama3.2",
+        "max_sentences": 3,
+        "timeout_s": 25.0
+      },
+      "window": {
+        "provisional": true,
+        "model": "gemma3:4b",
+        "max_images": 3,
+        "image_every_s": 2.0,
+        "max_per_flight": 6,
+        "cooldown_s": 120.0,
+        "crop_px": 448,
+        "timeout_s": 60.0,
+        "num_ctx": 8192
+      },
+      "dwell": {
+        "provisional": true,
+        "max_over_animal_s": 420.0,
+        "max_gap_s": 10.0,
+        "repeat_s": 120.0
+      },
+      "camera": {
+        "device": "0",
+        "width_px": 1280,
+        "height_px": 720,
+        "hfov_deg": 24.0,
+        "fps": 10.0
+      },
+      "mavlink": {
+        "url": "/dev/ttyTHS1",
+        "baud": 921600,
+        "heartbeat_timeout_s": 10.0,
+        "position_hz": 10.0,
+        "max_pose_age_s": 1.0
+      },
+      "flight": {
+        "out_dir": "flights",
+        "min_free_gb": 5.0,
+        "min_satellites": 8,
+        "min_fix_type": 3,
+        "preflight_wait_s": 180.0,
+        "min_agl_m": 5.0,
+        "start_on_arm": true,
+        "max_flight_s": 5400.0,
+        "save_video": true,
+        "no_position_image_every_s": 1.0
+      },
+      "delivery": {
+        "station_url": "http://192.168.1.10:8765",
+        "key_file": "secrets/delivery.key",
+        "listen": "0.0.0.0:8765",
+        "inbox_dir": "station_inbox",
+        "archive_dir": "ground_archive",
+        "chunk_mb": 4.0,
+        "retry_s": 15.0,
+        "timeout_s": 20.0
+      },
+      "reserve": {
+        "name": "Imam Abdulaziz bin Mohammed Royal Reserve",
+        "boundary": "../data_ext/wdpa_555756385/iarr_wdpa_555756385.geojson",
+        "history": "reserve/history.json",
+        "fence_max_vertices": 70,
+        "fence_margin_m": 50.0,
+        "plan_margin_m": 500.0,
+        "cell_m": 500.0,
+        "launch": {
+          "main": [
+            25.6474,
+            47.50644
+          ],
+          "L02": [
+            26.07948,
+            47.46625
+          ],
+          "L03": [
+            25.64682,
+            47.94581
+          ],
+          "L04": [
+            25.34071,
+            47.10809
+          ],
+          "L05": [
+            25.35933,
+            47.5862
+          ],
+          "L06": [
+            25.95325,
+            47.78669
+          ],
+          "L07": [
+            25.71913,
+            47.24663
+          ],
+          "L08": [
+            25.21406,
+            46.92944
+          ],
+          "L09": [
+            26.1694,
+            47.34583
+          ],
+          "L10": [
+            25.48454,
+            48.02503
+          ],
+          "L11": [
+            25.34126,
+            47.38698
+          ]
+        }
+      },
+      "vehicle": {
+        "provisional": true,
+        "cruise_speed_mps": 18.0,
+        "cruise_endurance_min": 100.0,
+        "reserve_frac": 0.25,
+        "hover_power_ratio": 4.0,
+        "takeoff_hover_s": 60.0,
+        "landing_hover_s": 90.0,
+        "takeoff_alt_m": 40.0,
+        "patrol_alt_m": 60.0,
+        "land_approach_m": 300.0
+      },
+      "planner": {
+        "provisional": true,
+        "herd_share": 0.3,
+        "w_age": 1.0,
+        "w_risk": 1.0,
+        "w_herd": 1.0,
+        "age_full_days": 14.0,
+        "risk_radius_m": 3000.0,
+        "risk_half_life_days": 365.0,
+        "herd_radius_m": 2000.0,
+        "herd_half_life_days": 30.0,
+        "candidates": 300,
+        "target_spacing_m": 1500.0
+      },
+      "behaviour": {
+        "provisional": true,
+        "enabled": true,
+        "herd_min_animals": 2,
+        "herd_link_m": 100.0,
+        "herd_memory_s": 120.0,
+        "herd_lost_s": 60.0,
+        "follow_herd_max_s": 300.0,
+        "herd_revisit_s": 1800.0,
+        "herd_revisit_m": 1000.0,
+        "vehicle_near_herd_m": 200.0,
+        "vehicle_close_m": 30.0,
+        "vehicle_herd_min_animals": 1,
+        "vehicle_leave_m": 250.0,
+        "vehicle_leave_s": 20.0,
+        "vehicle_lost_s": 60.0,
+        "vehicle_photo_every_s": 3.0,
+        "vehicle_lead_s": 3.0,
+        "hover_move_m": 8.0,
+        "hover_arrive_m": 40.0,
+        "herd_min_hover_s": 30.0,
+        "tick_s": 1.0,
+        "energy_margin_s": 120.0,
+        "battery_margin_pct": 5.0,
+        "manual_grace_s": 3.0,
+        "upload_plan": true
+      },
+      "rangers": {
+        "enabled": false,
+        "field_ops": "reserve/field_ops.json",
+        "marker_dict": "DICT_4X4_50",
+        "marker_ids": "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
+        "marker_pad": 0.5
+      },
+      "route_review": {
+        "enabled": true,
+        "wait_s": 60.0,
+        "poll_s": 2.0,
+        "wifi": true,
+        "radio": true,
+        "plans_dir": "station_inbox/plans",
+        "radio_url": "off",
+        "station_sysid": 254,
+        "imagery_dir": "../data_ext/imagery"
+      },
+      "demo": {
+        "enabled": true,
+        "package": "../data_ext/demo/flight-20261115T151622Z",
+        "route_offer": "../data_ext/demo/route_offer.json"
+      }
+    }
+  },
+  "criteria": {
+    "new_track_thresh": null,
+    "new_track_thresh_source": null,
+    "untracked_available": false,
+    "skipped": [
+      {
+        "criterion": "low_conf",
+        "why": "the tracker's new_track_thresh is unknown (tracker 'none (synthetic ids)')"
+      },
+      {
+        "criterion": "untracked",
+        "why": "detections without a track id are not stored in the session file; only a live recording (record-video --package) has them"
+      }
+    ]
+  },
+  "media": null,
+  "budget": {
+    "limit_bytes": 2000000000,
+    "used_bytes": 882325,
+    "dropped_count": 0,
+    "over_budget": false
+  },
+  "items": [
+    {
+      "id": "session",
+      "kind": "session",
+      "priority": 0,
+      "reason": "full session file",
+      "state": "stored",
+      "t_start": 0.0,
+      "t_end": 599.0,
+      "track_ids": [
+        101,
+        103,
+        104,
+        105,
+        202,
+        203
+      ],
+      "n_frames": 600,
+      "file": {
+        "path": "session.json",
+        "bytes": 878955,
+        "sha256": "8f60138dac127278ce6272e5953ff1b1b54e60b48a7f47ff2f3d31bb3b266919"
+      }
+    },
+    {
+      "id": "report",
+      "kind": "report",
+      "priority": 0,
+      "source": "template",
+      "reason": "landing report (fixed template: llm: not used (--no-llm))",
+      "state": "stored",
+      "t_start": 0.0,
+      "t_end": 599.0,
+      "track_ids": [
+        103
+      ],
+      "file": {
+        "path": "report.json",
+        "bytes": 3370,
+        "sha256": "9446b285da777d3c50feca87dbe1ddbe6b6a606336d42c4491e3bce815feeda8"
+      }
+    },
+    {
+      "kind": "event_clip",
+      "priority": 2,
+      "reason": "SUSPECTED_INJURY_OR_ILLNESS: isolation",
+      "t_start": 0.0,
+      "t_end": 60.0,
+      "track_ids": [
+        103
+      ],
+      "status": "SUSPECTED_INJURY_OR_ILLNESS",
+      "event_types": [
+        "isolation"
+      ],
+      "truncated": true,
+      "id": "clip-001",
+      "frame_first": null,
+      "frame_last": null,
+      "file": null,
+      "state": "no_media"
+    }
+  ]
+}

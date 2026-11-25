@@ -1,0 +1,15 @@
+# The drone computer: Jetson Orin, JetPack 6 (Ubuntu 22.04, Python 3.10).
+# torch / torchvision are NOT installed from here: the PyPI builds have no CUDA on the Jetson. deploy/setup_jetson.sh
+# installs the Jetson builds named in the Ultralytics Jetson guide (https://docs.ultralytics.com/guides/nvidia-jetson/,
+# read 2026-11-15): torch 2.10.0 and torchvision 0.25.0, cp310, linux_aarch64.
+# Only what the flight imports (no Streamlit / pandas: the dashboards run on the ground PC).
+ultralytics==8.4.153
+lap==0.5.13
+opencv-python==5.0.0.93          # USB / V4L2 cameras; a CSI camera needs JetPack's own OpenCV with GStreamer (see README)
+numpy>=1.26,<2.3                 # numpy 2.3 needs Python >= 3.11
+requests==2.34.2
+jsonschema==4.26.0
+referencing==0.37.0
+pymavlink==2.4.50
+pyserial==3.5                    # serial ports for pymavlink (COM on Windows, /dev/ttyTHS1 on the Jetson); BSD
+tomli==2.2.1; python_version < "3.11"

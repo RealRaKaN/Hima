@@ -1,0 +1,25 @@
+# Website
+node_modules/
+dist/
+dist-ssr/
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+*.log
+
+# Python and what the system makes while it runs (each machine makes its own)
+__pycache__/
+*.pyc
+.venv/
+flights/
+ground_archive/
+station_inbox/
+runs/
+
+# Editor and OS files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db

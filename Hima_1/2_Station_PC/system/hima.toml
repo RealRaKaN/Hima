@@ -1,0 +1,352 @@
+# hima.toml: every tunable number for Hima lives here, with its unit in the key name.
+# Code never hard-codes these values. Each analysis run copies them (plus this file's
+# SHA-256) into analysis.config_used.
+
+# provisional = true means: chosen as a starting default, NOT a measured or
+# published fact.
+
+config_version = 1
+
+[detector]
+weights = "best_4_1.pt"          # the only production weight
+conf = 0.15                      # as used by webots_bridge.py
+tracker = "bytetrack.yaml"
+imgsz = 0                        # model input size; 0 = the frame's own width, the frame is not shrunk (the
+                                 # gazelle needs >= 48 px; shrinking 1280 to 960 lost it)
+
+[detector.class_map]             # weight class name -> canonical species
+# Names inside best_4_1.pt: {0: 'arabain oryx', 1: 'reem_gazelle'}.
+"arabain oryx" = "arabian_oryx"
+"reem_gazelle" = "reem_gazelle"
+
+[geometry]
+speed_window_s = 2.0             # ground speed = displacement over this window
+
+[activity]
+provisional = true
+walk_min_mps = 0.3               # below: resting/grazing (engineering choice)
+run_min_mps = 2.5                # at or above: running (rough, Heglund & Taylor 1988 via secondary source)
+
+[events]
+provisional = true
+proximity_m = 45.0               # slant distance drone->animal below this = proximity
+stress_m = 60.0                  # running AND slant below this = stress
+isolation_m = 30.0               # distance from herd centroid above this = isolated
+min_event_s = 3.0                # drop events shorter than this
+merge_gap_s = 2.0                # merge events separated by a shorter gap
+
+[status]                         # ratios of visible time, 0..1
+provisional = true
+r_stress = 0.20
+r_iso = 0.50
+r_rest = 0.60
+r_iso_transit = 0.30
+r_run = 0.20
+r_prox = 0.50
+r_vis = 0.90
+
+[herd]
+timeline_step_s = 10.0           # herd_timeline sampling step
+neighbour_memory_s = 60.0        # isolation: neighbours = animals in this frame AND animals seen in the last 60 s at their
+                                 # last position (a camera that resolves the gazelle sees < 30 m of ground)
+
+[identity]                       # which boxes are one animal (analytics/identity.py)
+provisional = true
+confirm_s = 1.0                  # an animal is registered only after it was seen >= 1 s in a row (a box for a moment
+                                 # is not an animal: one such box broke the injury stages in a test)
+confirm_gap_s = 0.5              # sightings this close (or in consecutive frames) are "in a row" (camera.fps = 10)
+part_inside = 0.9                # a box >= 90 % inside a bigger box of the same frame ...
+part_area_ratio = 0.6            # ... with <= 60 % of its area is a part of that animal (head / leg boxes)
+link_gap_s = 120.0               # a new tracker id may continue an animal lost up to 2 min ago (under a tree, a run)
+link_base_m = 3.0                # allowed distance = 3 m + 1.5 x speed x gap (speed >= walk_min_mps), at most 30 m
+link_speed_margin = 1.5
+link_max_m = 30.0                # = events.isolation_m: farther than this it may be another animal of the herd
+
+[hiding]                         # hidden under cover: replaces the visibility ratio for INTERMITTENT_OCCLUSION
+provisional = true
+min_s = 5.0                      # hidden >= 5 s in total (spans added up) = under cover.
+                                 # replay of a simulated flight: 3 s per span gave 12 of 25 animals right, 5 s gave 14 of 25
+span_min_s = 2.0                 # a single span counts only if unseen >= 2 s with its place in view (an animal crossing
+                                 # tree after tree is lost 2-3 s each time; detector misses in the open were < 1 s in simulated flights)
+margin_px = 40.0                 # its place must be >= 40 px + an adult body inside the image (not leaving the view)
+
+[safety]
+provisional = true
+alt_min_m = 40.0                 # inside the 15-55 m range tested by vanVuuren et al.
+alt_max_m = 120.0                # GACA AC 101-01 v1.0 §2.2 item 3
+alt_default_m = 60.0             # fallback altitude when the gate rejects LLM advice
+observe_min_m = 50.0             # MAINTAIN_OBSERVATION (OBSERVE) never below this: above 50 m the Namibia trial
+                                 # (PLOS ONE 2023, doi 10.1371/journal.pone.0288975) saw movement in < 6 % of first passes
+
+[llm]
+model = "llama3.2"
+url = "http://localhost:11434/api/generate"
+temperature = 0.0
+seed = 42
+timeout_s = 60.0
+
+[onboard]                        # Analysis on the drone computer (python -m hima fly)
+provisional = true
+update_s = 10.0                  # re-run the analysis every this many seconds of mission time
+ai_keep_alive_s = 3600.0         # Ollama unloads a model 5 min after its last call by default, so the camera
+                                 # window found gemma3:4b cold and timed out (flight 5); keep the flight models loaded
+ai_flight_only = true            # before take-off: unload other models (the 8B report model), load periodic + window
+
+[alerts]                         # live alerts sent from the drone during flight (no LLM)
+provisional = true
+min_visible_s = 15.0             # no alert before the animal was actually seen this long (was 20). With update_s = 10 it acts like 20 on synthetic data
+cooldown_s = 120.0               # the same animal is not re-alerted sooner, unless the status escalates
+max_message_bytes = 50           # MAVLink STATUSTEXT text is char[50] (common.xml, message 253): one alert = one message
+
+[injury]                         # staged injury alerts (1 min suspicion, 6 min suspected injury)
+provisional = true
+stage1_s = 60.0                  # alone and still 1 min: INJ1 = keep watching (the drone stays over it, so the clock can grow)
+stage2_s = 180.0                 # 3 min: INJ2 = suspected injury; the camera window may open
+stage3_s = 360.0                 # 6 min: INJ3 = strong suspicion, a ranger should come
+still_radius_m = 5.0             # all positions of the span fit in a 10 m x 10 m box (sim GPS error p95 1.86 m)
+max_gap_s = 10.0                 # not seen for longer than this: the span ends
+
+[young]                          # possible hidden young: gazelle fawns and oryx calves lie alone and still for
+provisional = true               # hours while the mother is away; the injury rule would call them injured
+oryx_adult_m = 1.6               # long side of the box seen from above, as the simulation (sim/world.py BODY_LENGTH_M)
+gazelle_adult_m = 1.0
+max_ratio = 0.6                  # an oryx calf of ~10 kg vs an adult of ~65 kg is (10/65)^(1/3) = 0.54 of its
+                                 # length at birth (cube-root scaling; Marwell, San Diego Zoo figures). No gazelle figure found
+min_samples = 10                 # boxes clear of the image edge needed to judge the size
+
+[cause]                          # who started a run, written on SEVERE alerts
+provisional = true
+approach_s = 10.0                # look this far back before the run started
+approach_m = 5.0                 # the drone came >= 5 m closer (slant) to where the animal stood: DRONE
+vehicle_pre_s = 10.0             # a vehicle seen (objects.k samples) from 10 s before the run to the alert: VEHICLE
+
+[link]                           # simulated text-only link drone -> ground
+provisional = true
+bytes_per_s = 100.0              # share of the telemetry radio given to alerts (SiK air rate is up to 250 kbps, but flight telemetry uses most of it)
+signed = false                   # MAVLink 2 signing adds 13 bytes per packet
+
+[triage]                         # What the drone keeps for the ground station (all engineering choices, no field data)
+provisional = true
+pre_s = 10.0                     # event clip starts this long before the event
+post_s = 10.0                    # ... and ends this long after it
+max_clip_s = 60.0                # longest clip; a longer window is cut to this (marked truncated)
+min_track_s = 1.0                # a track seen for less than this is "uncertain" (possible false detection)
+switch_gap_s = 2.0               # a track that starts within this time after another ended ...
+switch_dist_px = 100.0           # ... and this close to where it ended = suspected ID switch
+untracked_gap_s = 1.0            # detections without a track id closer in time than this form one group
+jpeg_quality = 90                # still frames of uncertain detections (OpenCV IMWRITE_JPEG_QUALITY, 0-100)
+clip_fourcc = "mp4v"             # OpenCV VideoWriter codec; availability depends on the OpenCV build, so every clip is read back and counted
+storage_budget_mb = 2000.0       # onboard storage for one mission package; above it the lowest priority items are dropped (and logged)
+
+[report]                         # Short report at landing (LLM proposes, the fact gate decides)
+provisional = true
+max_findings = 8                 # at most this many findings, but never fewer than the animals in alert statuses
+max_chars = 2500                 # all text of the report together. With detail: headline + stage texts +
+                                 # incident texts and follow-ups + closing; recommendations only in a follow-up.
+model = "llama3.1:8b"            # report only: written after landing, no time pressure. Flight advice keeps [llm].model
+timeout_s = 180.0                # 8B is slower; NVIDIA's archived Orin Nano Super figure is ~19 tokens/s
+judge = true                     # a second LLM checks every sentence against the summary BEFORE the fixed fact gate; it can only reject; a rejected sentence is replaced by its template sentence (accuracy over time)
+judge_model = "llama3.1:8b"      # same model as the writer: no second model in the Jetson's 8 GB shared memory; a different family would share fewer blind spots
+num_ctx = 8192                   # Ollama context for the writer and the judge. Without it Ollama read only the first 2048
+                                 # tokens: a flight with 56 animals gives a 5407-token prompt, cut, and the report failed
+
+[objects]                        # General detector for foreign objects
+provisional = true
+weights = "weights/general/yolo26s.pt"   # COCO, Ultralytics YOLO26
+imgsz = 1280                     # 1280 instead of 640 raised vehicle AP50 by 0.13
+conf = 0.25
+every_s = 0.5                    # twice a second: a car does not need every frame
+k = 2                            # vehicle in k consecutive samples before an alert (first alert 0.5-3.5 s)
+cooldown_s = 120.0               # no second vehicle alert sooner (detection flickers)
+
+[periodic]                       # The AI reads the data (no images) every every_s and sends 2-3 sentences
+provisional = true
+every_s = 30.0
+model = "llama3.2"               # 12/14 sentences pass the gate (gemma3:4b 28/36), 2.9 s; both stay loaded together
+max_sentences = 3
+timeout_s = 25.0                 # a call must end before the next slot
+
+[window]                         # Camera window for the AI at an event
+provisional = true
+model = "gemma3:4b"              # vision model: qwen3-vl:2b thought until the context ran out and never answered
+max_images = 3                   # frames with YOLO boxes per window
+image_every_s = 2.0              # one frame every 2 s from the event on
+max_per_flight = 6               # at most this many windows per flight
+cooldown_s = 120.0               # per event type
+crop_px = 448                    # square crop around the subject of the event (or 3x its box if larger)
+timeout_s = 60.0
+num_ctx = 8192                   # Ollama context for the vision call; 3 images + prompt took 912 tokens with gemma3:4b
+
+[dwell]                          # How long the drone may stay over one animal
+provisional = true
+max_over_animal_s = 420.0        # 7 min: after INJ3 (stage3_s 360 s) so the injury stages can finish; then the
+                                 # drone is advised to leave (DWELL message): a drone overhead keeps the animal alert
+max_gap_s = 10.0                 # not seen for longer than this: the stay ends (as injury.max_gap_s)
+repeat_s = 120.0                 # at most one DWELL message every 2 min (a herd would raise one per animal)
+
+[camera]                         # live flight (python -m hima fly): the drone camera
+device = "0"                     # "0" = /dev/video0 (USB camera); a device path; a GStreamer pipeline (has "!"); or a
+                                 # video file for bench tests (read at its own frame rate)
+width_px = 1280                  # asked of the camera; the session keeps the size the camera really gives
+height_px = 720
+hfov_deg = 24.0                  # lens measured; the camera to be bought has the same angle
+fps = 10.0                       # frames per second given to YOLO; newer frames replace older ones (no backlog)
+
+[mavlink]                        # the Pixhawk (ArduPilot) on TELEM2 (SERIAL2_PROTOCOL = 2, SERIAL2_BAUD = 921)
+url = "/dev/ttyTHS1"             # Jetson Orin UART on the 40-pin header (pins 8 TX / 10 RX) on JetPack 6; check on the
+                                 # board with: ls /dev/ttyTHS*. SITL: "tcp:127.0.0.1:5763" (its SERIAL2)
+baud = 921600
+heartbeat_timeout_s = 10.0
+position_hz = 10.0               # GLOBAL_POSITION_INT (and ATTITUDE) per second
+max_pose_age_s = 1.0             # as the replay tests (no pose rather than a wrong one)
+
+[flight]                         # live flight runner
+out_dir = "flights"              # relative to this file; one new folder per flight
+min_free_gb = 5.0                # 1 h of 1280x720 mp4v video is about 2-4 GB (estimate), plus the package
+min_satellites = 8
+min_fix_type = 3                 # 3D fix
+min_agl_m = 5.0                  # below 5 m (take-off, landing) frames are not analysed; in SITL relative_alt was
+                                 # -0.007 m on touchdown and stopped the first bench flight before its package
+preflight_wait_s = 180.0         # GPS lock and the EKF origin (HOME) can take minutes after power-on; wait this long
+start_on_arm = true              # YOLO + recording from arming to disarming (the return home ends the flight)
+max_flight_s = 5400.0            # 90 min: the recorder stops (the drone is not affected)
+save_video = true
+no_position_image_every_s = 1.0  # The Pixhawk link is lost or gives no position. The flight
+                                 # does not end: the camera and the animal model go on, and one image per second is saved
+                                 # with its detections and the last known position (flight/no_position/, and the package),
+                                 # so the ground team can try to place an animal seen then. Every frame is still
+                                 # tracked and counted (no_position_analysis.json); the rules that need metres wait.
+
+[delivery]                       # After landing, the drone sends the package to the station PC over the base Wi-Fi
+station_url = "http://192.168.1.10:8765"   # drone: the station PC's receiver. Give the station a fixed address (a DHCP
+                                 # reservation in the base router); the station prints its addresses when it starts
+key_file = "secrets/delivery.key"  # the same secret file on the drone and the station (python -m hima keygen); never in git
+listen = "0.0.0.0:8765"          # station: the receiver listens on every network of the PC, port 8765
+inbox_dir = "station_inbox"      # station: packages being received (a cut transfer goes on from here) and rejected ones
+archive_dir = "ground_archive"   # station: accepted packages; the dashboard reads this folder
+chunk_mb = 4.0                   # one upload piece: a cut connection resends at most this much
+retry_s = 15.0                   # drone: while a package waits (no Wi-Fi yet, station off) try again this often
+timeout_s = 20.0                 # one request: connect or answer
+
+# ---- Autonomy, part 1: the flight plan made on the Jetson before take-off ----------------
+# The drone plans its own route from the reserve boundary and what past flights left (paths, herds, poaching
+# incidents); manual control is optional. python -m hima reserve / plan / history (autonomy/).
+
+[reserve]
+name = "Imam Abdulaziz bin Mohammed Royal Reserve"
+boundary = "../data_ext/wdpa_555756385/iarr_wdpa_555756385.geojson"  # WDPA site 555756385 (Protected Planet, border
+                                 # data of the reserve's Development Authority, 2023). WDPA terms: non-commercial use,
+                                 # cite it, never redistribute the data (so it stays out of git: data_ext/ is ignored)
+history = "reserve/history.json" # past flights, herd sightings, poaching incidents (on the Jetson and the station)
+fence_max_vertices = 70          # ArduPilot polygon fence: up to 70 points (ardupilot.org common-polygon_fence)
+fence_margin_m = 50.0            # FENCE_MARGIN. ArduPlane applies it to the height ceiling too: the SITL
+                                 # refused to arm with 150 m > FENCE_ALT_MAX 120 m. Must stay below
+                                 # safety.alt_max_m - vehicle.patrol_alt_m (60 m); the route keeps plan_margin_m anyway
+plan_margin_m = 500.0            # the route stays 500 m inside the fence, so a turn or wind drift does not
+                                 # reach it; the cells near the border are seen from 500 m inside only when the camera
+                                 # swath allows (it does not at 60 m)
+cell_m = 500.0                   # grid cell: 11,300 km2 / 0.25 km2 = about 45,000 cells
+
+[reserve.launch]                 # launch points: name = [lat_deg, lon_deg]. Proposals from python -m hima reserve
+                                 # --propose (greedy cover of the grid by the reach of one flight); the team moves each
+                                 # one to the nearest track or ranger post and writes it back here
+# reach of one flight with [vehicle] / [planner] below: 24.6 km; 11 points put 99.5 % of the safe cells within
+# reach (python -m hima reserve --propose). main covers the most and is nearest the reserve's centre.
+main = [25.64740, 47.50644]
+L02 = [26.07948, 47.46625]
+L03 = [25.64682, 47.94581]
+L04 = [25.34071, 47.10809]
+L05 = [25.35933, 47.58620]
+L06 = [25.95325, 47.78669]
+L07 = [25.71913, 47.24663]
+L08 = [25.21406, 46.92944]
+L09 = [26.16940, 47.34583]
+L10 = [25.48454, 48.02503]
+L11 = [25.34126, 47.38698]
+
+[vehicle]                        # VTOL quadplane: 4 lift motors + 1 stronger pusher. Medium specs (the airframe
+provisional = true               # is not final). Every number is an assumption, not measured
+cruise_speed_mps = 18.0
+cruise_endurance_min = 100.0          # One flight reaches 10-20 % of the reserve (herds are
+                                 # not everywhere, so no need to comb every metre); the battery is assumed to allow it. 100 min:
+                                 # main reaches 17.4 %. The real airframe must be measured
+reserve_frac = 0.25              # 25 % of the battery is never planned
+hover_power_ratio = 4.0          # hover draws about 4x the power of forward flight (typical small quadplane)
+takeoff_hover_s = 60.0           # climb to takeoff_alt_m and change to forward flight
+landing_hover_s = 90.0
+takeoff_alt_m = 40.0
+patrol_alt_m = 60.0              # gazelle about 50 px wide at 60 m with the 24 deg lens at 1280 px (needs 48)
+land_approach_m = 300.0          # no target this close to the launch point: the last leg is the VTOL landing approach
+                                 # (the SITL quadplane refused to arm with a shorter one: "VTOL land too short, min 117m")
+
+[planner]                        # starting defaults (no field data yet)
+provisional = true
+herd_share = 0.30                # 30 % of the forward-flight time is kept for following herds in flight
+w_age = 1.0
+w_risk = 1.0
+w_herd = 1.0
+age_full_days = 14.0
+risk_radius_m = 3000.0
+risk_half_life_days = 365.0
+herd_radius_m = 2000.0
+herd_half_life_days = 30.0
+candidates = 300
+target_spacing_m = 1500.0
+
+[behaviour]                      # autonomy part 2: what the drone does in flight (autonomy/behaviour.py).
+provisional = true               # Starting defaults: split the time between herds and coverage, follow a
+enabled = true                   # vehicle only when it is near a herd, return home when the Jetson fails
+herd_min_animals = 2             # a herd to follow: at least 2 animals
+herd_link_m = 100.0              # animals this close (at their last place) are one herd
+herd_memory_s = 120.0            # an animal counts at its last place for this long
+herd_lost_s = 60.0               # a followed herd not seen this long: back to the route
+follow_herd_max_s = 300.0        # one herd at most 5 min (below dwell.max_over_animal_s 420 s)
+herd_revisit_s = 1800.0          # a herd already followed is not followed again within 30 min ...
+herd_revisit_m = 1000.0          # ... and 1 km
+vehicle_near_herd_m = 200.0      # A vehicle is a danger only within 200 m of a herd (1 km was too much)
+vehicle_close_m = 30.0           # within 30 m (20-30 m): "HIMA VEH CLOSE" to the station at once
+vehicle_herd_min_animals = 1     # for that rule a single animal counts as a herd (a lone oryx near a car matters)
+vehicle_leave_m = 250.0          # follow the vehicle until it is more than 250 m from the herd (200 m + 50 m so it does
+vehicle_leave_s = 20.0           # not stop and start again at the line) for 20 s; no time limit, only the energy
+vehicle_lost_s = 60.0
+vehicle_photo_every_s = 3.0      # One camera image every 3 s while following a vehicle; never deleted
+vehicle_lead_s = 3.0             # a vehicle that drives: aim this far ahead of it, and on where it went when it leaves the
+                                 # 25 x 14 m picture (in SITL hovering where it was last seen lost one at 3 m/s)
+hover_move_m = 8.0               # Over the herd it hovers (VTOL, Q_GUIDED_MODE = 1) and moves a
+                                 # little: a new hover point when the target moved 8 m. The picture at 60 m is only
+                                 # 25.5 x 14.3 m (24 deg lens): 25 m would let a walking herd leave it first
+hover_arrive_m = 40.0            # within this of the hover point the time counts as hover (4x the power)
+herd_min_hover_s = 30.0          # follow a herd only with 30 s of hover left in the budget (hover = 4x the power)
+tick_s = 1.0                     # decisions once a second
+energy_margin_s = 120.0          # home with this much forward flight to spare, on top of vehicle.reserve_frac
+battery_margin_pct = 5.0         # or when the battery reads reserve_frac + 5 %
+manual_grace_s = 3.0             # a mode we did not ask for, this long: the pilot has control (manual override)
+upload_plan = true               # hima fly uploads today's fence and mission to the autopilot before arming
+
+[rangers]                        # the reserve's own vehicles near a herd (field work) are not followed
+enabled = false                  # One vehicle class for now (nothing known yet about the reserve's
+                                 # vehicles); every vehicle near a herd is followed and photographed. Kept for later
+field_ops = "reserve/field_ops.json"   # planned field work: places and UTC windows, entered at the station before take-off
+marker_dict = "DICT_4X4_50"      # ArUco roof marker on every reserve vehicle (OpenCV aruco)
+marker_ids = "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15"   # ids that belong to the reserve
+marker_pad = 0.5                 # the vehicle box is enlarged by this fraction before the marker search
+
+[route_review]                   # Today's route appears on the station's dashboard before
+enabled = true                   # take-off; it can be changed there; the drone waits 1 min, then flies its own route
+wait_s = 60.0
+poll_s = 2.0
+wifi = true                      # signed offer to [delivery].station_url (the same key as the packages)
+radio = true                     # and over the telemetry radio: "HIMA PLAN ..." text; the station reads the route from
+                                 # the autopilot (mission download) and may upload an edited one, then answers with
+                                 # MAV_CMD_USER_1 to the Jetson (component 191). No images go over the radio
+plans_dir = "station_inbox/plans"   # station: offers, answers and results (one folder per plan)
+radio_url = "off"                # station: e.g. "COM5" (the ground radio, QGroundControl closed) or "udpin:0.0.0.0:14445"
+                                 # (a MAVLink router); "off" = no radio bridge
+station_sysid = 254              # station: MAVLink system id on the radio (QGroundControl uses 255, the drone 1)
+imagery_dir = "../data_ext/imagery"   # station: satellite images under the route map (never in git)
+
+[demo]                           # A virtual flight always in the station's archive; the dashboard
+enabled = true                   # opens on it. A simulated flight (SITL + the simulator's video), NOT a real one
+package = "../data_ext/demo/flight-20261115T151622Z"   # outside git (its video comes from the simulator's assets)
+route_offer = "../data_ext/demo/route_offer.json"      # a real plan of the reserve (22 points); the fence stays local
+more = "../data_ext/demo/more"   # 8 synthetic flights (tools/make_demo_archive.py --packages-out): Compare has data

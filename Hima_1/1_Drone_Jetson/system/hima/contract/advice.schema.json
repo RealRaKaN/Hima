@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hima.local/schemas/advice/1",
+  "title": "Hima LLM advice v1 (what the model must return for one animal; English only). No ranger recommendation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "interpretation",
+    "proposed_command",
+    "proposed_altitude_m"
+  ],
+  "properties": {
+    "interpretation": { "type": "string", "minLength": 1, "maxLength": 400 },
+    "proposed_command": {
+      "enum": [
+        "MAINTAIN_OBSERVATION",
+        "INCREASE_ALTITUDE",
+        "INCREASE_STANDOFF",
+        "WIDEN_ORBIT",
+        "RETREAT",
+        "INSPECT_HIGH_ALTITUDE_ZOOM",
+        "REACQUIRE_TARGET"
+      ]
+    },
+    "proposed_altitude_m": { "type": "number" }
+  }
+}

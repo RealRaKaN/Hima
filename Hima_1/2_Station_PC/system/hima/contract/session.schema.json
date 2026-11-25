@@ -1,0 +1,371 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hima.local/schemas/session/1",
+  "title": "Hima mission session v1",
+  "description": "One file per mission. Sources write meta + frames (raw only). Generator may add ground_truth (never read by analytics or LLM). analytics writes analysis. advisor writes advice.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "frames"],
+  "properties": {
+    "meta": { "$ref": "#/$defs/meta" },
+    "frames": { "type": "array", "items": { "$ref": "#/$defs/frame" } },
+    "ground_truth": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[0-9]+$" },
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "analysis": { "$ref": "#/$defs/analysis" },
+    "advice": { "$ref": "#/$defs/advice" }
+  },
+
+  "$defs": {
+    "species": { "enum": ["arabian_oryx", "reem_gazelle"] },
+    "status": {
+      "enum": [
+        "SEVERE_DRONE_DISTURBANCE",
+        "SUSPECTED_INJURY_OR_ILLNESS",
+        "POSSIBLE_HIDDEN_YOUNG",
+        "RAPID_CORRIDOR_TRANSIT",
+        "PROXIMITY_PACING_ALERTNESS",
+        "INTERMITTENT_OCCLUSION",
+        "BASELINE"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "nonneg": { "type": "number", "minimum": 0 },
+    "nonneg_or_null": { "type": ["number", "null"], "minimum": 0 },
+    "ratio": { "type": "number", "minimum": 0, "maximum": 1 },
+    "track_id": { "type": "integer", "minimum": 0 },
+
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "mission_id", "source", "created_at", "camera", "detector", "geometry_assumptions"],
+      "properties": {
+        "schema_version": { "const": "hima.session/1" },
+        "mission_id": { "type": "string", "minLength": 1 },
+        "source": { "enum": ["synthetic", "webots", "real", "video", "simulation"] },
+        "created_at": { "$ref": "#/$defs/timestamp" },
+        "camera": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["width_px", "height_px", "hfov_deg", "mount", "params_known"],
+          "properties": {
+            "width_px": { "type": "integer", "minimum": 1 },
+            "height_px": { "type": "integer", "minimum": 1 },
+            "hfov_deg": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 180 },
+            "mount": { "const": "nadir" },
+            "params_known": { "type": "boolean" }
+          }
+        },
+        "detector": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["weights", "class_map", "conf", "tracker"],
+          "properties": {
+            "weights": { "type": "string", "minLength": 1 },
+            "class_map": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": { "$ref": "#/$defs/species" }
+            },
+            "conf": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+            "tracker": { "type": "string", "minLength": 1 },
+            "imgsz": { "type": "integer", "minimum": 32, "description": "model input size actually used (long side, px)" }
+          }
+        },
+        "geometry_assumptions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["flat_ground", "nadir_camera"] }
+        },
+        "home": {
+          "description": "optional: HOME_POSITION of the autopilot, the origin of every x_m / y_m",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["lat_deg", "lon_deg"],
+          "properties": {
+            "lat_deg": { "type": "number", "minimum": -90, "maximum": 90 },
+            "lon_deg": { "type": "number", "minimum": -180, "maximum": 180 }
+          }
+        }
+      }
+    },
+
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["t", "drone", "detections"],
+      "properties": {
+        "t": { "$ref": "#/$defs/nonneg" },
+        "drone": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["x_m", "y_m", "agl_m", "heading_deg"],
+          "properties": {
+            "x_m": { "type": "number" },
+            "y_m": { "type": "number" },
+            "agl_m": { "type": "number", "exclusiveMinimum": 0 },
+            "heading_deg": { "type": "number", "minimum": 0, "exclusiveMaximum": 360 }
+          }
+        },
+        "detections": { "type": "array", "items": { "$ref": "#/$defs/detection" } }
+      }
+    },
+
+    "detection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["track_id", "species", "class_raw", "conf", "bbox_xywh_px"],
+      "properties": {
+        "track_id": { "$ref": "#/$defs/track_id" },
+        "species": { "$ref": "#/$defs/species" },
+        "class_raw": { "type": "string", "minLength": 1 },
+        "conf": { "$ref": "#/$defs/ratio" },
+        "bbox_xywh_px": {
+          "type": "array",
+          "prefixItems": [
+            { "type": "number" },
+            { "type": "number" },
+            { "type": "number", "exclusiveMinimum": 0 },
+            { "type": "number", "exclusiveMinimum": 0 }
+          ],
+          "minItems": 4,
+          "items": false
+        }
+      }
+    },
+
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "start_s", "end_s", "duration_s"],
+      "properties": {
+        "type": { "enum": ["proximity", "stress", "isolation"] },
+        "start_s": { "$ref": "#/$defs/nonneg" },
+        "end_s": { "$ref": "#/$defs/nonneg" },
+        "duration_s": { "$ref": "#/$defs/nonneg" }
+      }
+    },
+
+    "animal_analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "track_id", "species", "first_seen_s", "last_seen_s", "visible_s", "visibility_ratio",
+        "ethogram_s", "distance_travelled_m", "max_ground_speed_mps", "mean_ground_speed_mps",
+        "min_slant_distance_to_drone_m", "events", "isolation_ratio", "ratios", "status", "metrics_valid"
+      ],
+      "properties": {
+        "track_id": { "$ref": "#/$defs/track_id" },
+        "species": { "$ref": "#/$defs/species" },
+        "first_seen_s": { "$ref": "#/$defs/nonneg" },
+        "last_seen_s": { "$ref": "#/$defs/nonneg" },
+        "visible_s": { "$ref": "#/$defs/nonneg" },
+        "visibility_ratio": { "$ref": "#/$defs/ratio" },
+        "still_alone_s": {
+          "description": "optional: seconds alone and in one place without a break up to the last sighting; null when metrics_valid is false",
+          "oneOf": [{ "$ref": "#/$defs/nonneg" }, { "type": "null" }]
+        },
+        "body_length_m": {
+          "description": "optional: median long side of the box in metres over boxes clear of the image edge; null without camera parameters or with fewer than young.min_samples such boxes",
+          "oneOf": [{ "$ref": "#/$defs/nonneg" }, { "type": "null" }]
+        },
+        "stress_start_s": {
+          "description": "optional: start of the latest stress event; null if none",
+          "oneOf": [{ "$ref": "#/$defs/nonneg" }, { "type": "null" }]
+        },
+        "drone_closing_m": {
+          "description": "optional: how much closer (slant) the drone came, over cause.approach_s before stress_start_s, to where the animal stood; negative = it moved away; null if no stress event",
+          "type": ["number", "null"]
+        },
+        "ethogram_s": {
+          "description": "null when metrics_valid is false (no camera parameters, so no speed in m/s)",
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["resting", "walking", "running"],
+              "properties": {
+                "resting": { "$ref": "#/$defs/nonneg" },
+                "walking": { "$ref": "#/$defs/nonneg" },
+                "running": { "$ref": "#/$defs/nonneg" }
+              }
+            },
+            { "type": "null" }
+          ]
+        },
+        "distance_travelled_m": { "$ref": "#/$defs/nonneg_or_null" },
+        "max_ground_speed_mps": { "$ref": "#/$defs/nonneg_or_null" },
+        "mean_ground_speed_mps": { "$ref": "#/$defs/nonneg_or_null" },
+        "min_slant_distance_to_drone_m": { "$ref": "#/$defs/nonneg_or_null" },
+        "events": { "type": "array", "items": { "$ref": "#/$defs/event" } },
+        "isolation_ratio": { "oneOf": [{ "$ref": "#/$defs/ratio" }, { "type": "null" }] },
+        "ratios": {
+          "description": "fractions of visible_s used by the status rules (null when metrics_valid is false)",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["stress", "proximity", "resting", "walking", "running"],
+          "properties": {
+            "stress": { "oneOf": [{ "$ref": "#/$defs/ratio" }, { "type": "null" }] },
+            "proximity": { "oneOf": [{ "$ref": "#/$defs/ratio" }, { "type": "null" }] },
+            "resting": { "oneOf": [{ "$ref": "#/$defs/ratio" }, { "type": "null" }] },
+            "walking": { "oneOf": [{ "$ref": "#/$defs/ratio" }, { "type": "null" }] },
+            "running": { "oneOf": [{ "$ref": "#/$defs/ratio" }, { "type": "null" }] }
+          }
+        },
+        "status": { "$ref": "#/$defs/status" },
+        "metrics_valid": { "type": "boolean" },
+        "sighting": {
+          "description": "optional: where and when the animal was registered (seen identity.confirm_s in a row); lat / lon need meta.home",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["t", "x_m", "y_m", "lat_deg", "lon_deg"],
+          "properties": {
+            "t": { "$ref": "#/$defs/nonneg" },
+            "x_m": { "type": ["number", "null"] },
+            "y_m": { "type": ["number", "null"] },
+            "lat_deg": { "type": ["number", "null"] },
+            "lon_deg": { "type": ["number", "null"] }
+          }
+        },
+        "segments": {
+          "description": "optional: the tracker ids joined into this animal, in time order",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["tracker_id", "start_s", "end_s"],
+            "properties": {
+              "tracker_id": { "type": "integer" },
+              "start_s": { "type": "number" },
+              "end_s": { "type": "number" }
+            }
+          }
+        },
+        "hidden": {
+          "description": "optional: spans hidden under cover (unseen while its place was in view >= hiding.min_s)",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["start_s", "end_s", "in_view_s", "x_m", "y_m", "open"],
+            "properties": {
+              "start_s": { "type": "number" },
+              "end_s": { "type": "number" },
+              "in_view_s": { "$ref": "#/$defs/nonneg" },
+              "x_m": { "type": "number" },
+              "y_m": { "type": "number" },
+              "open": { "type": "boolean" }
+            }
+          }
+        },
+        "hidden_s": {
+          "description": "optional: total in-view time of the hidden spans; null when metrics_valid is false",
+          "$ref": "#/$defs/nonneg_or_null"
+        }
+      }
+    },
+
+    "analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["config_used", "drone", "animals", "herd_timeline"],
+      "properties": {
+        "config_used": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sha256", "values"],
+          "properties": {
+            "sha256": { "$ref": "#/$defs/sha256" },
+            "values": { "type": "object" }
+          }
+        },
+        "drone": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["duration_s", "distance_flown_m", "distance_flown_3d_m"],
+          "properties": {
+            "duration_s": { "$ref": "#/$defs/nonneg" },
+            "distance_flown_m": { "$ref": "#/$defs/nonneg_or_null" },
+            "distance_flown_3d_m": { "$ref": "#/$defs/nonneg_or_null" }
+          }
+        },
+        "animals": { "type": "array", "items": { "$ref": "#/$defs/animal_analysis" } },
+        "herd_timeline": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["t", "count", "cohesion_m", "isolated_ids"],
+            "properties": {
+              "t": { "$ref": "#/$defs/nonneg" },
+              "count": { "type": "integer", "minimum": 0 },
+              "cohesion_m": { "$ref": "#/$defs/nonneg_or_null" },
+              "isolated_ids": { "type": "array", "items": { "$ref": "#/$defs/track_id" }, "uniqueItems": true }
+            }
+          }
+        },
+        "identity": {
+          "description": "optional: tracker ids seen, animals registered, animals not registered, part boxes dropped",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tracker_ids", "animals", "not_registered", "part_boxes_dropped"],
+          "properties": {
+            "tracker_ids": { "type": "integer", "minimum": 0 },
+            "animals": { "type": "integer", "minimum": 0 },
+            "not_registered": { "type": "integer", "minimum": 0 },
+            "part_boxes_dropped": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+
+    "animal_advice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["track_id", "llm_raw", "parsed", "gate", "final", "prompt_sha256", "latency_s"],
+      "properties": {
+        "track_id": { "$ref": "#/$defs/track_id" },
+        "llm_raw": { "type": ["string", "null"], "description": "exact model text; null if the model was unreachable" },
+        "parsed": { "oneOf": [{ "$ref": "https://hima.local/schemas/advice/1" }, { "type": "null" }] },
+        "gate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["accepted", "reasons"],
+          "properties": {
+            "accepted": { "type": "boolean" },
+            "reasons": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "final": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["proposed_command", "proposed_altitude_m", "source"],
+          "properties": {
+            "proposed_command": { "$ref": "https://hima.local/schemas/advice/1#/properties/proposed_command" },
+            "proposed_altitude_m": { "type": "number", "exclusiveMinimum": 0 },
+            "source": { "enum": ["llm", "policy_default"] }
+          }
+        },
+        "prompt_sha256": { "$ref": "#/$defs/sha256" },
+        "latency_s": { "$ref": "#/$defs/nonneg_or_null" }
+      }
+    },
+
+    "advice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "created_at", "animals"],
+      "properties": {
+        "model": { "type": "string", "minLength": 1 },
+        "created_at": { "$ref": "#/$defs/timestamp" },
+        "animals": { "type": "array", "items": { "$ref": "#/$defs/animal_advice" } }
+      }
+    }
+  }
+}

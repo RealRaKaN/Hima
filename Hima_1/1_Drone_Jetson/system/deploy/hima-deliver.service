@@ -1,0 +1,21 @@
+# HIMA Wi-Fi delivery: always running on the drone computer. After each landing it sends the new mission
+# package to the ground station as soon as the base Wi-Fi reaches the station; until then the package waits on the
+# drone (nothing is deleted). @USER@ and @DIR@ are filled in by launcher/hima_start.py --install-service.
+[Unit]
+Description=HIMA mission package delivery to the ground station (Wi-Fi)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=@USER@
+WorkingDirectory=@DIR@
+Environment=PYTHONUNBUFFERED=1
+ExecStart=@DIR@/.venv/bin/python -m hima deliver --watch
+# SIGINT = Ctrl+C: stops between two pieces; the next start goes on from the bytes the station holds
+KillSignal=SIGINT
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

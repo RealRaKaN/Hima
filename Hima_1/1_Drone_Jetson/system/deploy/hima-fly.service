@@ -1,0 +1,22 @@
+# HIMA onboard system: starts at boot, runs the preflight, waits for ARM, records until DISARM, builds the package,
+# then starts again for the next flight. The launcher finds the camera and the Pixhawk port at each start.
+# @USER@ and @DIR@ are filled in by launcher/hima_start.py --install-service.
+[Unit]
+Description=HIMA wildlife drone onboard system
+Wants=ollama.service
+After=network-online.target ollama.service
+
+[Service]
+Type=simple
+User=@USER@
+WorkingDirectory=@DIR@
+Environment=PYTHONUNBUFFERED=1
+ExecStart=@DIR@/.venv/bin/python @DIR@/launcher/hima_start.py --fly --no-install
+# SIGINT = Ctrl+C: the flight lands cleanly (session, package) before it exits
+KillSignal=SIGINT
+TimeoutStopSec=180
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

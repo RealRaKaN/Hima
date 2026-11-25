@@ -1,0 +1,19 @@
+{
+  "schema_version": "hima.imagery/1",
+  "name": "route_main_s2_2025",
+  "bounds_deg": [
+    25.522615,
+    47.351074,
+    25.76032,
+    47.570801
+  ],
+  "stored_crs": "EPSG:3857",
+  "added_from_crs": "EPSG:3857",
+  "width_px": 2560,
+  "height_px": 3072,
+  "source": "EOxCloudless https://cloudless.eox.at by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2025)",
+  "licence": "CC BY-NC-SA 4.0 (non-commercial; commercial use needs an EOX licence)",
+  "original": "main_z14.jpg",
+  "original_sha256": "3cac1eab0adb03a68c81dc3f544a5a7b48b89b74083e152936c0554783f01e42",
+  "m_per_px": 8.61
+}
