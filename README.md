@@ -1,10 +1,16 @@
+<div align="center">
+
 # Hima | حِمَى
 
 **An Integrated Drone-Based System for Real-Time Wildlife Detection and Tracking Using Computer Vision**
 
-> Qassim University, Computer Science Department. Graduation Project.
+Qassim University, Computer Science Department. Graduation Project.
 
-Website: https://realrakan.github.io/Hima/
+[**Website**](https://realrakan.github.io/Hima/) &nbsp;|&nbsp; [**العربية**](#arabic) &nbsp;|&nbsp; [**English**](#english)
+
+</div>
+
+<a id="arabic"></a>
 
 <div dir="rtl">
 
@@ -12,46 +18,22 @@ Website: https://realrakan.github.io/Hima/
 
 هذه الصفحة تمشي مع الرحلة خطوة بخطوة: ما القطع، وكيف يرسم الدرون طريقه ويعرضه على المحطة، وكيف يقرر وحده في الجو، وكيف يتحول ما تراه الكاميرا إلى حيوان له رقم وحالة، ومتى يصل التنبيه للطيار، وكيف يُكتب التقرير قصةً للرحلة، وكيف تعرضه لوحة المحطة. في كل خطوة سطر أول بكلام بسيط، وتحته التفاصيل والأرقام لمن يحتاجها.
 
-<details>
-<summary><b>كلمات تتكرر في الصفحة</b></summary>
+<a id="ar-toc"></a>
 
-| الكلمة | معناها |
-|---|---|
-| **البيكس هوك وأردو بايلوت** | البيكس هوك هو الطيار الآلي، أي القطعة التي تطيّر الدرون. وأردو بايلوت هو البرنامج الذي يعمل عليه. |
-| **الجيتسون** | حاسوب صغير على الدرون، عليه نظام حِمَى كله. |
-| **التسليح وفك التسليح** | التسليح: تشغيل المحركات قبل الإقلاع. وفك التسليح: إطفاؤها بعد الهبوط. النظام يبدأ ويتوقف معهما. |
-| **الإطار** | صورة واحدة من فيديو الكاميرا. |
-| **YOLO** | نموذج ذكاء اصطناعي يرسم مربعًا (صندوقًا) حول كل حيوان في الصورة ويقول نوعه. |
-| **المسار ورقم المسار** | تتبّع الصندوق نفسه من صورة لصورة، مع رقم يميّزه. يقوم به برنامج اسمه ByteTrack. |
-| **MAVLink وSTATUSTEXT** | MAVLink لغة التخاطب بين الجيتسون والبيكس هوك والمحطة. وSTATUSTEXT نوع رسالة نصية قصيرة فيها، حدها 50 حرفًا، تظهر للطيار على شاشته. |
-| **Mission Planner** | البرنامج الذي يتابع منه الطيار الدرون في المحطة الأرضية. |
-| **لوحة المحطة** | صفحة في متصفح حاسوب المحطة: قبلَ الإقلاع تعرض طريق اليوم، وبعد الهبوط تعرض المهمات وتقاريرها. |
-| **VTOL** | طائرة تقلع وتهبط عموديًا مثل الدرون العادي بأربع مراوح، ثم تطير إلى الأمام بجناح ومروحة دفع خامسة. الطيران بالجناح أوفر بكثير من الحوم. |
-| **السياج الجغرافي** | حدود مرسومة داخل الطيار الآلي نفسه. إذا اقترب الدرون منها يرجع إلى نقطة الإقلاع، مهما كان ما يطلبه الجيتسون. |
-| **المحاكاة (SITL)** | أردو بايلوت الحقيقي يعمل على الحاسوب بدل الدرون، مع عالم مصنوع فيه حيوانات نعرف حقيقتها، فنقيس صحة النظام قبل الطيران الفعلي. |
-
-</details>
-
-| # | المرحلة |
-|---|---|
-| 1 | القطع وكيف تتصل |
-| 2 | قبل الإقلاع: التجهيز والفحص |
-| 3 | قبل الإقلاع: الدرون يرسم طريقه |
-| 4 | الرحلة: من تشغيل المحركات إلى إطفائها |
-| 5 | أثناء الرحلة: الدرون يقرر وحده |
-| 6 | الكشف والتتبع |
-| 7 | من مربع إلى حيوان له رقم |
-| 8 | الحسابات: أين الحيوان وماذا يفعل |
-| 9 | حالة كل حيوان |
-| 10 | التنبيهات التي تصل للطيار |
-| 11 | الذكاء الاصطناعي في أثناء الرحلة |
-| 12 | بعد الهبوط: تجهيز الحزمة |
-| 13 | كتابة التقرير: قصة الرحلة |
-| 14 | وصول الحزمة إلى المحطة |
-| 15 | لوحة المحطة |
-| 16 | ما أثبتته المحاكاة وما لم يثبت بعد |
+| # | المرحلة | # | المرحلة |
+|:-:|---|:-:|---|
+| 1 | [القطع وكيف تتصل](#ar-1) | 9 | [حالة كل حيوان](#ar-9) |
+| 2 | [قبل الإقلاع: التجهيز والفحص](#ar-2) | 10 | [التنبيهات التي تصل للطيار](#ar-10) |
+| 3 | [قبل الإقلاع: الدرون يرسم طريقه](#ar-3) | 11 | [الذكاء الاصطناعي في أثناء الرحلة](#ar-11) |
+| 4 | [الرحلة: من تشغيل المحركات إلى إطفائها](#ar-4) | 12 | [بعد الهبوط: تجهيز الحزمة](#ar-12) |
+| 5 | [أثناء الرحلة: الدرون يقرر وحده](#ar-5) | 13 | [كتابة التقرير: قصة الرحلة](#ar-13) |
+| 6 | [الكشف والتتبع](#ar-6) | 14 | [وصول الحزمة إلى المحطة](#ar-14) |
+| 7 | [من مربع إلى حيوان له رقم](#ar-7) | 15 | [لوحة المحطة](#ar-15) |
+| 8 | [الحسابات: أين الحيوان وماذا يفعل](#ar-8) | 16 | [ما أثبتته المحاكاة وما لم يثبت بعد](#ar-16) |
 
 ---
+
+<a id="ar-1"></a>
 
 ### 1. القطع وكيف تتصل
 
@@ -68,7 +50,11 @@ Website: https://realrakan.github.io/Hima/
 | **حاسوب المحطة** | عليه Mission Planner للطيار، واستقبال حزمة المهمة بعد الهبوط، ولوحة المحطة في المتصفح: الطريق قبل الإقلاع، والمهمات بعد الهبوط. | `Mission Planner · web dashboard` |
 | **نماذج اللغة** | تعمل بـ Ollama على الجيتسون نفسه: نموذج للملخص في الجو، ونموذج يرى الصور، ونموذج أكبر للتقرير بعد الهبوط. | `llama3.2 · gemma3:4b · llama3.1:8b` |
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-2"></a>
 
 ### 2. قبل الإقلاع: التجهيز والفحص
 
@@ -98,7 +84,11 @@ Website: https://realrakan.github.io/Hima/
 
 > لكل فحص نتيجة من ثلاث: `OK` سليم، و`WARN` تحذير، و`FAIL` فشل. الفشل يمنع الطيران. التحذير لا يمنعه: مثلًا إن لم يعمل Ollama تطير الرحلة بلا نماذج لغة، والتنبيهات تبقى تعمل لأنها قواعد ثابتة لا تحتاج ذكاءً اصطناعيًا.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-3"></a>
 
 ### 3. قبل الإقلاع: الدرون يرسم طريقه
 
@@ -136,7 +126,11 @@ Website: https://realrakan.github.io/Hima/
 
 > جُرّبت خطة الـ 60 دقيقة الأولى في محاكي أردو بايلوت الرسمي بطائرة VTOL: قبل السياج والطريق، وأقلع وطار **14 من 14** نقطة في 23 دقيقة، وبقي داخل السياج كل الوقت، وهبط على بعد **10 سنتيمترات** من نقطة الإقلاع. والمحاكي كشف خطأين قبل الإقلاع وصُحّحا: هامش السياج أكبر من سقف الارتفاع، وآخر نقطة قريبة جدًا من مكان الهبوط.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-4"></a>
 
 ### 4. الرحلة: من تشغيل المحركات إلى إطفائها
 
@@ -164,7 +158,11 @@ Website: https://realrakan.github.io/Hima/
 
 > ولكل رحلة **ملف خام** بلا أي تحليل: كل صورة حُللت ومربعات الكاشف فيها، وموقع الدرون ووضعه وبطاريته، وكل رسالة وحدث. يُكتب سطرًا سطرًا أثناء الرحلة، ويذهب مضغوطًا مع التحاليل كلها في الحزمة.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-5"></a>
 
 ### 5. أثناء الرحلة: الدرون يقرر وحده
 
@@ -198,7 +196,11 @@ Website: https://realrakan.github.io/Hima/
 
 > جُرّب في محاكي أردو بايلوت الرسمي بطائرة VTOL، والجيتسون يتكلم معه بالبرنامج نفسه، بحيوانات ومركبات افتراضية تُرى فقط إذا كانت تحت الكاميرا. القطيع: ترك الطريق وتحول إلى العمودي في **أقل من ثانية**، ووقف فوقه **101 ثانية** وتحرك معه مرتين وهو يرعى، ثم رجع للطريق من حيث تركه. المركبة: وقف فوقها، ولما مشت **3 م/ث** لحقها بـ 23 حركة صغيرة حتى ابتعدت عن القطيع. والمحاكي كشف خطأ وصُحّح: في أول تجربة كان الدرون يقف حيث رأى المركبة آخر مرة، فخرجت من الصورة وفقدها؛ صار يقف **3 ثوانٍ أمامها** ويمضي إلى حيث كانت ذاهبة. وعندما أُسكت الجيتسون رجع الطيار الآلي إلى البيت بعد **5.1 ثانية**. والحوم مكلف: الوقت المحجوز يكفي قرابة **5 دقائق** وقوف في الرحلة، ونفد في تجربة بعد قطيع ومركبة وقطيع.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-6"></a>
 
 ### 6. الكشف والتتبع
 
@@ -216,7 +218,11 @@ Website: https://realrakan.github.io/Hima/
 | **نموذج المركبات** | نموذج YOLO عام يعرف السيارات والشاحنات والناس. يعمل **مرتين في الثانية** فقط، فالسيارة لا تحتاج كل صورة. |
 | **تنبيه المركبة** | إذا ظهرت مركبة في **فحصين متتاليين**. ولا يتكرر التنبيه قبل **دقيقتين**، لأن الكشف يظهر ويختفي. |
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-7"></a>
 
 ### 7. من مربع إلى حيوان له رقم
 
@@ -232,7 +238,11 @@ Website: https://realrakan.github.io/Hima/
 
 > هذه القواعد تنظر إلى ما مضى فقط، ولا تنتظر المستقبل. لذلك الأرقام التي تصل الطيار في الجو هي نفسها الأرقام في التقرير بعد الهبوط.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-8"></a>
 
 ### 8. الحسابات: أين الحيوان وماذا يفعل
 
@@ -254,7 +264,11 @@ Website: https://realrakan.github.io/Hima/
 
 > الكاميرا من فوق لا تفرّق بين شجرة وكثيب وظل، فكلها «غطاء». وإذا خرج مكان الحيوان من الصورة، فهو خرج من مجال الكاميرا، وهذا لا يُحسب اختباءً.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-9"></a>
 
 ### 9. حالة كل حيوان
 
@@ -272,7 +286,11 @@ Website: https://realrakan.github.io/Hima/
 
 > النسب محسوبة من الوقت الذي ظهر فيه الحيوان للكاميرا، لا من طول الرحلة.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-10"></a>
 
 ### 10. التنبيهات التي تصل للطيار
 
@@ -303,7 +321,11 @@ Website: https://realrakan.github.io/Hima/
 
 > في آخر التنبيه أمر مقترح وارتفاع مقترح: `OBSERVE` تابِع (ولا تنزل تحت 50 م)، و`CLIMB` ارتفع، و`STANDOFF` ابتعد أفقيًا، و`RETREAT` انسحب، و`WIDEN` وسّع الدوران، و`ZOOM` قرّب الصورة من ارتفاع عالٍ، و`REACQ` ابحث عنه من جديد. الارتفاع بين 40 و120 م. هي توصيات فقط، والطيار يقرر.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-11"></a>
 
 ### 11. الذكاء الاصطناعي في أثناء الرحلة
 
@@ -327,7 +349,11 @@ Website: https://realrakan.github.io/Hima/
 
 `≤ 6 per flight · 120 s per event type`
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-12"></a>
 
 ### 12. بعد الهبوط: تجهيز الحزمة
 
@@ -349,7 +375,11 @@ Website: https://realrakan.github.io/Hima/
 
 > ما لا يُحذف أبدًا مهما كان الحجم، ويُرسل أولًا: ملف الجلسة، والتقرير، وسجل الطيران، والملف الخام، وتحليل «بلا موقع»، وصور ملاحقة المركبة.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-13"></a>
 
 ### 13. كتابة التقرير: قصة الرحلة
 
@@ -372,7 +402,11 @@ Website: https://realrakan.github.io/Hima/
 - **4. الفحص الثابت** كل رقم بوحدته، وكل حالة، وكل مركبة، وكل «مسافة واتجاه» يجب أن يكون في حقائق الجزء نفسه. ولا نصيحة خارج المتابعة.
 - **5. الإصلاح** الجزء المرفوض وحده يأخذ نص القالب الجاهز، والباقي يبقى.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-14"></a>
 
 ### 14. وصول الحزمة إلى المحطة
 
@@ -392,7 +426,11 @@ Website: https://realrakan.github.io/Hima/
 
 > بعد الإرسال تبقى نسخة الحزمة على الدرون ولا تُحذف.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-15"></a>
 
 ### 15. لوحة المحطة
 
@@ -414,7 +452,11 @@ Website: https://realrakan.github.io/Hima/
 
 > أول فتح بعد تشغيل المحطة يأخذ نحو **7 ثوانٍ** لأنها تفحص بصمة كل ملف في الأرشيف، ثم يصير فوريًا.
 
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
+
 ---
+
+<a id="ar-16"></a>
 
 ### 16. ما أثبتته المحاكاة وما لم يثبت بعد
 
@@ -441,6 +483,8 @@ Website: https://realrakan.github.io/Hima/
 - التخطيط والقرار أثناء الطيران مبنيان على مواصفات طائرة مفترضة، وجُرّبا في المحاكي فقط بحيوانات ومركبات افتراضية، لا بصور حقيقية من الجو
 - عرض الطريق عبر الراديو جُرّب بطيار آلي بديل فقط، لا براديو حقيقي
 - التقرير ولوحة المحطة جُرّبا على حاسوب التطوير فقط
+
+<p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
 
 ---
 
@@ -478,3 +522,512 @@ npm run build    # للنشر، الناتج في dist/
 التفاصيل في `Hima_1/4_Licenses_and_Sources/`.
 
 </div>
+
+---
+
+<a id="english"></a>
+
+## Workflow: from planning the route to the mission report
+
+This page follows the flight step by step: the parts, how the drone plans its route and shows it to the station, how it decides on its own in the air, how what the camera sees becomes an animal with a number and a status, when an alert reaches the pilot, how the report is written as the story of the flight, and how the station dashboard shows it. Each step opens with one line in plain words, followed by the details and numbers for those who need them.
+
+<a id="en-toc"></a>
+
+| # | Stage | # | Stage |
+|:-:|---|:-:|---|
+| 1 | [The parts and how they connect](#en-1) | 9 | [The status of each animal](#en-9) |
+| 2 | [Before take-off: setup and checks](#en-2) | 10 | [The alerts that reach the pilot](#en-10) |
+| 3 | [Before take-off: the drone plans its route](#en-3) | 11 | [AI during the flight](#en-11) |
+| 4 | [The flight: from starting the motors to stopping them](#en-4) | 12 | [After landing: preparing the package](#en-12) |
+| 5 | [During the flight: the drone decides on its own](#en-5) | 13 | [Writing the report: the story of the flight](#en-13) |
+| 6 | [Detection and tracking](#en-6) | 14 | [The package reaches the station](#en-14) |
+| 7 | [From a box to an animal with a number](#en-7) | 15 | [The station dashboard](#en-15) |
+| 8 | [The calculations: where the animal is and what it is doing](#en-8) | 16 | [What the simulation proved and what is not proven yet](#en-16) |
+
+---
+
+<a id="en-1"></a>
+
+### 1. The parts and how they connect
+
+> **In short:** the camera films, the Jetson understands the image, the Pixhawk flies the drone and gives its position, and the radio carries short messages to the pilot.
+
+Hima's goal is a fully autonomous drone, with manual control optional. Before take-off Hima plans the flight route by itself and shows it to the station (stage 3). In the air the autopilot (ArduPilot on the Pixhawk) flies this route, while the Jetson watches, computes and sends alerts, and decides when to leave the route to hover over a herd or follow a vehicle near it (stage 5). After landing the package moves to the station and a dashboard in the browser shows it (stage 15).
+
+| Part | Role | Specs |
+|---|---|---|
+| **Camera** | Points straight down, because every calculation assumes it looks at the ground from above. | `USB · Full HD` |
+| **Jetson Orin** | The drone computer. It runs the animal detection, the analysis and the language models, all without internet. | `JetPack 6 · Ubuntu 22.04 · Python 3.10` |
+| **Pixhawk** | The autopilot. It flies the route Hima planned, keeps the drone inside the reserve, gives the Jetson its position, altitude and heading, and carries our messages to the ground. | `TELEM2 · MAVLink 2` |
+| **Telemetry radio** | Links the Pixhawk to the ground station in the air. It is slow, so it carries only short text messages. | `STATUSTEXT ≤ 50 B` |
+| **Station PC** | Runs Mission Planner for the pilot, receives the mission package after landing, and hosts the station dashboard in the browser: the route before take-off, the missions after landing. | `Mission Planner · web dashboard` |
+| **Language models** | Run with Ollama on the Jetson itself: one model for the in-flight summary, one that sees images, and a larger one for the report after landing. | `llama3.2 · gemma3:4b · llama3.1:8b` |
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-2"></a>
+
+### 2. Before take-off: setup and checks
+
+> **In short:** before every flight the system checks by itself that every part works. If a fault prevents flying, it says so and does not start.
+
+One program called "the launcher" recognises the device, installs what is missing, finds the camera and the Pixhawk by itself, then runs the pre-flight check.
+
+#### What the launcher does, in order
+
+- Detects the device type: a Windows PC, the Jetson, or Linux
+- Prepares the Python environment and the right libraries for the device
+- Confirms the model files are the right ones, by their digital fingerprint
+- Starts Ollama and the language models
+- Tries the cameras until one gives it an image
+- Tries the ports until it hears the Pixhawk's heartbeat
+- Asks the station PC: are you answering? (a warning only, it does not block the flight)
+- Runs the pre-flight check
+- Starts the flight, if asked to
+
+#### What it checks before take-off
+
+| Item | Details |
+|---|---|
+| **GPS** | A 3D fix from at least **8 satellites**. It waits up to **3 minutes**, because the fix is slow after power-up. |
+| **Storage** | At least **5 GB** free for the video and the package. |
+| **The rest** | The settings, the models, the camera, the Pixhawk, the launch point, the graphics card, and Ollama. |
+
+> Every check has one of three results: `OK` healthy, `WARN` warning, and `FAIL` failure. A failure blocks the flight. A warning does not: for example, if Ollama does not run, the flight goes ahead without language models, and the alerts keep working because they are fixed rules that need no AI.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-3"></a>
+
+### 3. Before take-off: the drone plans its route
+
+> **In short:** before every flight the drone decides by itself where to fly today: the places it has not seen for a while, the places where poaching happened, and the places where herds were seen. The pilot can step in, but does not need to.
+
+The plan is computed on the Jetson from the real reserve boundary and the record of past flights, then handed to the autopilot as files it understands: the route and the fence. There is no AI in the plan; it is all numbers and fixed rules.
+
+| **11,270 km²** | **70 points** | **49 km** | **11 points** |
+|---|---|---|---|
+| Area of the reserve from its official boundary. The published figure is 11,269; the difference is under one in ten thousand | For the fence, the most the autopilot accepts. It stays entirely inside the boundary | Length of one flight's route, reaching up to 24.6 km from the launch point | Proposed launch points that put 99.5 % of the reserve within reach of a flight. One flight reaches 10 to 20 % of it |
+
+| Item | Details |
+|---|---|
+| **Reserve boundary** | Imam Abdulaziz bin Mohammed Royal Reserve, from the World Database on Protected Areas (WDPA, Protected Planet), the reserve development authority's 2023 boundary. Its terms: non-commercial use, with the source cited. |
+| **Fence** | The boundary has 6,782 points and the autopilot accepts 70. It is simplified to 70 points, then pulled **200 metres** inward so no part of it leaves the reserve, and the program checks this before every plan. |
+| **Cells** | The reserve is divided into about **45,000 cells**, each 500 × 500 metres. The route stays at least **500 metres** inside the fence. |
+| **Score of each cell** | Three things are added: how long since the drone passed over it (complete after **14 days**; a cell never visited gets the full score); closeness to past poaching incidents (an incident loses half its weight every **year**); closeness to herds that were seen (a sighting loses half its weight every **30 days**, because herds move). |
+| **Energy** | The aircraft is a five-rotor VTOL. Its specs are assumed until the design is approved: **100 minutes** of forward flight at **18 m/s**, so one flight reaches 10 to 20 % of the reserve (because the gazelles are not in all of it). A quarter of the battery is never planned (reserve), vertical take-off and landing cost 4 times as much, and **30 %** of the flight time is kept for following herds. What remains is a 49 km route. |
+| **Choosing the route** | A loop that starts at the launch point and returns to it. At each step the program adds the cell that gives the highest score per extra metre, counting every new cell the route passes over. It tries starting from each of the 12 best cells and picks the loop with the highest score. If poaching happened far away, the route stretches to reach it. |
+| **Output** | The route file for the autopilot (vertical take-off to 40 metres, flight at **60 metres** between points, then vertical landing at the launch point), the fence file and its values, and a picture of the plan. |
+
+> **One flight does not cover the reserve**
+>
+> At 60 metres the camera sees a strip only **25.5 metres** wide, so one flight scans about **1.25 km²** with the camera and reaches **24.6 km** from the launch point, which means it picks its route from 10 to 20 % of the reserve. So the route passes over cells on the way, the system remembers what it passed over, and the next flight goes elsewhere. We proposed 11 launch points the drone is driven to by car, and the system picks the best one each day. The team moves each point to the nearest road or ranger post.
+
+#### The route at the station before take-off
+
+After the drone plans its route and uploads it to the autopilot, it shows it to the station and **waits one minute**. With no answer it flies its own route.
+
+- **Two paths at once:** the same Wi-Fi the package travels on, and the radio. Over the radio the route arrives as points only, without images.
+- **The Route page in the station dashboard** opens by itself, with a countdown and a table of points: the route on a map that needs no internet, over satellite images stored at the station, with a button to hide the images if they do not line up with the route.
+- **Satellite images:** Sentinel-2 images from 2025 (EOxCloudless): one of the whole reserve at about **69 metres** per pixel, and one of the area of the main launch point at about **9 metres**. Their licence is non-commercial, and their source appears under the map. How well they line up with the ground has not been measured against a known point.
+- Points can be dragged, added and deleted, and clicking a point, a leg or any spot gives its **GPS** position. Problems show at once: outside the fence, close to it, close to the landing spot, or a route longer than the battery.
+- "Check" checks the route the same way the drone does. The drone checks it again by itself; if it fails, it rejects it, goes back to its own route and tells the station why.
+
+> The first 60-minute plan was tried in ArduPilot's official simulator with a VTOL aircraft: it accepted the fence and the route, took off and flew **14 of 14** points in 23 minutes, stayed inside the fence the whole time, and landed **10 centimetres** from the launch point. The simulator found two mistakes before take-off, and both were fixed: the fence margin was larger than the altitude ceiling, and the last point was too close to the landing spot.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-4"></a>
+
+### 4. The flight: from starting the motors to stopping them
+
+> **In short:** the system starts recording the moment the motors start, and saves with every image where the drone was at that moment. It stops after landing.
+
+| Item | Details |
+|---|---|
+| **Images** | The camera gives **30 images per second**, and the system analyses **10** of them. It always takes the newest image and skips what it missed, so no delay builds up. |
+| **Drone position** | Arrives from the Pixhawk **10 times per second**. An image with no position newer than **one second** is not analysed, because an old position gives the animal the wrong place. |
+| **Take-off and landing** | Below **5 metres** images are not analysed: the drone is close to the ground and the image is not useful. |
+| **Analysis** | Everything is recomputed every **10 seconds**, and the alerts come from that. |
+| **Longest recording** | **90 minutes**, then recording stops. The drone itself is not affected. |
+
+> **If the Pixhawk link is lost or the position is gone**
+>
+> The flight does not end. The system enters a "no position" state:
+>
+> - It sends `HIMA NO POSITION` to the pilot if the link allows.
+> - It keeps the camera, the animal detection and tracking running on every image, and analyses what it can without a place: how many animals are in the image, how long each one was seen, and its species. This "no-position analysis" goes with the package. The rules that need metres (distances and movement) wait for the position to return.
+> - It saves **one image per second** in a separate folder, with the animals seen in it, the drone's last known position, and how old that position is. With this the team can estimate where an animal seen in that period was.
+> - These images go with the mission package to the station.
+> - When the position returns, it sends `HIMA POSITION BACK` and the analysis goes back to normal.
+>
+> Without a link the system cannot tell the drone has landed, so the flight ends when the camera stops, on a manual stop, or after 90 minutes.
+
+> Every flight also has a **raw file** with no analysis at all: every analysed image and the detector's boxes in it, the drone's position, mode and battery, and every message and event. It is written line by line during the flight and goes, compressed, into the package with all the analyses.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-5"></a>
+
+### 5. During the flight: the drone decides on its own
+
+> **In short:** the drone flies its route; if it sees a herd, it leaves the route and hovers over it vertically like a helicopter, moving a little with it, then goes back. If it sees a vehicle very close to a herd, it hovers over it and follows it until it moves away, taking a photo every 3 seconds. When the energy runs low it returns. The pilot can take control at any moment.
+
+After every analysed image the Jetson decides with fixed rules, then gives the autopilot one command: "go to this point", "go back to the route" or "return home". There is no AI in the decision, and the autopilot's fence stays above everything.
+
+| **30 %** | **5 minutes** | **200 m** | **5 seconds** |
+|---|---|---|---|
+| Of the flight time kept for herds, so the route always has enough | The longest watch over one herd, and it does not return to it within half an hour | A vehicle is followed only at this distance from a herd or closer. At 30 metres an immediate alert is sent | Without a heartbeat from the Jetson, and the drone returns home by itself |
+
+| Item | Details |
+|---|---|
+| **Route** | The autopilot flies the plan by itself (AUTO mode). The Jetson only watches. |
+| **Herd** | Two or more animals, each within **100 metres** of the next. The drone goes to its centre, switches to vertical flight and hovers over it. The image at 60 metres covers only 25.5 × 14.3 metres, so when the herd's centre moves **8 metres** away the drone makes a small move to it. Hovering costs **4 times** the energy, and is counted that way against the reserved time. If the herd is gone for a minute, 5 minutes pass, or the reserved time runs out, it goes back to the route where it left it. |
+| **Vehicle** | All vehicles are one class (no information yet about the reserve's own vehicles). A vehicle is followed only when it is **200 metres** or less from a herd, and it comes before the herd. At **30 metres** or less the drone sends `HIMA VEH CLOSE` to the station at once. It hovers over the vehicle and follows it with no time limit, until it is more than 250 metres from the herd for 20 seconds, is gone for a minute, or the energy runs out. It saves **one photo every 3 seconds**; they are never deleted and go with the package after landing. |
+| **Energy** | Every second the Jetson computes the time left minus the way home minus the landing. If less than **two minutes** remain, or the battery is at **30 %**, it returns home. |
+| **Pilot** | If the pilot selects a mode the Jetson did not ask for, the Jetson goes quiet and sends no command until the pilot sets AUTO again. |
+| **Jetson failure** | The Jetson sends a heartbeat every second. If it stops for **5 seconds**, the autopilot returns home by itself (a feature of ArduPilot itself, not of our program). |
+| **Before arming** | The Jetson finds the launch point from the drone's position, plans today's route, uploads it to the autopilot, then reads back the safety values (the fence, and return when the Jetson fails). If one value differs, there is no flight. |
+
+| Autonomy message | Meaning |
+|---|---|
+| `HIMA PLAN …` | Today's route was shown to the station. After the minute it sends what happened: the route was edited, the edit was rejected, and which of the two routes it flew |
+| `HIMA FOLLOW HERD 6` | Left the route to hover over a herd of 6 animals |
+| `HIMA FOLLOW VEH` | Following a vehicle near a herd |
+| `HIMA VEH CLOSE 25m` | The vehicle is 25 metres from the herd (30 metres or less) |
+| `HIMA RESUME …` | Back on the route, with the reason: 5 minutes ended, the target was lost, the reserved time ran out, the vehicle moved away, or the position was lost |
+| `HIMA RTL ENERGY` | Returned home because the energy came close to the reserve limit |
+| `HIMA MANUAL / AUTO BACK` | The pilot took control, then gave it back |
+
+> Tried in ArduPilot's official simulator with a VTOL aircraft, with the Jetson talking to it through the same program, and virtual animals and vehicles that are seen only when they are under the camera. The herd: it left the route and switched to vertical flight in **under a second**, hovered over it for **101 seconds** and moved with it twice while it grazed, then went back to the route where it left it. The vehicle: it hovered over it, and when it drove off at **3 m/s** it followed with 23 small moves until the vehicle was away from the herd. The simulator found a mistake that was fixed: in the first trial the drone hovered where it last saw the vehicle, so the vehicle left the image and was lost; now it hovers **3 seconds ahead of it** and moves to where it was heading. When the Jetson was silenced, the autopilot returned home after **5.1 seconds**. Hovering is costly: the reserved time is enough for about **5 minutes** of hovering per flight, and in one trial it ran out after a herd, a vehicle and a herd.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-6"></a>
+
+### 6. Detection and tracking
+
+> **In short:** in every image the model draws a box around every oryx and every gazelle. Then it follows each box from image to image and gives it a number.
+
+| Item | Details |
+|---|---|
+| **Animal model** | A YOLO model we trained on two species only: the Arabian oryx and the reem gazelle. It runs on every image. |
+| **Sensitivity** | A detection is accepted when the model's confidence is **15%** or more. The threshold is low on purpose, and the later rules clean up the mistakes. |
+| **Image resolution** | The image is analysed at full size without shrinking, because a gazelle is small from above and needs at least **48 pixels** to be detected. The resolution required from the camera is currently 1280×720. |
+| **Tracking** | ByteTrack links the box in the new image to the same box in the previous one, so the animal keeps a fixed number while it is visible. |
+
+| Item | Details |
+|---|---|
+| **Vehicle model** | A general YOLO model that knows cars, trucks and people. It runs only **twice per second**, since a car does not need every image. |
+| **Vehicle alert** | When a vehicle appears in **two checks in a row**. The alert does not repeat within **two minutes**, because the detection flickers. |
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-7"></a>
+
+### 7. From a box to an animal with a number
+
+> **In short:** boxes alone are not enough: an animal may vanish for a moment and get a new number, or a box may be drawn around its head alone. These rules make every real animal count once, with one number.
+
+| Item | Details |
+|---|---|
+| **Registered after one second** | A new box does not count as an animal until it has been seen for **one full second in a row**. A box seen for a moment may be a model mistake, so it is not counted, not treated as a neighbour of others, and gets no alert. |
+| **Box inside a box** | If a small box is inside a larger box of the same species (**90%** of it inside, and its area **60%** or less), it is part of the same animal, such as the head or a leg, and it is dropped. A gazelle standing next to an oryx is not dropped, because it is another species. |
+| **The animal that comes back** | If an animal disappears and a new box appears near it, it is treated as the same animal if: it was gone **two minutes** or less, it is the same species, and the distance fits its speed (under **30 m**, and under 3 m + 1.5 × its speed × the time it was gone). |
+| **Animal number** | The animal keeps the first number it was given. So it is alerted about once. |
+| **Point of registration** | For each animal the place and time at the moment it was registered are saved, with GPS coordinates. The map at the station shows the drone's path and one point per animal. |
+
+> These rules look only at the past and never wait for the future. So the numbers the pilot gets in the air are the same numbers in the report after landing.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-8"></a>
+
+### 8. The calculations: where the animal is and what it is doing
+
+> **In short:** from where the box is in the image, and from the drone's position, altitude and heading, the system computes where the animal is on the ground, in metres. From how that place changes it knows whether the animal is grazing, walking or running, and whether it is close to the drone or far from its herd.
+
+| Item | Details |
+|---|---|
+| **Speed** | How far the animal moved in the last **two seconds** |
+| **Grazing or resting** | Slower than **0.3 m/s** |
+| **Running** | **2.5 m/s** or faster |
+| **Drone close** | The distance between the drone and the animal is under **45 m** (the slant distance, straight through the air) |
+| **Stress** | The animal is running and the drone is closer than **60 m** |
+
+| Item | Details |
+|---|---|
+| **Isolated** | More than **30 m** from the centre of its herd. The herd is whoever is in the image, plus whoever was seen in the last **minute** at their last place |
+| **Clean-up** | An event shorter than **3 s** is ignored, and two events less than **two seconds** apart count as one event |
+| **Hidden** | Gone while its place is still inside the image, as if under a tree. One disappearance counts if it lasts **two seconds**, and the animal is "hidden" when its disappearances add up to **5 seconds** |
+
+> From above the camera cannot tell a tree from a dune or a shadow, so all of them are "cover". If the animal's place leaves the image, it has left the camera's view, and that does not count as hiding.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-9"></a>
+
+### 9. The status of each animal
+
+> **In short:** at every moment each animal gets one status that sums up its situation. The statuses are checked in this order, from the most serious to normal, and the first one that applies is its status.
+
+| Order | Status | When |
+|---|---|---|
+| 1 | `SEVERE_DRONE_DISTURBANCE` | Severe disturbance: it spent **20%** of its time or more under stress (running with the drone close). |
+| 2 | `SUSPECTED_INJURY_OR_ILLNESS` | Possible injury or illness: alone and resting most of its time (isolated **50%** and resting **60%**), or alone and still in one place for a full **minute**. |
+| 3 | `POSSIBLE_HIDDEN_YOUNG` | Possible hidden young: the same condition as above, but its body is small (**60%** or less of an adult's length: oryx 1.6 m, gazelle 1.0 m). Oryx and gazelle young stay still alone while the mother is away, so we do not call them injured. |
+| 4 | `RAPID_CORRIDOR_TRANSIT` | Fast transit: running **20%** of its time away from the herd (**30%**), and the drone did not disturb it. |
+| 5 | `PROXIMITY_PACING_ALERTNESS` | Alert to the drone: the drone was close to it **50%** of its time or more. |
+| 6 | `INTERMITTENT_OCCLUSION` | Hides now and then: its disappearances while inside the image add up to **5 seconds**. |
+| 7 | `BASELINE` | Normal: none of the above. |
+
+> The shares are computed from the time the animal was visible to the camera, not from the length of the flight.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-10"></a>
+
+### 10. The alerts that reach the pilot
+
+> **In short:** when an animal's status becomes important, the system sends a short line that appears to the pilot on the Mission Planner screen, with the animal's number and species, what happened, and what is suggested.
+
+An alert is a fixed rule, with no AI, so it is fast and never gets the numbers wrong. Each alert is one line of at most **50 characters**; the Jetson sends it to the Pixhawk, and the Pixhawk passes it over the radio to the station.
+
+| Item | Details |
+|---|---|
+| **Before any alert** | The animal must have been seen for at least **15 seconds**, so nothing unconfirmed is alerted. |
+| **No repeats** | The alert about the same animal does not repeat within **two minutes**, unless its status gets worse. |
+| **Radio** | Our share of the radio is **100 bytes per second**. Messages arrive in the order they were sent. |
+
+#### Injury stages: a lone animal staying still within 10 × 10 m
+
+| **0** | **INJ1 · 1 min** | **INJ2 · 3 min** | **INJ3 · 6 min** |
+|---|---|---|---|
+| Starts staying still alone | Watch and follow; the drone stays over it | Suspected injury; the camera window opens to check | Strong suspicion; a ranger needs to come |
+
+| Code in the alert | Meaning |
+|---|---|
+| `SEVDRN / SEVVEH / SEVUNK` | Severe disturbance, with the cause: the drone (came **5 m** or more closer before the animal started running), a vehicle (appeared 10 seconds or less before the run), or an unknown cause |
+| `INJ1 / INJ2 / INJ3` | The stages of possible injury, as in the strip above |
+| `YOUNG` | Possible hidden young |
+| `PROXIM` | The animal is alert to the drone being close |
+| `VEHICLE` | A vehicle in the image |
+| `DWELL … LEAVE` | The drone has been over one animal for **7 minutes**: leaving is suggested, because its presence keeps the animal stressed. At most once every two minutes |
+
+> At the end of the alert is a suggested command and a suggested altitude: `OBSERVE` keep watching (and do not go below 50 m), `CLIMB` climb, `STANDOFF` move away horizontally, `RETREAT` withdraw, `WIDEN` widen the circle, `ZOOM` zoom in from a high altitude, and `REACQ` search for it again. The altitude is between 40 and 120 m. These are suggestions only; the pilot decides.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-11"></a>
+
+### 11. AI during the flight
+
+> **In short:** two language models help the pilot: one writes a short summary every half minute, and one looks at the images at an important event and describes what it sees. But the decision stays with the fixed rules, and what they say arrives marked "unconfirmed".
+
+They run on a separate line, so they never slow down the animal detection. Their answers do not change the status, the alert or the suggested command.
+
+#### The summary every 30 seconds
+
+The model (llama3.2) sees no images. It reads only the system's numbers: how many animals, which species, their statuses, and what changed. Then it writes up to 3 sentences.
+
+Every sentence is checked before it is sent: if it mentions a number that is not in the numbers, or a species that was not seen, it is rejected. If nothing changed, the system sends `NO CHANGE` without a model.
+
+`HIMA S2 @60 0GZ 5OR | 5 tracks so far: 5 oryx.`
+
+#### The camera window at an event
+
+At a vehicle, a suspected injury (INJ2 and INJ3), a run, or a young animal, the model (gemma3:4b) sees up to 3 close-up images two seconds apart, with the YOLO boxes drawn on them.
+
+It is asked a neutral question that does not mention the alert: is there an animal in the box? Is it lying down? Do you see a vehicle or a person? If it says "vehicle" or "person" and the detector drew no box for it, its answer is rejected and becomes "not sure".
+
+`≤ 6 per flight · 120 s per event type`
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-12"></a>
+
+### 12. After landing: preparing the package
+
+> **In short:** when the motors stop, the system computes the final result and gathers the flight into a "mission package": the analyses, the report, the flight log, the raw file, the event clips and the images.
+
+| Item | Details |
+|---|---|
+| **Event clips** | For each event, a clip from **10 seconds** before it to **10 seconds** after it, and the longest clip is **one minute**. |
+| **Uncertain detection** | An animal seen for less than **one second** gets a saved image, for a person at the station to review: it may be a model mistake. |
+| **Suspected number switch** | If a number disappears and a new number appears close to it within **two seconds**, it is flagged for review, as it may be the same animal. |
+| **Flight log** | The autopilot's modes, every message sent in the air, and the vehicle alerts. From it the report knows where the vehicle was. |
+
+| Item | Details |
+|---|---|
+| **Raw file** | Every analysed image and its boxes, the drone's position, and every message, with no analysis. Compressed. |
+| **Vehicle-follow photos** | One photo every **3 seconds** while following. |
+| **"No position"** | If the position was lost: its analysis (count, species and time seen) and one image per second. |
+| **Size** | The package limit is **2000 MB**. If it goes over, the least important items are dropped first, and what was dropped is recorded. |
+
+> What is never dropped whatever the size, and is sent first: the session file, the report, the flight log, the raw file, the no-position analysis, and the vehicle-follow photos.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-13"></a>
+
+### 13. Writing the report: the story of the flight
+
+> **In short:** the report explains the flight rather than listing numbers: a short summary, then what the drone found in order, then each incident and what is suggested after it, then a closing. A language model writes it, then every part is checked twice, and any wrong part is replaced by a ready-made text built from the numbers.
+
+The format follows reserve patrol reports and drone survey papers. The language is English, and recommendations appear only at incidents. The tables and detailed numbers stay in the station dashboard.
+
+| Item | Details |
+|---|---|
+| **Summary** | Two or three sentences: how long and where the flight went, what it found, and the incidents by name, or "nothing unusual". |
+| **Flight** | A text for each stage in time order, read one after another as a single story. The program computes the stages: animals 100 m or less apart are one place, and quiet neighbouring places in the same direction are one stage. "Outbound" is before the farthest point the drone reached, and "return" is after it. |
+| **Incidents** | One incident for each place with an alert status (severe disturbance, possible injury, hidden young, alertness to the drone), and one for each vehicle. A vehicle **200 m** or less from a herd joins that herd's incident. Each incident has a title set by the program, a text, and a "follow-up". |
+| **Follow-up** | The only place for a recommendation, from a list the program sets by status and cause: whether the vehicle was allowed, a second look at the herd on a future flight, flying higher or farther, sending a ranger to an animal suspected of injury, or avoiding low passes over a hidden young. |
+| **Closing** | Whether the rest of the flight was quiet, and the limits of the data: the counts are a minimum, and animals under trees may be missed. |
+| **Counts and numbers** | "At least N" = the largest number of that species seen together in one image, so it is an honest minimum. Distances are rounded (to the nearest 10 m under 100 m, 50 m under a kilometre, and 100 m above), and minutes are whole. |
+
+- **1. Facts** The program computes the places, stages, incidents and vehicles from the session and the flight log. No images.
+- **2. Writer** The model (llama3.1:8b) writes all the parts in English, up to 2500 characters.
+- **3. Reviewer** The same model reads each part with its own facts only. It can only reject, not write.
+- **4. Fixed check** Every number with its unit, every status, every vehicle, and every "distance and direction" must be in the facts of that same part. No advice outside the follow-up.
+- **5. Repair** Only the rejected part takes the ready-made template text; the rest stays.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-14"></a>
+
+### 14. The package reaches the station
+
+> **In short:** the package is too big for the radio. After landing the Jetson joins the base Wi-Fi and sends it by itself to the station PC, so the mission appears in the dashboard within seconds, with no step from anyone.
+
+| Item | Details |
+|---|---|
+| **Sending** | In pieces of **4 MB**. If the Wi-Fi drops, it continues from where it stopped and does not start from zero. |
+| **File integrity** | Every file has a digital fingerprint. The station compares them, and any file that arrived incomplete or damaged is sent again. |
+| **Security** | Every message is signed with a secret key that exists only on the drone and the station, so no other device can send a package or change one. Encryption in the air comes from the Wi-Fi itself. |
+
+| Item | Details |
+|---|---|
+| **No network** | The package waits on the drone, which tries every **15 seconds**. |
+| **Package not accepted** | It does not enter the archive, and is kept with the reason it was rejected. A saved mission is never overwritten. |
+| **Dashboard** | Asks every **3 seconds** for a new flight or a new route, so the mission appears by itself without reloading the page. |
+
+> After sending, the copy of the package stays on the drone and is not deleted.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-15"></a>
+
+### 15. The station dashboard
+
+> **In short:** a page in the station PC's browser that works without internet. Before take-off it shows today's route, and after landing it shows every mission: its report, its animals, its map, its images and clips, and how it compares with others.
+
+It runs on the same PC only, and opens only files inside the mission folder. It has a light and a dark theme, and works on a phone screen.
+
+| Item | Details |
+|---|---|
+| **Overview** | The totals, the tracks per flight by species, the statuses from most serious, the daily charts, the flights table, the events, and a date filter. |
+| **Mission** | One flight, with a button to print the report. Its tabs: **Report:** the report as in stage 13, the result of its checks, the table of places under it (the data behind the report), and the messages sent in the air on a timeline with their delivery delay; **Animals** and **Timeline:** each animal's status and behaviour, and its events on a timeline with the alerts; **Map:** the drone's path and one point per animal, with zoom and GPS copy; **Images & clips:** the clips play with the detector's boxes on them, and the images open in a viewer with zoom; **Flight log** and **Files**. |
+| **Compare** | Up to **6** flights or days side by side, each with a fixed colour in every chart. |
+| **Review** | The images the detector was not sure about, for review and labelling. |
+| **Route** | The route editor before take-off (stage 3). It opens by itself when a route is waiting. |
+
+> **Virtual flights so it never opens empty**
+>
+> The archive always has one simulated flight (**27 minutes**, with a report from the model) and **8** synthetic flights for comparison. All are marked "Virtual", and they leave the totals as soon as a real flight arrives. The dashboard opens on the newest flight, or on Route when a route is waiting.
+
+> The first opening after the station starts takes about **7 seconds**, because it checks the fingerprint of every file in the archive; after that it is instant.
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
+
+---
+
+<a id="en-16"></a>
+
+### 16. What the simulation proved and what is not proven yet
+
+> **In short:** we tried the whole system in a simulated flight 27 and a half minutes long, with 25 animals whose truth we know. The results are good, but the real drone and the real Jetson have not been tried yet.
+
+Flight data2: the real ArduPilot running on the PC, a made-up world, a detector that imitates the model's mistakes, and the same system that will fly.
+
+| **27.5 minutes** | **55 → 25** | **24 of 25** | **25 of 25** | **0.5 seconds** | **99 of 99** |
+|---|---|---|---|---|---|
+| One flight, and 16,001 images analysed | Numbers the tracker gave, which became 25 animals. The truth is 25 | Animals that got the right status in the flight | After adjusting the hiding rule, on the same data | From the vehicle appearing to its alert, with no false alert | Messages reached the station in order |
+
+#### What happened in the flight
+
+- The injured oryx: stage 1 at second 396, stage 2 at 516, and stage 3 at 696
+- The young: alerted at second 856
+- The vehicle: 6 severe-disturbance alerts because of it, at seconds 996 and 1006
+- The drone staying over one animal: alerted at second 751
+
+#### Not proven yet
+
+- Not tried on a real Jetson, or in real flight
+- The image analysis speed on the Jetson is not measured. On the development PC it is 58 thousandths of a second per image
+- There are no images from above of oryx and gazelle young, so how well the young is told apart is not measured
+- The planning and the in-flight decisions are built on assumed aircraft specs, and were tried only in the simulator with virtual animals and vehicles, not with real images from the air
+- Showing the route over the radio was tried only with a stand-in autopilot, not a real radio
+- The report and the station dashboard were tried on the development PC only
+
+---
+
+## Repository contents
+
+| Path | What it holds |
+|---|---|
+| `Hima_1/` | The complete Hima system, ready to copy to a USB drive: one folder for the drone (Jetson Orin) and one for the station PC (Windows), with the code, settings, models, link key and data. Start from `Hima_1/README.md` |
+| `src/`, `public/`, `index.html` | The project website (React, TypeScript, Vite, Tailwind CSS, Three.js) |
+| `tools/drone_model/` | The script that builds the website's 3D drone model |
+| `.github/workflows/deploy.yml` | Publishes the website to GitHub Pages on every push to `main` |
+
+## Running the website
+
+```bash
+npm install
+npm run dev      # development
+npm run build    # production, output in dist/
+```
+
+## Installing the system
+
+- **Drone:** `Hima_1/1_Drone_Jetson/HOW_TO_INSTALL_DRONE.md`
+- **Station:** `Hima_1/2_Station_PC/HOW_TO_RUN_STATION.md`
+
+The first install on each device needs internet once (the Python libraries, torch, Ollama and its models). After that the system runs without internet.
+
+## Data
+
+- **Reserve boundary:** WDPA (Protected Planet), site 555756385. Non-commercial use, with the source cited.
+- **Satellite images:** EOxCloudless 2025 by EOX IT Services GmbH, containing modified Copernicus Sentinel data. Licence CC BY-NC-SA 4.0.
+- **General model:** `yolo26s.pt` by Ultralytics (AGPL-3.0).
+- **Animal model:** `best_4_1.pt`, trained on Roboflow project hima-smaf5, version 4.
+
+Details in `Hima_1/4_Licenses_and_Sources/`.
