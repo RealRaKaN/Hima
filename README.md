@@ -462,27 +462,51 @@ Qassim University, Computer Science Department. Graduation Project.
 
 > **باختصار:** جرّبنا النظام كاملًا في رحلة محاكاة طولها 27 دقيقة ونصف، فيها 25 حيوانًا نعرف حقيقتها. النتائج جيدة، لكن الدرون الحقيقي والجيتسون الحقيقي لم يُجرَّبا بعد.
 
-رحلة data2: أردو بايلوت الحقيقي يعمل على الحاسوب، وعالم مصنوع، وكاشف يحاكي أخطاء النموذج، والنظام نفسه الذي سيطير.
+#### الرحلة التجريبية (data2)
 
-| **27.5 دقيقة** | **55 → 25** | **24 من 25** | **25 من 25** | **0.5 ثانية** | **99 من 99** |
-|---|---|---|---|---|---|
-| رحلة واحدة، و16,001 صورة حُللت | رقمًا أعطاها المتتبع، صارت 25 حيوانًا. والحقيقة 25 | حيوانًا أخذ الحالة الصحيحة في الرحلة | بعد تعديل قاعدة الاختباء، على البيانات نفسها | من ظهور المركبة إلى تنبيهها، ولا تنبيه خطأ | رسالة وصلت المحطة بالترتيب |
+| البند | التفاصيل |
+|---|---|
+| **الطيار الآلي** | أردو بايلوت الحقيقي (ArduCopter 4.7.2) يعمل على حاسوب التطوير بدل الدرون (SITL). |
+| **النظام** | نفس البرنامج الذي سيطير على الجيتسون (`hima fly`)، بلا أي تعديل للتجربة. |
+| **العالم** | مصنوع، فيه **25 حيوانًا**، ونعرف لكل واحد مكانه وحالته الحقيقية في كل لحظة، فنقارن قرار النظام بالحقيقة. |
+| **الكاشف** | مولَّد يكرر أخطاء نموذج YOLO المختارة (يفوّت حيوانًا أحيانًا ويرسم صناديق زائدة)، لا صور حقيقية. |
+| **الطول** | **1,653 ثانية** (27.5 دقيقة)، حُلّلت فيها **16,001 صورة**. |
 
-#### ما حدث في الرحلة
+#### النتائج
 
-- المها المصاب: المرحلة 1 عند الثانية 396، والمرحلة 2 عند 516، والمرحلة 3 عند 696
-- الصغير: نُبّه عنه عند الثانية 856
-- المركبة: 6 تنبيهات إزعاج شديد بسببها، عند الثانية 996 و1006
-- بقاء الدرون فوق حيوان واحد: نُبّه عند الثانية 751
+| ما قسناه | النتيجة | الشرح |
+|---|---|---|
+| **عدّ الحيوانات** | **25 من 25** | المتتبع أعطى 55 رقمًا. 21 منها ظهرت أقل من ثانية فلم تُسجَّل، والباقي رُبط بحيوانه بعد غيابه. فبقي 25 حيوانًا، لكل حيوان رقم واحد، ولا تبديل بين حيوانين. |
+| **الحالة الصحيحة أثناء الرحلة** | **24 من 25** | الخطأ الوحيد حيوان يمشي تحت شجر ويختفي نحو 3 ثوانٍ كل مرة، فأخذ «طبيعي» بدل «يختبئ متقطعًا». |
+| **بعد تعديل قاعدة الاختباء** | **25 من 25** | صارت الغيابات القصيرة تُجمع. أُعيد التحليل على صناديق الكاشف نفسها من هذه الرحلة، لا في رحلة جديدة. |
+| **تنبيه المركبة** | **بعد 0.5 ثانية** | من ظهور المركبة في الصورة إلى خروج التنبيه، ولم يخرج أي تنبيه كاذب. |
+| **الرسائل إلى المحطة** | **99 من 99** | وصلت كلها عبر أردو بايلوت، وبالترتيب الذي أُرسلت به. |
+| **أطول تحديث للتحليل** | **0.92 ثانية** | التحليل يُعاد كل 10 ثوانٍ. هذا الرقم على حاسوب التطوير، وعلى الجيتسون أبطأ ولم يُقس. |
+
+#### التنبيهات بترتيب وقوعها
+
+الوقت محسوب من الإقلاع (دقيقة:ثانية).
+
+| الوقت | التنبيه | ما حدث |
+|---|---|---|
+| 6:36 | `INJ1` | المها المصاب ساكن وحده منذ دقيقة: المراقبة |
+| 8:36 | `INJ2` | ساكن منذ 3 دقائق: اشتباه إصابة |
+| 11:36 | `INJ3` | ساكن منذ 6 دقائق: اشتباه قوي، يحتاج حارسًا |
+| 12:31 | `DWELL` | الدرون فوق حيوان واحد منذ 7 دقائق: اقتُرحت المغادرة |
+| 14:16 | `YOUNG` | صغير مختبئ محتمل |
+| 16:36 و16:46 | `SEVVEH` | 6 تنبيهات إزعاج شديد، سببها المركبة |
+| 21:46 | `PROXIM` | حيوان منتبه لقرب الدرون |
 
 #### لم يثبت بعد
 
-- لم يُجرَّب على جيتسون حقيقي، ولا في طيران فعلي
-- سرعة تحليل الصورة على الجيتسون غير مقيسة. على حاسوب التطوير 58 جزءًا من الألف من الثانية للصورة
-- لا توجد صور من فوق لصغار المها والريم، فدقة تمييز الصغير غير مقيسة
-- التخطيط والقرار أثناء الطيران مبنيان على مواصفات طائرة مفترضة، وجُرّبا في المحاكي فقط بحيوانات ومركبات افتراضية، لا بصور حقيقية من الجو
-- عرض الطريق عبر الراديو جُرّب بطيار آلي بديل فقط، لا براديو حقيقي
-- التقرير ولوحة المحطة جُرّبا على حاسوب التطوير فقط
+| الجانب | ما ينقصه |
+|---|---|
+| **الجهاز والطيران** | لم يُجرَّب على جيتسون حقيقي، ولا في طيران فعلي. |
+| **السرعة** | سرعة تحليل الصورة على الجيتسون غير مقيسة. على حاسوب التطوير (RTX 3050) الوسيط 58 مللي ثانية للصورة. |
+| **الصغار** | لا توجد صور من فوق لصغار المها والريم، فدقة تمييز الصغير غير مقيسة. |
+| **التخطيط والقرار في الجو** | مبنيان على مواصفات طائرة مفترضة، وجُرّبا في المحاكي فقط بحيوانات ومركبات افتراضية، لا بصور حقيقية من الجو. |
+| **الراديو** | عرض الطريق عبر الراديو جُرّب بطيار آلي بديل فقط، لا براديو حقيقي. |
+| **التقرير واللوحة** | جُرّبا على حاسوب التطوير فقط. |
 
 <p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
 
@@ -496,14 +520,6 @@ Qassim University, Computer Science Department. Graduation Project.
 | `src/` و`public/` و`index.html` | موقع المشروع (React وTypeScript وVite وTailwind CSS وThree.js) |
 | `tools/drone_model/` | السكربت الذي يبني مجسّم الدرون ثلاثي الأبعاد للموقع |
 | `.github/workflows/deploy.yml` | نشر الموقع على GitHub Pages مع كل دفع إلى `main` |
-
-## تشغيل الموقع
-
-```bash
-npm install
-npm run dev      # للتطوير
-npm run build    # للنشر، الناتج في dist/
-```
 
 ## تثبيت النظام
 
@@ -975,27 +991,53 @@ It runs on the same PC only, and opens only files inside the mission folder. It 
 
 > **In short:** we tried the whole system in a simulated flight 27 and a half minutes long, with 25 animals whose truth we know. The results are good, but the real drone and the real Jetson have not been tried yet.
 
-Flight data2: the real ArduPilot running on the PC, a made-up world, a detector that imitates the model's mistakes, and the same system that will fly.
+#### The test flight (data2)
 
-| **27.5 minutes** | **55 → 25** | **24 of 25** | **25 of 25** | **0.5 seconds** | **99 of 99** |
-|---|---|---|---|---|---|
-| One flight, and 16,001 images analysed | Numbers the tracker gave, which became 25 animals. The truth is 25 | Animals that got the right status in the flight | After adjusting the hiding rule, on the same data | From the vehicle appearing to its alert, with no false alert | Messages reached the station in order |
+| Item | Details |
+|---|---|
+| **Autopilot** | The real ArduPilot (ArduCopter 4.7.2) running on the development PC in place of the drone (SITL). |
+| **System** | The same program that will fly on the Jetson (`hima fly`), with no change for the test. |
+| **World** | Made up, with **25 animals**. We know where each one is and what its true status is at every moment, so the system's decisions can be compared with the truth. |
+| **Detector** | Generated to repeat chosen YOLO mistakes (it sometimes misses an animal or draws extra boxes); no real images. |
+| **Length** | **1,653 seconds** (27.5 minutes), with **16,001 images** analysed. |
 
-#### What happened in the flight
+#### Results
 
-- The injured oryx: stage 1 at second 396, stage 2 at 516, and stage 3 at 696
-- The young: alerted at second 856
-- The vehicle: 6 severe-disturbance alerts because of it, at seconds 996 and 1006
-- The drone staying over one animal: alerted at second 751
+| What we measured | Result | Explanation |
+|---|---|---|
+| **Counting the animals** | **25 of 25** | The tracker gave 55 numbers. 21 of them were seen for less than a second and were not registered, and the rest were linked back to their animal after a gap. That left 25 animals, one number each, with no swap between two animals. |
+| **Right status during the flight** | **24 of 25** | The only mistake was an animal walking under trees and vanishing for about 3 seconds each time; it got "normal" instead of "hides now and then". |
+| **After adjusting the hiding rule** | **25 of 25** | Short disappearances are now added up. The analysis was rerun on the same detector boxes from this flight, not in a new flight. |
+| **Vehicle alert** | **after 0.5 seconds** | From the vehicle appearing in the image to the alert going out, with no false alert. |
+| **Messages to the station** | **99 of 99** | All arrived through ArduPilot, in the order they were sent. |
+| **Longest analysis update** | **0.92 seconds** | The analysis is redone every 10 seconds. This is on the development PC; the Jetson is slower and has not been measured. |
+
+#### The alerts in the order they happened
+
+Time from take-off (minutes:seconds).
+
+| Time | Alert | What happened |
+|---|---|---|
+| 6:36 | `INJ1` | The injured oryx has stayed still alone for a minute: watch |
+| 8:36 | `INJ2` | Still for 3 minutes: suspected injury |
+| 11:36 | `INJ3` | Still for 6 minutes: strong suspicion, a ranger needs to come |
+| 12:31 | `DWELL` | The drone has been over one animal for 7 minutes: leaving was suggested |
+| 14:16 | `YOUNG` | Possible hidden young |
+| 16:36 and 16:46 | `SEVVEH` | 6 severe-disturbance alerts, caused by the vehicle |
+| 21:46 | `PROXIM` | An animal alert to the drone being close |
 
 #### Not proven yet
 
-- Not tried on a real Jetson, or in real flight
-- The image analysis speed on the Jetson is not measured. On the development PC it is 58 thousandths of a second per image
-- There are no images from above of oryx and gazelle young, so how well the young is told apart is not measured
-- The planning and the in-flight decisions are built on assumed aircraft specs, and were tried only in the simulator with virtual animals and vehicles, not with real images from the air
-- Showing the route over the radio was tried only with a stand-in autopilot, not a real radio
-- The report and the station dashboard were tried on the development PC only
+| Area | What is missing |
+|---|---|
+| **Hardware and flight** | Not tried on a real Jetson, or in real flight. |
+| **Speed** | The image analysis speed on the Jetson is not measured. On the development PC (RTX 3050) the median is 58 ms per image. |
+| **Young animals** | There are no images from above of oryx and gazelle young, so how well the young is told apart is not measured. |
+| **Planning and in-flight decisions** | Built on assumed aircraft specs, and tried only in the simulator with virtual animals and vehicles, not with real images from the air. |
+| **Radio** | Showing the route over the radio was tried only with a stand-in autopilot, not a real radio. |
+| **Report and dashboard** | Tried on the development PC only. |
+
+<p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
 
 ---
 
@@ -1007,14 +1049,6 @@ Flight data2: the real ArduPilot running on the PC, a made-up world, a detector 
 | `src/`, `public/`, `index.html` | The project website (React, TypeScript, Vite, Tailwind CSS, Three.js) |
 | `tools/drone_model/` | The script that builds the website's 3D drone model |
 | `.github/workflows/deploy.yml` | Publishes the website to GitHub Pages on every push to `main` |
-
-## Running the website
-
-```bash
-npm install
-npm run dev      # development
-npm run build    # production, output in dist/
-```
 
 ## Installing the system
 
