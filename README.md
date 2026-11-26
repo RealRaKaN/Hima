@@ -466,7 +466,7 @@ Qassim University, Computer Science Department. Graduation Project.
 
 | البند | التفاصيل |
 |---|---|
-| **الطيار الآلي** | أردو بايلوت الحقيقي (ArduCopter 4.7.2) يعمل على جهاز غير الجهاز الأساسي المطلوب (الجيتسون) بدل الدرون (SITL). |
+| **الطيار الآلي** | أردو بايلوت الحقيقي (ArduCopter 4.7.2) يعمل على جهاز غير الجهاز الأساسي المطلوب (البيكس هوك)، أي بدل الدرون (SITL). |
 | **النظام** | نفس البرنامج الذي سيطير على الجيتسون (`hima fly`)، بلا أي تعديل للتجربة. |
 | **العالم** | مصنوع، فيه **25 حيوانًا**، ونعرف لكل واحد مكانه وحالته الحقيقية في كل لحظة، فنقارن قرار النظام بالحقيقة. |
 | **الكاشف** | مولَّد يكرر أخطاء نموذج YOLO المختارة (يفوّت حيوانًا أحيانًا ويرسم صناديق زائدة)، لا صور حقيقية. |
@@ -506,7 +506,7 @@ Qassim University, Computer Science Department. Graduation Project.
 | **الصغار** | لا توجد صور من فوق لصغار المها والريم، فدقة تمييز الصغير غير مقيسة. |
 | **التخطيط والقرار في الجو** | مبنيان على مواصفات طائرة مفترضة، وجُرّبا في المحاكي فقط بحيوانات ومركبات افتراضية، لا بصور حقيقية من الجو. |
 | **الراديو** | عرض الطريق عبر الراديو جُرّب بطيار آلي بديل فقط، لا براديو حقيقي. |
-| **التقرير واللوحة** | جُرّبا على جهاز غير الجهاز الأساسي المطلوب (الجيتسون) فقط. |
+| **التقرير واللوحة** | جُرّبا على جهاز غير الأجهزة الأساسية المطلوبة فقط (الجيتسون للتقرير، وحاسوب المحطة للوحة). |
 
 <p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
 
@@ -995,7 +995,7 @@ It runs on the same PC only, and opens only files inside the mission folder. It 
 
 | Item | Details |
 |---|---|
-| **Autopilot** | The real ArduPilot (ArduCopter 4.7.2) running on a device other than the required one (the Jetson) in place of the drone (SITL). |
+| **Autopilot** | The real ArduPilot (ArduCopter 4.7.2) running on a device other than the required one (the Pixhawk), in place of the drone (SITL). |
 | **System** | The same program that will fly on the Jetson (`hima fly`), with no change for the test. |
 | **World** | Made up, with **25 animals**. We know where each one is and what its true status is at every moment, so the system's decisions can be compared with the truth. |
 | **Detector** | Generated to repeat chosen YOLO mistakes (it sometimes misses an animal or draws extra boxes); no real images. |
@@ -1035,7 +1035,7 @@ Time from take-off (minutes:seconds).
 | **Young animals** | There are no images from above of oryx and gazelle young, so how well the young is told apart is not measured. |
 | **Planning and in-flight decisions** | Built on assumed aircraft specs, and tried only in the simulator with virtual animals and vehicles, not with real images from the air. |
 | **Radio** | Showing the route over the radio was tried only with a stand-in autopilot, not a real radio. |
-| **Report and dashboard** | Tried on a device other than the required one (the Jetson) only. |
+| **Report and dashboard** | Tried only on devices other than the required ones (the Jetson for the report, the station PC for the dashboard). |
 
 <p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
 
