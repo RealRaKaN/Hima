@@ -510,7 +510,7 @@ npm run build    # للنشر، الناتج في dist/
 - **الدرون:** `Hima_1/1_Drone_Jetson/HOW_TO_INSTALL_DRONE.md`
 - **المحطة:** `Hima_1/2_Station_PC/HOW_TO_RUN_STATION.md`
 
-أول تثبيت على كل جهاز يحتاج إنترنت مرة واحدة (مكتبات بايثون وtorch وOllama ونماذجه)، وبعدها يعمل النظام بلا إنترنت.
+أول تثبيت على كل جهاز يحتاج إنترنت مرة واحدة، وبعدها يعمل النظام بلا إنترنت. الدرون يثبّت مكتبات بايثون وtorch وOllama ونماذجه. والمحطة تثبّت مكتبات بايثون فقط (`requirements-station.txt`)، لأنها تستقبل الحزم وتعرضها وتراجع الطريق قبل الإقلاع، والكشف والتحليل والتقرير كلها على الدرون.
 
 ## البيانات
 
@@ -1021,7 +1021,7 @@ npm run build    # production, output in dist/
 - **Drone:** `Hima_1/1_Drone_Jetson/HOW_TO_INSTALL_DRONE.md`
 - **Station:** `Hima_1/2_Station_PC/HOW_TO_RUN_STATION.md`
 
-The first install on each device needs internet once (the Python libraries, torch, Ollama and its models). After that the system runs without internet.
+The first install on each device needs internet once. After that the system runs without internet. The drone installs the Python libraries, torch, Ollama and its models. The station installs the Python libraries only (`requirements-station.txt`), because it only receives the packages, shows them, and reviews the route before take-off; detection, analysis and the report all run on the drone.
 
 ## Data
 

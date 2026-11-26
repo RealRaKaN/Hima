@@ -19,8 +19,9 @@ What it does, in order (each step prints OK / WARN / FAIL, and a summary at the 
     8. preflight   the system's own check: python -m hima preflight, with what steps 5 and 6 found
     9. fly         only with --fly: python -m hima fly (it waits for ARM)
 
-With --station (the ground station PC), after steps 1 and 2:
-    3. key         the delivery key shared with the drone (made here the first time: copy it to the drone)
+With --station (the ground station PC), after step 1 and step 2 with requirements-station.txt (no torch, no
+YOLO, no Ollama: the station only receives the packages, shows them, and edits the route before take-off):
+    3. key        the delivery key shared with the drone (made here the first time: copy it to the drone)
     4. network     this PC's addresses, for [delivery].station_url on the drone
     5. dashboard   opens the dashboard on the archive (unless --no-dashboard)
     6. receiver    python -m hima receive: takes the drone's packages, checks them, adds them to the archive
@@ -88,6 +89,7 @@ TORCH_JETSON = [
 ]
 JETSON_APT = ["python3-venv", "python3-pip", "python3-dev", "libopenblas-dev", "curl", "v4l-utils"]
 FLIGHT_IMPORTS = "import ultralytics, cv2, numpy, torch, pymavlink, serial, requests, jsonschema"
+STATION_IMPORTS = "import cv2, numpy, pandas, pymavlink, serial, requests, jsonschema"
 
 # USB ids, to tell an autopilot's own USB port from a USB-TTL adapter wired to TELEM2
 AUTOPILOT_VIDS = {0x26AC: "3DR / Pixhawk", 0x1209: "ArduPilot", 0x2DAE: "CubePilot", 0x3162: "Holybro"}
@@ -181,32 +183,36 @@ def venv_ok(code: str) -> bool:
     return VENV_PY.exists() and capture([VENV_PY, "-c", code], 300)[0] == 0
 
 
-def install_profile(dev: dict) -> dict:
-    req = SYSTEM / ("requirements-jetson.txt" if dev["kind"] == "jetson" else "requirements.txt")
-    torch = "jetson" if dev["kind"] == "jetson" else ("cuda" if dev["gpu"] else "cpu")
+def install_profile(dev: dict, station: bool = False) -> dict:
+    if station:                                   # receive, show, edit the route: no detection, no AI
+        req, torch = SYSTEM / "requirements-station.txt", "none"
+    else:
+        req = SYSTEM / ("requirements-jetson.txt" if dev["kind"] == "jetson" else "requirements.txt")
+        torch = "jetson" if dev["kind"] == "jetson" else ("cuda" if dev["gpu"] else "cpu")
     return {"requirements": req.name, "requirements_sha256": sha256(req), "torch": torch,
             "python": f"{sys.version_info[0]}.{sys.version_info[1]}"}
 
 
-def step_python(dev: dict, install: bool) -> None:
+def step_python(dev: dict, install: bool, station: bool = False) -> None:
     step(2, "python environment (system/.venv)")
-    profile = install_profile(dev)
+    profile = install_profile(dev, station)
+    imports = STATION_IMPORTS if station else FLIGHT_IMPORTS
     try:
         done = json.loads(MARKER.read_text(encoding="utf-8")) if MARKER.exists() else None
     except (OSError, ValueError):
         done = None
-    if done == profile and venv_ok(FLIGHT_IMPORTS):
+    if done == profile and venv_ok(imports):
         result("python", "OK", f"ready ({profile['requirements']}, torch {profile['torch']}); nothing to install")
         return
     if not install:
-        level = "OK" if venv_ok(FLIGHT_IMPORTS) else "FAIL"
+        level = "OK" if venv_ok(imports) else "FAIL"
         result("python", level, "libraries import" if level == "OK" else
                "libraries missing and --no-install was given: run the launcher once without --no-install")
         if level == "FAIL":
             raise SystemExit(1)
         return
 
-    if dev["kind"] == "jetson":
+    if dev["kind"] == "jetson" and not station:
         missing = [p for p in JETSON_APT if capture(["dpkg", "-s", p], 30)[0] != 0]
         if missing:
             say(f"  apt packages missing: {missing} (sudo asks for your password)")
@@ -222,8 +228,8 @@ def step_python(dev: dict, install: bool) -> None:
     if profile["torch"] == "jetson" and not venv_ok("import torch; assert torch.cuda.is_available()"):
         # requirements pulled the PyPI torch (no CUDA on aarch64): replace it with the Jetson builds
         run([VENV_PY, "-m", "pip", "install", "--force-reinstall", "--no-deps", *TORCH_JETSON])
-    if not venv_ok(FLIGHT_IMPORTS):
-        result("python", "FAIL", f"installed, but these still do not import: {FLIGHT_IMPORTS[7:]}")
+    if not venv_ok(imports):
+        result("python", "FAIL", f"installed, but these still do not import: {imports[7:]}")
         raise SystemExit(1)
     MARKER.write_text(json.dumps(profile, indent=1), encoding="utf-8")
     result("python", "OK", f"installed from {profile['requirements']} (torch {profile['torch']})")
@@ -718,7 +724,7 @@ def main() -> int:
         say(f"HIMA launcher in {SYSTEM}")
         dev = detect_device()
         step_device(dev)
-        step_python(dev, args.install)
+        step_python(dev, args.install, args.station)
         if args.install_service:
             install_service()
         env = dict(os.environ, HIMA_LAUNCHER_DEVICE=json.dumps(dev),

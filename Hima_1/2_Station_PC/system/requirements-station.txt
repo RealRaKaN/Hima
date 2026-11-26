@@ -1,0 +1,12 @@
+# Ground station PC only (launcher --station, START_STATION.bat). Same pins as requirements.txt.
+# The station receives the mission packages, shows them in the dashboard, and edits the route before take-off.
+# No torch, no YOLO, no Ollama: detection and the landing report run on the drone and arrive inside the package.
+numpy==2.3.5
+opencv-python==5.0.0.93          # event clips and image thumbnails in the dashboard
+requests==2.34.2
+tomli==2.2.1; python_version < "3.11"   # hima.toml reader on Python 3.10; 3.11+ has tomllib
+jsonschema==4.26.0               # checks each package against its schema
+referencing==0.37.0
+pandas==3.0.6                    # the animal points on the mission map
+pymavlink==2.4.50                # the route over the telemetry radio; LGPLv3
+pyserial==3.5                    # serial ports for pymavlink; BSD
