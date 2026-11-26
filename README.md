@@ -466,7 +466,7 @@ Qassim University, Computer Science Department. Graduation Project.
 
 | البند | التفاصيل |
 |---|---|
-| **الطيار الآلي** | أردو بايلوت الحقيقي (ArduCopter 4.7.2) يعمل على حاسوب التطوير بدل الدرون (SITL). |
+| **الطيار الآلي** | أردو بايلوت الحقيقي (ArduCopter 4.7.2) يعمل على جهاز غير الجهاز الأساسي المطلوب (الجيتسون) بدل الدرون (SITL). |
 | **النظام** | نفس البرنامج الذي سيطير على الجيتسون (`hima fly`)، بلا أي تعديل للتجربة. |
 | **العالم** | مصنوع، فيه **25 حيوانًا**، ونعرف لكل واحد مكانه وحالته الحقيقية في كل لحظة، فنقارن قرار النظام بالحقيقة. |
 | **الكاشف** | مولَّد يكرر أخطاء نموذج YOLO المختارة (يفوّت حيوانًا أحيانًا ويرسم صناديق زائدة)، لا صور حقيقية. |
@@ -481,7 +481,7 @@ Qassim University, Computer Science Department. Graduation Project.
 | **بعد تعديل قاعدة الاختباء** | **25 من 25** | صارت الغيابات القصيرة تُجمع. أُعيد التحليل على صناديق الكاشف نفسها من هذه الرحلة، لا في رحلة جديدة. |
 | **تنبيه المركبة** | **بعد 0.5 ثانية** | من ظهور المركبة في الصورة إلى خروج التنبيه، ولم يخرج أي تنبيه كاذب. |
 | **الرسائل إلى المحطة** | **99 من 99** | وصلت كلها عبر أردو بايلوت، وبالترتيب الذي أُرسلت به. |
-| **أطول تحديث للتحليل** | **0.92 ثانية** | التحليل يُعاد كل 10 ثوانٍ. هذا الرقم على حاسوب التطوير، وعلى الجيتسون أبطأ ولم يُقس. |
+| **أطول تحديث للتحليل** | **0.92 ثانية** | التحليل يُعاد كل 10 ثوانٍ. هذا الرقم على جهاز غير الجهاز الأساسي المطلوب (الجيتسون)، وعلى الجيتسون لم يُقس بعد. |
 
 #### التنبيهات بترتيب وقوعها
 
@@ -502,11 +502,11 @@ Qassim University, Computer Science Department. Graduation Project.
 | الجانب | ما ينقصه |
 |---|---|
 | **الجهاز والطيران** | لم يُجرَّب على جيتسون حقيقي، ولا في طيران فعلي. |
-| **السرعة** | سرعة تحليل الصورة على الجيتسون غير مقيسة. على حاسوب التطوير (RTX 3050) الوسيط 58 مللي ثانية للصورة. |
+| **السرعة** | سرعة تحليل الصورة على الجيتسون غير مقيسة. وعلى جهاز غير الجهاز الأساسي المطلوب (الجيتسون) كان الوسيط 58 مللي ثانية للصورة. |
 | **الصغار** | لا توجد صور من فوق لصغار المها والريم، فدقة تمييز الصغير غير مقيسة. |
 | **التخطيط والقرار في الجو** | مبنيان على مواصفات طائرة مفترضة، وجُرّبا في المحاكي فقط بحيوانات ومركبات افتراضية، لا بصور حقيقية من الجو. |
 | **الراديو** | عرض الطريق عبر الراديو جُرّب بطيار آلي بديل فقط، لا براديو حقيقي. |
-| **التقرير واللوحة** | جُرّبا على حاسوب التطوير فقط. |
+| **التقرير واللوحة** | جُرّبا على جهاز غير الجهاز الأساسي المطلوب (الجيتسون) فقط. |
 
 <p align="left"><sub><a href="#ar-toc">↑ الفهرس</a></sub></p>
 
@@ -995,7 +995,7 @@ It runs on the same PC only, and opens only files inside the mission folder. It 
 
 | Item | Details |
 |---|---|
-| **Autopilot** | The real ArduPilot (ArduCopter 4.7.2) running on the development PC in place of the drone (SITL). |
+| **Autopilot** | The real ArduPilot (ArduCopter 4.7.2) running on a device other than the required one (the Jetson) in place of the drone (SITL). |
 | **System** | The same program that will fly on the Jetson (`hima fly`), with no change for the test. |
 | **World** | Made up, with **25 animals**. We know where each one is and what its true status is at every moment, so the system's decisions can be compared with the truth. |
 | **Detector** | Generated to repeat chosen YOLO mistakes (it sometimes misses an animal or draws extra boxes); no real images. |
@@ -1010,7 +1010,7 @@ It runs on the same PC only, and opens only files inside the mission folder. It 
 | **After adjusting the hiding rule** | **25 of 25** | Short disappearances are now added up. The analysis was rerun on the same detector boxes from this flight, not in a new flight. |
 | **Vehicle alert** | **after 0.5 seconds** | From the vehicle appearing in the image to the alert going out, with no false alert. |
 | **Messages to the station** | **99 of 99** | All arrived through ArduPilot, in the order they were sent. |
-| **Longest analysis update** | **0.92 seconds** | The analysis is redone every 10 seconds. This is on the development PC; the Jetson is slower and has not been measured. |
+| **Longest analysis update** | **0.92 seconds** | The analysis is redone every 10 seconds. This was on a device other than the required one (the Jetson); on the Jetson it has not been measured yet. |
 
 #### The alerts in the order they happened
 
@@ -1031,11 +1031,11 @@ Time from take-off (minutes:seconds).
 | Area | What is missing |
 |---|---|
 | **Hardware and flight** | Not tried on a real Jetson, or in real flight. |
-| **Speed** | The image analysis speed on the Jetson is not measured. On the development PC (RTX 3050) the median is 58 ms per image. |
+| **Speed** | The image analysis speed on the Jetson is not measured. On a device other than the required one (the Jetson) the median was 58 ms per image. |
 | **Young animals** | There are no images from above of oryx and gazelle young, so how well the young is told apart is not measured. |
 | **Planning and in-flight decisions** | Built on assumed aircraft specs, and tried only in the simulator with virtual animals and vehicles, not with real images from the air. |
 | **Radio** | Showing the route over the radio was tried only with a stand-in autopilot, not a real radio. |
-| **Report and dashboard** | Tried on the development PC only. |
+| **Report and dashboard** | Tried on a device other than the required one (the Jetson) only. |
 
 <p align="right"><sub><a href="#en-toc">↑ Contents</a></sub></p>
 

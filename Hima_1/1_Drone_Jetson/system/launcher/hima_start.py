@@ -254,7 +254,7 @@ def stage2(args: argparse.Namespace, dev: dict) -> int:
 
     if args.tests and not (SYSTEM / "tests").is_dir():
         step(0, "tests")
-        result("tests", "WARN", "this copy has no tests folder (the tests stay on the development PC)")
+        result("tests", "WARN", "this copy has no tests folder (the tests are not part of this copy)")
     elif args.tests:
         step(0, "tests")
         rc = run([sys.executable, "-m", "pytest", "-q", "-m", "not ollama"], check=False)

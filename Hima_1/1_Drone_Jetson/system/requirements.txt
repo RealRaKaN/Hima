@@ -1,4 +1,4 @@
-# Exact versions tested (Python 3.14.2, Windows 11).
+# Exact versions tested.
 # Only packages the project imports directly; transitive deps come with them.
 #
 # torch/torchvision are CUDA 12.8 builds. Install them from the PyTorch index:
